@@ -6,6 +6,8 @@ import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
+import waypoints2 from './route1.json';
+
 const MSC = {
     latitude: 30.6123,
     longitude: -96.3415,
@@ -64,7 +66,7 @@ export function Map({ navigation }) {
                     />
                     <Polyline
                         //key={polyline.id}
-                        coordinates={waypoints}
+                        coordinates={waypoints2}
                         strokeColor="#500000"
                         fillColor="rgba(255, 0,0,0.75)"
                         strokeWidth={6} />
