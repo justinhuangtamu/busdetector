@@ -8,12 +8,14 @@ print(r.status_code)
 i = 0
 for j in r.json():
     input = ""
+    input += str(long) + ", "
+    input += str(lat) + ", "
     input += j.get("Name") + ", "
     input += str(j.get("Rank")) + ", "
     transformer = Transformer.from_crs(102100, 4326)
     (lat, long) = transformer.transform(j.get("Longtitude"), j.get("Latitude"))
-    input += str(lat) + ", "
-    input += str(long)
+
+
     if (i < 100):
         print(input)
         i += 1
