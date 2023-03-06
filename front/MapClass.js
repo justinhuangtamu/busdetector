@@ -8,6 +8,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 
 import waypoints2 from './route1.json';
 
+
 const MSC = {
     latitude: 30.6123,
     longitude: -96.3415,
@@ -35,6 +36,15 @@ const waypoints = [
     {latitude: 30.61722595198309, longitude: -96.335060229007, },
 ];
 
+//const Pool = require('pg').Pool
+/*const pool = new Pool({
+    user: 'postgres',
+    host: 'lus-lvm1.southcentralus.cloudapp.azure.com',
+    database: 'busdetector',
+    password: 'Bu$det3ctoR2023',
+    port: 5432,
+  });
+  */
 
 export function Map({ navigation }) {
     return (
