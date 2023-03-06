@@ -14,3 +14,11 @@
 
 - website I got the instructions from 
     - https://reactnavigation.org/docs/getting-started/
+
+
+
+## Installations for node-postgres backend API
+-npm i express pg
+
+-- Run node API with 'node index.js' called from within the node-postgres directory  
+
