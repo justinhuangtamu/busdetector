@@ -7,7 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import waypoints2 from './route1.json';
-
+import * as SQLite from 'expo-sqlite';
 
 const MSC = {
     latitude: 30.6123,
@@ -36,7 +36,15 @@ const waypoints = [
     {latitude: 30.61722595198309, longitude: -96.335060229007, },
 ];
 
-//const Pool = require('pg').Pool
+/*const createConnectionPool = require('@databases/pg');
+
+const db = createConnectionPool({
+  user: 'postgres', // e.g. 'my-user'
+  password: 'Bu$det3ctoR2023', // e.g. 'my-user-password'
+  database: 'busdetector', // e.g. 'my-database'
+  host: 'lus-lvm1.southcentralus.cloudapp.azure.com',
+});*/
+//const Pool = require('pg').Pool;
 /*const pool = new Pool({
     user: 'postgres',
     host: 'lus-lvm1.southcentralus.cloudapp.azure.com',
