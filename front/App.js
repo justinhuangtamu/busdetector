@@ -13,7 +13,6 @@ import { Map, getRoutesFromAPI, styles, RouteSelection} from './MapClass';
 function Settings() {
   return (
     <View style={styles.link}>
-      {/* {console.log(getRoutesFromAPI())} */}
       <Text>
         Settings Screen</Text>
     </View>
