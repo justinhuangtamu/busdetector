@@ -25,7 +25,7 @@ def update_routes(cur):
             input = ""+str(i)+", "
             input += str(long) + ", "
             input += str(lat) + ", "
-
+            if():
             input += j.get("Name") + ", "
             #input += str(j.get("Rank")) + ", "
 
