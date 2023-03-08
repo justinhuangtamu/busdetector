@@ -99,6 +99,10 @@ export const styles = StyleSheet.create({
 export function RouteSelection() {
     return (
       <View style={styles.link}>
+        <select>
+            <option value="someOption">Some option</option>
+            <option value="otherOption">Other option</option>
+        </select>
         <Text>RouteSelection Screen</Text>
       </View>
     );
