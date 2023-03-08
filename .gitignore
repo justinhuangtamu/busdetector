@@ -1,5 +1,1 @@
-front/node_modules
-node-postgres/node_modules
-front/temp
-node_modules
 *.DS_Store*
