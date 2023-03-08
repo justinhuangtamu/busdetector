@@ -1,0 +1,39 @@
+
+    {
+        "01": {
+            "color": "rgb(98,64,153)",
+            "name": "Bonfire"
+        },
+        "01-04": {
+            "color": "DarkOrchid",
+            "name": "Nights & Weekends",
+        },
+        "03": {
+            "color": "rgb(1,1,1)",
+            "name": "yell practice",
+        },
+        "03-05": {
+            "color": "rgb(124,55,19)",
+            "name": "Nights & Weekends",
+        },
+        "04": {
+            "color": "rgb(236,39,39)",
+            "name": "Gig Em",
+        },
+        "05": {
+            "color": "rgb(94,155,211)",
+            "name": "Bush School",
+        },
+        "06": {
+            "color": "rgb(20,178,75)",
+            "name": "12th Man",
+        },
+        "07": {
+            "color": "rgb(82,189,160)",
+            "name": "Airport",
+        },
+        "08": {
+            "color": "rgb(233,22,139)",
+            "name": "Howdy",
+        }
+    }

@@ -7,6 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import waypoints2 from './route1.json';
+import buses from "./buses.json";
 
 const MSC = {
     latitude: 30.6123,
@@ -15,25 +16,6 @@ const MSC = {
     longitudeDelta: 0.02,
 }
 
-const MSC2 = {
-    latitude: 30.6125,
-    longitude: -96.3420,
-    latitudeDelta: 0.02,
-    longitudeDelta: 0.02,
-}
-const waypoints = [
-    {latitude: 30.6152035662653, longitude: -96.3374031387212, },
-
-    {latitude: 30.6167807052601, longitude: -96.3350937566217, },
-
-    {latitude: 30.6169081101959, longitude: -96.3351178965043, },
-
-    {latitude: 30.617004669726196, longitude: -96.335121919818, },
-
-    {latitude: 30.617118663616107, longitude: -96.33509643883089, },
-
-    {latitude: 30.61722595198309, longitude: -96.335060229007, },
-];
 
 
 export function Map({ navigation }) {
@@ -67,8 +49,8 @@ export function Map({ navigation }) {
                     <Polyline
                         //key={polyline.id}
                         coordinates={waypoints2}
-                        strokeColor="#500000"
-                        fillColor="rgba(255, 0,0,0.75)"
+                        
+                        strokeColor={buses["01"]["color"]}
                         strokeWidth={6} />
 
                 </MapView>
@@ -80,25 +62,30 @@ export function Map({ navigation }) {
 }
 
 // API connection function
-export const getRoutesFromAPI = async () => {
+async function CallDatabase() {
     try {
-        // fetch for IOS needs IP so run ipconfig and replace (192.xxx.x.xx:) with that IPV4
-        const response = await fetch('http://192.168.1.67:3001/', {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            }
-        });
-        const json = await response.json();
-        return json.routes;
-    } catch (error) {
-        console.error(error);
+        const response = await fetch('http://10.229.30.189:3001/',
+            {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+
+        let json = undefined;
+
+        if (response.status === 200) {
+            json = await response.json();
+            console.log(json);
+        }
+
+        return json;
+    } catch (err) {
+        console.log(err)
     }
 
-};
-
-
+}
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -116,3 +103,11 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+export function RouteSelection() {
+    return (
+      <View style={styles.link}>
+        <Text>RouteSelection Screen</Text>
+      </View>
+    );
+  }

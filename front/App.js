@@ -9,11 +9,10 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Map, getRoutesFromAPI, styles } from './MapClass';
+import { Map, getRoutesFromAPI, styles, RouteSelection} from './MapClass';
 function Settings() {
   return (
     <View style={styles.link}>
-      {/* component={console.log(getRoutesFromAPI())} */}
       <Text>
         Settings Screen</Text>
     </View>
@@ -28,13 +27,7 @@ function Announcments() {
   );
 }
 
-function RouteSelection() {
-  return (
-    <View style={styles.link}>
-      <Text>RouteSelection Screen</Text>
-    </View>
-  );
-}
+
 
 const Stack = createNativeStackNavigator();
 

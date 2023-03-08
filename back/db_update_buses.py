@@ -9,12 +9,12 @@ def convert_coords(latitude, longitude):
 
 def update_buses(route_id):
     r = requests.get('https://transport.tamu.edu/BusRoutesFeed/api/route/'+str(route_id) +'/buses/mentor', auth=('user', 'pass'))
-    rows = []
     for bus in r.json():
         bus_id = bus.get("Name")
         lat, long = convert_coords(bus.get("GPS").get("Long"), bus.get("GPS").get("Lat"))
         occupancy = bus.get("APC").get("TotalPassenger")
         next_stop_id = bus.get("NextStops")[0].get("StopCode")
+        print(bus_id,route_id,lat,long,occupancy,next_stop_id)
         rows.append((bus_id,route_id,lat,long,occupancy,next_stop_id))
     return rows
 
@@ -48,3 +48,4 @@ def main():
 
 # Run Program
 main()
+
