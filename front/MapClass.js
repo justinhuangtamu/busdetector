@@ -1,13 +1,14 @@
 
-import * as React from 'react';
+import React, {useState} from 'react';
 import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import waypoints2 from './route1.json';
 import buses from "./buses.json";
+import bus_buttons from "./bus-button.json";
 
 const MSC = {
     latitude: 30.6123,
@@ -102,16 +103,66 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    item: {
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+      },
+      title: {
+        fontSize: 32,
+      },
 });
 
+// this is for the button list
+const DATA = [
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      title: 'First Item',
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      title: 'Second Item',
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      title: 'Third Item',
+    },
+  ];
+  
+const Item = ({item, onPress, backgroundColor, textColor}) => (
+    <TouchableOpacity onPress={onPress} style={[styles.item, {backgroundColor}]}>
+      <Text style={[styles.title, {color: textColor}]}>{item.id}</Text>
+    </TouchableOpacity>
+  );
+
 export function RouteSelection() {
-    return (
-      <View style={styles.link}>
-        <select>
-            <option value="someOption">Some option</option>
-            <option value="otherOption">Other option</option>
-        </select>
-        <Text>RouteSelection Screen</Text>
-      </View>
-    );
+    const [selectedId, setSelectedId] = useState();
+  
+    const renderItem = ({item}) => {
+        const backgroundColor = item.id === selectedId ? '#dcdcdc' : buses[item.id]["color"];
+        const color = item.id === selectedId ? 'black' : 'white';
+    
+        return (
+          <Item
+            item={item}
+            onPress={() => setSelectedId(item.id)}
+            backgroundColor={backgroundColor}
+            textColor={color}
+          />
+        );
+      };
+
+      return (
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={bus_buttons}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            extraData={selectedId}
+          />
+        </SafeAreaView>
+      );
   }
+
+
+  
