@@ -1,13 +1,15 @@
 
-import * as React from 'react';
+import React, {useState} from 'react';
 import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import waypoints2 from './route1.json';
 import buses from "./buses.json";
+import on_bus_buttons from "./bus-on-campus-button.json";
+import off_bus_buttons from "./bus-off-campus-buttons.json";
 
 const MSC = {
     latitude: 30.6123,
@@ -92,6 +94,8 @@ export const styles = StyleSheet.create({
         backgroundColor: '#fff', // #500000 is maroon
         alignItems: 'center',
         justifyContent: 'center',
+        
+        
     },
     map: {
         width: '98%',
@@ -102,12 +106,70 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    item: {
+        padding: 20,
+        // marginVertical: 8,
+        marginHorizontal: 8,
+        // flexDirection: 'row',
+        borderRadius: 20,
+      },
+      title: {
+        fontSize: 24,
+      },
+      buttonTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        marginTop: 20,
+      },
 });
 
+// this is for the button list
+const Item = ({item, onPress, backgroundColor, textColor}) => (
+    <TouchableOpacity onPress={onPress} style={[styles.item, {backgroundColor}]}>
+      <Text style={[styles.title, {color: textColor}]}>{item.id}</Text>
+    </TouchableOpacity>
+  );
+
 export function RouteSelection() {
-    return (
-      <View style={styles.link}>
-        <Text>RouteSelection Screen</Text>
-      </View>
-    );
+    const [selectedId, setSelectedId] = useState();
+  
+    const renderItem = ({item}) => {
+        const backgroundColor = item.id === selectedId ? '#dcdcdc' : item.color;
+        const color = item.id === selectedId ? 'black' : 'white';
+    
+        return (
+          <Item
+            item={item}
+            onPress={() => setSelectedId(item.id)}
+            backgroundColor={backgroundColor}
+            textColor={color}
+          />
+        );
+      };
+
+      return (
+        
+        <SafeAreaView style={styles.item}>
+          <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
+          <FlatList
+            horizontal = {true}
+            data={on_bus_buttons}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            extraData={selectedId}
+          />
+          <Text style={[styles.buttonTitle]}>Off Campus Routes</Text>
+          <FlatList
+            horizontal = {true}
+            data={off_bus_buttons}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            extraData={selectedId}
+          />
+        </SafeAreaView>
+      );
   }
+
+
+  
