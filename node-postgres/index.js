@@ -13,14 +13,14 @@ app.use(function(req,res,next) {
 });
 
 
-app.get('/', (req,res) => {
-    route_model.getRoutes()
-    .then(response => {
-        res.status(200).send(response);
-    })
-    .catch(error => {
-        res.status(500).send(error)
-    })
+app.get('/:query', async (req,res) => {
+    const {query} = req.params;
+    try {
+        const response = await route_model.getRoutes(query);
+        res.json(response.rows);
+    } catch (error) {
+        res.status(500).send(error);
+    }
 })
 
 
