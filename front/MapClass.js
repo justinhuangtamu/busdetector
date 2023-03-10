@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
@@ -17,8 +17,6 @@ const MSC = {
     latitudeDelta: 0.02,
     longitudeDelta: 0.02,
 }
-
-
 
 export function Map({ navigation }) {
     return (
@@ -64,9 +62,11 @@ export function Map({ navigation }) {
 }
 
 // API connection function
-async function CallDatabase() {
+async function CallDatabase(query) {
     try {
-        const response = await fetch('http://10.229.30.189:3001/',
+      // this still has to be set to the IP using ipConfig
+      const fetchString = "http://172.31.11.160:3001/" + query;
+        const response = await fetch(fetchString,
             {
                 method: 'GET',
                 headers: {
@@ -80,6 +80,7 @@ async function CallDatabase() {
         if (response.status === 200) {
             json = await response.json();
             console.log(json);
+            // waypoints = json;
         }
 
         return json;
@@ -126,13 +127,23 @@ export const styles = StyleSheet.create({
 
 // this is for the button list
 const Item = ({item, onPress, backgroundColor, textColor}) => (
-    <TouchableOpacity onPress={onPress} style={[styles.item, {backgroundColor}]}>
+    <TouchableOpacity onPress={() => onPress(item.id)} style={[styles.item, {backgroundColor}]}>
       <Text style={[styles.title, {color: textColor}]}>{item.id}</Text>
     </TouchableOpacity>
   );
 
 export function RouteSelection() {
     const [selectedId, setSelectedId] = useState();
+
+    // gets the route number that is selected and processes it
+    handlePress = (id) => {
+      setSelectedId(id);
+      const queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "';";
+      
+      console.log(queryString);
+      CallDatabase(queryString);
+      
+    };
   
     const renderItem = ({item}) => {
         const backgroundColor = item.id === selectedId ? '#dcdcdc' : item.color;
@@ -141,7 +152,7 @@ export function RouteSelection() {
         return (
           <Item
             item={item}
-            onPress={() => setSelectedId(item.id)}
+            onPress={handlePress}
             backgroundColor={backgroundColor}
             textColor={color}
           />

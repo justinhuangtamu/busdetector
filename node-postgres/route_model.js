@@ -7,7 +7,9 @@ const pool = new Pool({
     port: 5432,
 });
 
-const getRoutes = () => pool.query('SELECT (lattitude, longitude) FROM stops');
+const getRoutes = (query) =>  {
+    return pool.query(query);
+}
 // const getRoutes = () => {
 //     return new Promise(function (resolve, reject) {
 //         pool.query('SELECT * FROM routes', (error, results) => {
