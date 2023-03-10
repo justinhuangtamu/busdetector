@@ -6,7 +6,7 @@
     },
     {
         id: "01-04",
-        color: "DarkOrchid",
+        color: "rgb(153, 50, 204)",
         name: "Nights & Weekends",
     },
     {

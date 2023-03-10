@@ -8,7 +8,8 @@ import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacit
 
 import waypoints2 from './route1.json';
 import buses from "./buses.json";
-import bus_buttons from "./bus-button.json";
+import on_bus_buttons from "./bus-on-campus-button.json";
+import off_bus_buttons from "./bus-off-campus-buttons.json";
 
 const MSC = {
     latitude: 30.6123,
@@ -153,12 +154,19 @@ export function RouteSelection() {
           <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
           <FlatList
             horizontal = {true}
-            data={bus_buttons}
+            data={on_bus_buttons}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             extraData={selectedId}
           />
           <Text style={[styles.buttonTitle]}>Off Campus Routes</Text>
+          <FlatList
+            horizontal = {true}
+            data={off_bus_buttons}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            extraData={selectedId}
+          />
         </SafeAreaView>
       );
   }
