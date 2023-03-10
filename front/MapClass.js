@@ -93,6 +93,8 @@ export const styles = StyleSheet.create({
         backgroundColor: '#fff', // #500000 is maroon
         alignItems: 'center',
         justifyContent: 'center',
+        
+        
     },
     map: {
         width: '98%',
@@ -105,30 +107,23 @@ export const styles = StyleSheet.create({
     },
     item: {
         padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
+        // marginVertical: 8,
+        marginHorizontal: 8,
+        // flexDirection: 'row',
+        borderRadius: 20,
       },
       title: {
-        fontSize: 32,
+        fontSize: 24,
+      },
+      buttonTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        marginTop: 20,
       },
 });
 
 // this is for the button list
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-  ];
-  
 const Item = ({item, onPress, backgroundColor, textColor}) => (
     <TouchableOpacity onPress={onPress} style={[styles.item, {backgroundColor}]}>
       <Text style={[styles.title, {color: textColor}]}>{item.id}</Text>
@@ -139,7 +134,7 @@ export function RouteSelection() {
     const [selectedId, setSelectedId] = useState();
   
     const renderItem = ({item}) => {
-        const backgroundColor = item.id === selectedId ? '#dcdcdc' : buses[item.id]["color"];
+        const backgroundColor = item.id === selectedId ? '#dcdcdc' : item.color;
         const color = item.id === selectedId ? 'black' : 'white';
     
         return (
@@ -153,13 +148,17 @@ export function RouteSelection() {
       };
 
       return (
-        <SafeAreaView style={styles.container}>
+        
+        <SafeAreaView style={styles.item}>
+          <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
           <FlatList
+            horizontal = {true}
             data={bus_buttons}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             extraData={selectedId}
           />
+          <Text style={[styles.buttonTitle]}>Off Campus Routes</Text>
         </SafeAreaView>
       );
   }
