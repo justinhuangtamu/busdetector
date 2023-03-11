@@ -9,9 +9,13 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Map, getRoutesFromAPI, styles, RouteSelection} from './MapClass';
+import { Map, getRoutesFromAPI, styles, RouteSelection, test} from './MapClass.js';
+//import {} from './table.js';
+
+
 function Settings() {
   return (
+
     <View style={styles.link}>
       <Text>
         Settings Screen</Text>

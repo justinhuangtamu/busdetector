@@ -65,7 +65,7 @@ export function Map({ navigation }) {
 async function CallDatabase(query) {
     try {
       // this still has to be set to the IP using ipConfig
-      const fetchString = "http://172.31.11.160:3001/" + query;
+        const fetchString = "http://192.168.12.146:3001/" + query;
         const response = await fetch(fetchString,
             {
                 method: 'GET',
@@ -79,8 +79,10 @@ async function CallDatabase(query) {
 
         if (response.status === 200) {
             json = await response.json();
-            console.log(json);
+            console.log(json);                       // UNCOMMENT TO LOG JSON RESPONSES
             // waypoints = json;
+        } else {
+            console.log(response.status);
         }
 
         return json;
@@ -137,13 +139,22 @@ export function RouteSelection() {
 
     // gets the route number that is selected and processes it
     handlePress = (id) => {
-      setSelectedId(id);
-      const queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "';";
+        setSelectedId(id);
+        const queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "';";
       
-      console.log(queryString);
-      CallDatabase(queryString);
-      
+        console.log(queryString);
+        CallDatabase(queryString);
+           
     };
+
+    handlePress2 = (id) => {
+        setSelectedId(id);
+        const tableString = "select (stop_name, static_time) from route_stop_bridge " +
+            "inner join stops on route_stop_bridge.stop_id = stops.stop_id " +
+            "where(timed_stop and route_id = '" + id + "'); ";
+        console.log(tableString);
+        CallDatabase(tableString);
+    }
   
     const renderItem = ({item}) => {
         const backgroundColor = item.id === selectedId ? '#dcdcdc' : item.color;
@@ -152,7 +163,7 @@ export function RouteSelection() {
         return (
           <Item
             item={item}
-            onPress={handlePress}
+            onPress={handlePress2}
             backgroundColor={backgroundColor}
             textColor={color}
           />
