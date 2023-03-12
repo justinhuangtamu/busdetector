@@ -1,12 +1,12 @@
-import * as React from 'react';
-// import MapView from 'react-native-maps';
-// import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
+import React, {useState, useEffect} from 'react';
+import MapView from 'react-native-maps';
+import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Map, getRoutesFromAPI, styles, RouteSelection} from './MapClass';
