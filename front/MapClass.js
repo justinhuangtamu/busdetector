@@ -4,9 +4,10 @@ import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, Scrollabl } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import {sort_times, create_table} from './table.js';
+import { useNavigation } from '@react-navigation/native';
 import times from './route1.json';
 
 import waypoints2 from './route1.json';
@@ -21,7 +22,23 @@ const MSC = {
     longitudeDelta: 0.02,
 }
 
-export function Map({ navigation }) {
+var queryString = "";
+
+export function Map({ navigation, route }) {
+  // const [waypoints, setWaypoints] = useState([]);
+  const { waypoints } = route.params || [];
+
+  // useEffect(() => {
+  //   // Call your function to get the waypoints from the database and update the state variable
+  //   async function fetchData() {
+  //     console.log(queryString);
+  //     const json = await CallDatabase(queryString);
+  //     setWaypoints(json);
+  //   }
+
+  //   fetchData();
+  // }, []);
+
     return (
         <View style={styles.container}>
             <Button
@@ -51,7 +68,7 @@ export function Map({ navigation }) {
                     />
                     <Polyline
                         //key={polyline.id}
-                        coordinates={waypoints2}
+                        coordinates={waypoints}
                         
                         strokeColor={buses["01"]["color"]}
                         strokeWidth={6} />
@@ -135,12 +152,20 @@ const Item = ({item, onPress, backgroundColor, textColor}) => (
   );
 
 export function RouteSelection() {
+    const navigation = useNavigation();
     const [selectedId, setSelectedId] = useState();
 
     // gets the route number that is selected and processes it
-    handlePress = (id) => {
-        setSelectedId(id);
-        const queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "';";
+    handlePress = async (id) => {
+      setSelectedId(id);
+      queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "';";
+      
+      console.log(queryString);
+      // CallDatabase(queryString);
+      const waypoints = await CallDatabase(queryString);
+
+    // Navigate to the Map screen and pass the selected waypoints as a parameter
+    navigation.navigate('Home', { waypoints });
       
         console.log(queryString);
         CallDatabase(queryString);
