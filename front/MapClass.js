@@ -4,7 +4,10 @@ import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, Scrollabl } from 'react-native';
+
+import {sort_times, create_table} from './table.js';
+import times from './route1.json';
 
 import waypoints2 from './route1.json';
 import buses from "./buses.json";
@@ -79,7 +82,7 @@ async function CallDatabase(query) {
 
         if (response.status === 200) {
             json = await response.json();
-            console.log(json);                       // UNCOMMENT TO LOG JSON RESPONSES
+           // console.log(json);                       // UNCOMMENT TO LOG JSON RESPONSES
             // waypoints = json;
         } else {
             console.log(response.status);
@@ -94,11 +97,8 @@ async function CallDatabase(query) {
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff', // #500000 is maroon
         alignItems: 'center',
         justifyContent: 'center',
-        
-        
     },
     map: {
         width: '98%',
@@ -144,17 +144,16 @@ export function RouteSelection() {
       
         console.log(queryString);
         CallDatabase(queryString);
-           
-    };
 
-    handlePress2 = (id) => {
-        setSelectedId(id);
-        const tableString = "select (stop_name, static_time) from route_stop_bridge " +
+
+        const tableString = "select stop_name, static_time from route_stop_bridge " +
             "inner join stops on route_stop_bridge.stop_id = stops.stop_id " +
             "where(timed_stop and route_id = '" + id + "'); ";
         console.log(tableString);
         CallDatabase(tableString);
-    }
+           
+    };
+
   
     const renderItem = ({item}) => {
         const backgroundColor = item.id === selectedId ? '#dcdcdc' : item.color;
@@ -163,7 +162,7 @@ export function RouteSelection() {
         return (
           <Item
             item={item}
-            onPress={handlePress2}
+            onPress={handlePress}
             backgroundColor={backgroundColor}
             textColor={color}
           />
@@ -189,9 +188,20 @@ export function RouteSelection() {
             keyExtractor={item => item.id}
             extraData={selectedId}
           />
-        </SafeAreaView>
+        {table_view()}
+        </SafeAreaView>        
       );
   }
+
+
+
+
+
+
+
+
+
+
 
 
   
