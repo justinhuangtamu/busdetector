@@ -1,3 +1,11 @@
+'''
+CSCE 482-933
+BusDetector
+
+Script runs very frequently (almost constantly, depending on Google API limitations)
+Updates ETA for all buses and pushes to database
+'''
+
 from pyproj import Transformer  # coordinate transformations
 import requests  # HTTP requests library
 import psycopg2 as ps  # PostgreSQL db library
