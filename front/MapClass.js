@@ -6,6 +6,7 @@ import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+// import * as turf from '@turf/turf'; // import Turf.js library
 
 import waypoints2 from './route1.json';
 import buses from "./buses.json";
@@ -22,19 +23,7 @@ const MSC = {
 var queryString = "";
 
 export function Map({ navigation, route }) {
-  // const [waypoints, setWaypoints] = useState([]);
   const { waypoints } = route.params || [];
-
-  // useEffect(() => {
-  //   // Call your function to get the waypoints from the database and update the state variable
-  //   async function fetchData() {
-  //     console.log(queryString);
-  //     const json = await CallDatabase(queryString);
-  //     setWaypoints(json);
-  //   }
-
-  //   fetchData();
-  // }, []);
 
     return (
         <View style={styles.container}>
@@ -81,8 +70,8 @@ export function Map({ navigation, route }) {
 // API connection function
 async function CallDatabase(query) {
     try {
-      // this still has to be set to the IP using ipConfig
-      const fetchString = "http://172.31.11.160:3001/" + query;
+      // this still has to be set to the IP using ipConfig10.228.101.52
+      const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
         const response = await fetch(fetchString,
             {
                 method: 'GET',
