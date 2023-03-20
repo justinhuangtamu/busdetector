@@ -146,7 +146,7 @@ export function RouteSelection() {
     // gets the route number that is selected and processes it
     handlePress = async (id) => {
       setSelectedId(id);
-      queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "';";
+      queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "' order by route_stop_bridge.rank asc;";
       
       console.log(queryString);
       // CallDatabase(queryString);
