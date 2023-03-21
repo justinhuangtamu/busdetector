@@ -8,7 +8,7 @@ import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacit
 import { useNavigation } from '@react-navigation/native';
 // import * as turf from '@turf/turf'; // import Turf.js library
 
-import waypoints2 from './route1.json';
+//import waypoints2 from './route1.json';
 import buses from "./buses.json";
 import on_bus_buttons from "./bus-on-campus-button.json";
 import off_bus_buttons from "./bus-off-campus-buttons.json";
@@ -70,7 +70,6 @@ export function Map({ navigation, route }) {
 // API connection function
 async function CallDatabase(query) {
     try {
-      // this still has to be set to the IP using ipConfig10.228.101.52
       const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
         const response = await fetch(fetchString,
             {
