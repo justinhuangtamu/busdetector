@@ -7,9 +7,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import {sort_times, create_table} from './table.js';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 // import * as turf from '@turf/turf'; // import Turf.js library
-
+import Swiper from 'react-native-swiper';
 // import * as turf from '@turf/turf'; // import Turf.js library
 
 import buses from "./buses.json";
@@ -25,58 +25,152 @@ const MSC = {
 
 var queryString = "";
 
+
+// this is for the button list
+const Item = ({ item, onPress, backgroundColor, textColor }) => (
+  <TouchableOpacity onPress={() => onPress(item.id)} style={[styles.item, { backgroundColor }]}>
+    <Text style={[styles.title, { color: textColor }]}>{item.id}</Text>
+  </TouchableOpacity>
+);
+
+
+
 export function Map({ navigation, route }) {
-  const { waypoints } = route.params || [];
+  //const { waypoints } = route.params || []; //route.params
+  
+  const [selectedId, setSelectedId] = useState();
+  //const [waypoint, setWaypoint] = useState([]);
+  console.log(route.params);
+  var waypoints;
+  if (route.params === undefined) {
+    waypoints = route.params || [];
+  } else {
+    waypoints  = route.params["waypoint"] || [];
+  }
+  
+  // gets the route number that is selected and processes it
+  handlePress = async (id) => {
+    setSelectedId(id);
+
+    queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "' order by route_stop_bridge.rank asc;";
+
+    console.log(queryString);
+    // CallDatabase(queryString);
+    const waypoint = await CallDatabase(queryString);
+
+    // Navigate to the Map screen and pass the selected waypoints as a parameter
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'Home',
+        params: {waypoint},
+      })
+    )
+
+
+  };
+
+
+  const renderItem = ({ item }) => {
+    const backgroundColor = item.id === selectedId ? '#dcdcdc' : item.color;
+    const color = item.id === selectedId ? 'black' : 'white';
 
     return (
-        <View style={styles.container}>
-            <Button
-                title="Go to Route Selection"
-                onPress={() => navigation.navigate('RouteSelection')}
-            />
-            <Button
-                title="Go to Settings"
-                onPress={() => navigation.navigate('Settings')}
-            />
-            <Button
-                title="Go to Announcments"
-                onPress={() => navigation.navigate('Announcments')}
-            />
+      <Item
+        item={item}
+        onPress={handlePress}
+        backgroundColor={backgroundColor}
+        textColor={color}
+      />
+    );
+    
+  }
+    return (
+      <Swiper horizontal={false} loop={false} showsButtons={false}>
+        {create_Map(waypoints)}
+        <SafeAreaView style={styles.item}>
+          <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
+          <FlatList
+            horizontal={true}
+            data={on_bus_buttons}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            extraData={selectedId}
+          />
+          <Text style={[styles.buttonTitle]}>Off Campus Routes</Text>
+          <FlatList
+            horizontal={true}
+            data={off_bus_buttons}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            extraData={selectedId}
+          />
+          {/* <Button
+            title="Return to Map"
+            onPress={() => navigation.navigate('Home', { waypoint })}
+          /> 
+          
+          
+          */}
 
-            {
-                // Google API block
-                <MapView
-                    style={styles.map}
-                    initialRegion={MSC}
-                    provider={PROVIDER_GOOGLE}
-                //showsMyLocationButton={true}
-                >
-                    <Marker
-                        coordinate={MSC}
-                        pinColor="grey"
-                    />
-                    <Polyline
-                        //key={polyline.id}
-                        coordinates={waypoints}
-                        
-                        strokeColor={buses["01"]["color"]}
-                        strokeWidth={6} />
-
-                </MapView>
-            }
-            {/* <Text>Open up App.js to start working on your app!</Text> */}
-            <StatusBar style="auto" />
-        </View>
+          {//table_view()
+          }
+        </SafeAreaView> 
+      </Swiper>
     );
 }
+
+function create_Map(waypoints) {
+
+  return (
+    <View style={styles.container}>
+      {/* <Button
+                title="Go to Route Selection"
+                onPress={() => navigation.navigate('RouteSelection')}
+            /> */}
+      <Button
+        title="Go to Settings"
+        onPress={() => navigation.navigate('Settings')}
+      />
+      <Button
+        title="Go to Announcments"
+        onPress={() => navigation.navigate('Announcments')}
+      />
+
+      {
+        // Google API block
+        <MapView
+          style={styles.map}
+          initialRegion={MSC}
+          provider={PROVIDER_GOOGLE}
+        //showsMyLocationButton={true}
+        >
+          <Marker
+            coordinate={MSC}
+            pinColor="grey"
+          />
+          <Polyline
+            //key={polyline.id}
+            coordinates={waypoints}
+
+            strokeColor={buses["01"]["color"]}
+            strokeWidth={6} />
+
+        </MapView>
+      }
+      {/* <Text>Open up App.js to start working on your app!</Text> */}
+      <StatusBar style="auto" />
+    </View>
+  )
+  
+}
+
 
 // API connection function
 async function CallDatabase(query) {
     try {
       // this still has to be set to the IP using ipConfig
         const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
-      // this still has to be set to the IP using ipConfig10.228.101.52
-      const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
+
         const response = await fetch(fetchString,
             {
                 method: 'GET',
@@ -134,75 +228,6 @@ export const styles = StyleSheet.create({
         marginTop: 20,
       },
 });
-
-// this is for the button list
-const Item = ({item, onPress, backgroundColor, textColor}) => (
-    <TouchableOpacity onPress={() => onPress(item.id)} style={[styles.item, {backgroundColor}]}>
-      <Text style={[styles.title, {color: textColor}]}>{item.id}</Text>
-    </TouchableOpacity>
-  );
-
-export function RouteSelection() {
-    const navigation = useNavigation();
-    const [selectedId, setSelectedId] = useState();
-
-    // gets the route number that is selected and processes it
-    handlePress = async (id) => {
-      setSelectedId(id);
-      queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "' order by route_stop_bridge.rank asc;";
-      
-      console.log(queryString);
-      // CallDatabase(queryString);
-      const waypoints = await CallDatabase(queryString);
-
-    // Navigate to the Map screen and pass the selected waypoints as a parameter
-    navigation.navigate('Home', { waypoints });
-      
-           
-    };
-
-  
-    const renderItem = ({item}) => {
-        const backgroundColor = item.id === selectedId ? '#dcdcdc' : item.color;
-        const color = item.id === selectedId ? 'black' : 'white';
-    
-        return (
-          <Item
-            item={item}
-            onPress={handlePress}
-            backgroundColor={backgroundColor}
-            textColor={color}
-          />
-        );
-      };
-
-      return (
-        
-        <SafeAreaView style={styles.item}>
-          <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
-          <FlatList
-            horizontal = {true}
-            data={on_bus_buttons}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            extraData={selectedId}
-          />
-          <Text style={[styles.buttonTitle]}>Off Campus Routes</Text>
-          <FlatList
-            horizontal = {true}
-            data={off_bus_buttons}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            extraData={selectedId}
-          />
-        {table_view()}
-        </SafeAreaView>        
-      );
-  }
-
-
-
-
 
 export function table_view() {
 

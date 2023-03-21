@@ -12,7 +12,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Map, getRoutesFromAPI, styles, RouteSelection, test} from './MapClass.js';
 
 //import {} from './table.js';
-import {get_Announcements, theme} from "./temp/News.js";
+import {get_Announcements, theme} from "./News.js";
 
 
 
@@ -45,28 +45,31 @@ export default function App() {
   //const scheme = useColorScheme();
   return (
     // all app code has to go within the <NavigationContainer> tag
+   
+  <NavigationContainer>{
 
-    <NavigationContainer>{
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#500000',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
-      >
-        <Stack.Screen name="Home"
-          component={Map}
-          options={{ title: 'Map' }}
-        />
-        <Stack.Screen name="RouteSelection" component={RouteSelection} />
-        <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="Announcments" component={Announcments} />
-      </Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#500000',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        >
+          <Stack.Screen name="Home"
+            component={Map}
+            options={{ title: 'Map' }}
+          />
+          {/* <Stack.Screen name="RouteSelection" component={RouteSelection} /> */}
+          <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen name="Announcments" component={Announcments} />
+        </Stack.Navigator>
+
     }</NavigationContainer>
+    
 
   );
 }
