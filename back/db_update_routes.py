@@ -12,29 +12,42 @@ def get_route_pattern(route_ids):
     route_data = []
     route_bridge = []
     visited_stops = {}
-    bridge_key = 0
+    #bridge_key = 0
     for route_id in route_ids:
         r = requests.get('https://transport.tamu.edu/BusRoutesFeed/api/route/'+str(route_id)+'/pattern', auth=('user', 'pass'))
-
         for location in r.json():
+            bridge_key = str(location.get("Key"))
             lat, long = convert_coords(location.get("Longtitude"), location.get("Latitude"))
             stop = location.get("Stop")
+            rank = location.get("Rank")
             if stop != None:
+                stop_name = stop.get("Name")
                 stop_id = stop.get("StopCode")
                 if visited_stops.get(stop_id) == None:
                     visited_stops[stop_id] = True
                     timed_stop = stop.get("IsTimePoint")
-                    stop_name = stop.get("Name")
                     route_data.append((stop_id,stop_name, lat, long, timed_stop))
-                route_bridge.append((bridge_key,route_id, stop_id))
+                route_bridge.append((bridge_key,route_id, stop_id,rank))
             else:
                 timed_stop = False
                 stop_name = 'Way Point'
                 stop_id = location.get("Key")
                 route_data.append((stop_id,stop_name, lat, long, timed_stop))
-                route_bridge.append((bridge_key, route_id, stop_id))
-            bridge_key += 1
+                route_bridge.append((bridge_key, route_id, stop_id,rank))
     return (route_data, route_bridge)
+
+def get_static_timetable(route_ids):
+    static_times = []
+    for route_id in route_ids:
+        r = requests.get('https://transport.tamu.edu/BusRoutesFeed/api/Route/'+str(route_id)+'/TimeTable', auth=('user', 'pass'))
+        for group in r.json():
+            for key, time in group.items():
+                if key == ' ' or time == "No Service Is Scheduled For This Date":
+                    continue
+                key = key[:36]
+                static_times.append((time, str(key)))
+    return static_times
+
 
 
 
@@ -47,6 +60,8 @@ def main():
                    'RELLIS', 'Nights & Weekends', 'RELLIS Circulator', 'Thursday & Friday']
     route_pattern, route_bridge = get_route_pattern(route_ids)
 
+    static_times = get_static_timetable(route_ids)
+    
     # establish db connection
     try:
         conn = ps.connect("dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
@@ -75,12 +90,14 @@ def main():
     cur.executemany(sql, route_pattern)
     
     # Update Bridge Table
-    bridge_sql = '''INSERT INTO public.route_stop_bridge (key, route_id, stop_id) VALUES (%s,%s,%s)'''
+    bridge_sql = '''INSERT INTO public.route_stop_bridge (key, route_id, stop_id, rank) VALUES (%s,%s,%s,%s)'''
     cur.executemany(bridge_sql, route_bridge)
 
-
+    # Update Static Time Table Values in Bridge Table
+    static_time_sql = """Update public.route_stop_bridge set static_time = %s where key = %s"""
+    cur.executemany(static_time_sql, static_times)
     conn.commit()
     conn.close()
-
+    
 # Run Program
 main()
