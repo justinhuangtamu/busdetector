@@ -20,5 +20,9 @@
 ## Installations for node-postgres backend API
 -npm i express pg
 
--- Run node API with 'node index.js' called from within the node-postgres directory  
+-- Run node API with 'node index.js' called from within the node-postgres directory 
+
+## installation for news
+yarn add react-native-webview
+
 
