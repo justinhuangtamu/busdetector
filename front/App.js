@@ -3,7 +3,7 @@ import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, ScrollView, Image } from 'react-native';
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -37,17 +37,26 @@ function Announcments() {
   );
 }
 
+// function LogoTitle() {
+//   return (
+//     <Image
+//       style={{ width: 50, height: 50 }}
+//       source={require('./assets/settings.png')}
+//     />
+//   );
+// }
+
 
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   //const scheme = useColorScheme();
+  
   return (
     // all app code has to go within the <NavigationContainer> tag
    
   <NavigationContainer>{
-
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
@@ -61,7 +70,11 @@ export default function App() {
         >
           <Stack.Screen name="Home"
             component={Map}
-            options={{ title: 'Map' }}
+            options={({navigation}) => ({
+              // headerTitle: () => <Text>Map</Text>,
+              headerRight: () => <Button title="Settings" onPress={() => navigation.navigate('Settings')} />,
+              headerLeft: () => <Button title="Announcments" onPress={() => navigation.navigate('Announcments')} />,
+            })}
           />
           {/* <Stack.Screen name="RouteSelection" component={RouteSelection} /> */}
           <Stack.Screen name="Settings" component={Settings} />

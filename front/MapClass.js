@@ -4,7 +4,7 @@ import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 
 import {sort_times, create_table} from './table.js';
 import { useNavigation, CommonActions } from '@react-navigation/native';
@@ -127,14 +127,14 @@ function create_Map(navigation, waypoints) {
                 title="Go to Route Selection"
                 onPress={() => navigation.navigate('RouteSelection')}
             /> */}
-      <Button
+      {/* <Button
         title="Go to Settings"
         onPress={() => navigation.navigate('Settings')}
       />
       <Button
         title="Go to Announcments"
         onPress={() => navigation.navigate('Announcments')}
-      />
+      /> */}
 
       {
         // Google API block
@@ -202,7 +202,9 @@ export const styles = StyleSheet.create({
     },
     map: {
         width: '98%',
-        height: '75%',
+        height: '90%',
+        marginBottom: 100
+        ,
     },
     link: {
         flex: 1,
