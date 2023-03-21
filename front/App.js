@@ -3,15 +3,16 @@ import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+
 import { Map, getRoutesFromAPI, styles, RouteSelection, test} from './MapClass.js';
 
 //import {} from './table.js';
-//import news from "./temp/announcements.json";
+import {get_Announcements, theme} from "./temp/News.js";
 
 
 
@@ -27,9 +28,10 @@ function Settings() {
 
 
 function Announcments() {
+  var array = get_Announcements();
   return (
     <ScrollView style={theme.scroll}>
-      {get_Announcements()}
+      {array}  
     </ScrollView>
     
   );
@@ -73,18 +75,8 @@ export default function App() {
 
 
 
-// const theme = StyleSheet.create({
-//   light:{
-//     theme:'light',
-//     color:'black',
-//     background: 'white',
-//   },
-//   dark: {
-//     theme: 'dark',
-//     color: 'white',
-//     background: 'black',
-//   }
-// });
+
+
 
 // have to add dependencies for dark mode/ light mode
 

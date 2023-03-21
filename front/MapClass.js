@@ -85,7 +85,7 @@ export function Map({ navigation, route }) {
 async function CallDatabase(query) {
     try {
       // this still has to be set to the IP using ipConfig
-        const fetchString = "http://192.168.12.146:3001/" + query;
+        const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
         const response = await fetch(fetchString,
             {
                 method: 'GET',
@@ -167,15 +167,6 @@ export function RouteSelection() {
     // Navigate to the Map screen and pass the selected waypoints as a parameter
     navigation.navigate('Home', { waypoints });
       
-        console.log(queryString);
-        CallDatabase(queryString);
-
-
-        const tableString = "select stop_name, static_time from route_stop_bridge " +
-            "inner join stops on route_stop_bridge.stop_id = stops.stop_id " +
-            "where(timed_stop and route_id = '" + id + "'); ";
-        console.log(tableString);
-        CallDatabase(tableString);
            
     };
 
@@ -222,7 +213,15 @@ export function RouteSelection() {
 
 
 
+export function table_view() {
 
+    return (
+        <View>
+            {sort_times(times)}
+        </View>
+    );
+
+}
 
 
 
