@@ -38,8 +38,8 @@ function get_Announcements2(news) {
     hold = news["Items"];
     var announcements = [];
     announcements.push(<View key={0} style={theme.title}></View>);
-
-    for (var i = 0; i < 1; i++) {
+    console.log(hold);
+    for (var i = 0; i < hold.length; i++) {
         var summary = hold[i]["Summary"]["Text"];
 
         
@@ -49,6 +49,9 @@ function get_Announcements2(news) {
                 <Text >{fix_summary(summary)}</Text>
             </View>
         )
+    }
+    if (hold.length == 0) {
+        announcements.push(<View ><Text style={theme.title}>No Current Announcements</Text></View>)
     }
     return announcements;
 }
@@ -110,10 +113,10 @@ export function Trial() {
         };
         newsArr().then(setNews);
     }, []);
-    // console.log("News: " + news);
+    console.log(news);
     if (news.length == 0) {
         console.log("News is Undefined");
-        return <View><Text>None</Text></View>;
+        return <View style={theme.title}><Text >No Current Announcements</Text></View>;
        
     } else {
         //console.log(news);

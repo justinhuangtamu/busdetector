@@ -86,7 +86,7 @@ export function Map({ navigation, route }) {
   }
     return (
       <Swiper horizontal={false} loop={false} showsButtons={false}>
-        {create_Map(waypoints)}
+        {create_Map(navigation, waypoints)}
         <SafeAreaView style={styles.item}>
           <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
           <FlatList
@@ -119,8 +119,8 @@ export function Map({ navigation, route }) {
     );
 }
 
-function create_Map(waypoints) {
-
+function create_Map(navigation, waypoints) {
+  var navigation = useNavigation();
   return (
     <View style={styles.container}>
       {/* <Button
