@@ -8,9 +8,10 @@ import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacit
 
 import {sort_times, create_table} from './table.js';
 import { useNavigation } from '@react-navigation/native';
-import times from './route1.json';
+// import * as turf from '@turf/turf'; // import Turf.js library
 
-import waypoints2 from './route1.json';
+// import * as turf from '@turf/turf'; // import Turf.js library
+
 import buses from "./buses.json";
 import on_bus_buttons from "./bus-on-campus-button.json";
 import off_bus_buttons from "./bus-off-campus-buttons.json";
@@ -25,19 +26,7 @@ const MSC = {
 var queryString = "";
 
 export function Map({ navigation, route }) {
-  // const [waypoints, setWaypoints] = useState([]);
   const { waypoints } = route.params || [];
-
-  // useEffect(() => {
-  //   // Call your function to get the waypoints from the database and update the state variable
-  //   async function fetchData() {
-  //     console.log(queryString);
-  //     const json = await CallDatabase(queryString);
-  //     setWaypoints(json);
-  //   }
-
-  //   fetchData();
-  // }, []);
 
     return (
         <View style={styles.container}>
@@ -86,6 +75,8 @@ async function CallDatabase(query) {
     try {
       // this still has to be set to the IP using ipConfig
         const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
+      // this still has to be set to the IP using ipConfig10.228.101.52
+      const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
         const response = await fetch(fetchString,
             {
                 method: 'GET',
@@ -158,7 +149,7 @@ export function RouteSelection() {
     // gets the route number that is selected and processes it
     handlePress = async (id) => {
       setSelectedId(id);
-      queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "';";
+      queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "' order by route_stop_bridge.rank asc;";
       
       console.log(queryString);
       // CallDatabase(queryString);
@@ -217,7 +208,7 @@ export function table_view() {
 
     return (
         <View>
-            {sort_times(times)}
+            {sort_times()}
         </View>
     );
 
