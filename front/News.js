@@ -10,7 +10,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 
 //import {AsyncStorage} from 
-import news_ex from './temp/announcements.json';
+//import news_ex from './temp/announcements.json';
 
 
 export const theme = StyleSheet.create({
