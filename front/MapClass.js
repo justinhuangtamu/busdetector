@@ -1,7 +1,7 @@
 
 import React, {useState, useEffect} from 'react';
 import MapView from 'react-native-maps';
-import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
+import { PROVIDER_GOOGLE, Marker, Polyline, Callout } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, Modal } from 'react-native';
@@ -47,16 +47,20 @@ export function Map({ navigation, route }) {
   var bus_ids = "01";
   var static_times;
   var eta_times;
+  var markers;
   if (route.params === undefined) {
     waypoints = route.params || [];
     bus_ids = "01";
     static_times = [];
+    markers = [];
     eta_times = [];
   } else {
     waypoints  = route.params["waypoint"] || [];
     bus_ids = route.params["bus_id"] || "";
+    markers = route.params["stops"] || [];
     static_times = route.params["static_time"] || [];
     eta_times = [];
+
   }
   
   // gets the route number that is selected and processes it
@@ -70,17 +74,25 @@ export function Map({ navigation, route }) {
     const waypoint = await CallDatabase(queryString);
     const bus_id = id
 
+
     //Querry for static tables
     queryString = "Select static_time, stop_name, key from static_table where route_id='" + id + "' order by (key, index) asc";
     const static_time = await CallDatabase(queryString);
     //console.log(static_time);  
-
+    
+    // get the stops from the database
+    queryString = "select distinct stop_name, timed_stop, longitude, latitude from route_stop_bridge inner join stops on route_stop_bridge.stop_id = stops.stop_id where (stop_name != 'Way Point' and route_id='" + id + "');";
+    const stops = await CallDatabase(queryString);
+    // console.log(stops)
+    
     
     // Navigate to the Map screen and pass the selected waypoints as a parameter
     navigation.dispatch(
       CommonActions.navigate({
         name: 'Home',
-        params: {waypoint, bus_id, static_time}, 
+
+        params: {waypoint, bus_id, stops, static_time}, 
+
       })
     )
 
@@ -108,9 +120,11 @@ export function Map({ navigation, route }) {
           loop={false} 
           showsButtons={false}
         >
-          {create_Map(navigation, waypoints, bus_ids)}
+
+          {create_Map(navigation, waypoints, bus_ids, markers)}
           <ScrollView horizontal={false}>
             <SafeAreaView style={styles.item}>
+
             <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
             <FlatList
               horizontal={true}
@@ -146,8 +160,11 @@ export function Map({ navigation, route }) {
     );
 }
 
-function create_Map(navigation, waypoints, bus_id) {
+function create_Map(navigation, waypoints, bus_id, markers) {
   var navigation = useNavigation();
+  var id = 0;
+  // console.log("in create map")
+  // console.log(markers)
   return (
     <View style={styles.container}>
       {/* <Button
@@ -169,12 +186,41 @@ function create_Map(navigation, waypoints, bus_id) {
           style={styles.map}
           initialRegion={MSC}
           provider={PROVIDER_GOOGLE}
-        //showsMyLocationButton={true}
+        // showsMyLocationButton={true}
         >
-          <Marker
+          {/* <Marker
             coordinate={MSC}
             pinColor="grey"
-          />
+            //title="MSC"
+          > 
+            <Callout>
+              <Text>{'MSC'}</Text>
+            </Callout>
+          </Marker> */}
+          {markers.map(marker => (
+            <Marker
+              key={id++}
+              
+            //   {var current_coordinate = {latitude: marker.latitude,
+            //   longitude: marker.longitude
+            // }}
+              coordinate={
+                {latitude: marker.latitude,
+                longitude: marker.longitude,
+                }
+              }
+              pinColor={marker.timed_stop ? buses[bus_id]["color"] : buses[bus_id]["color"]}
+              
+            >
+              <Callout>
+                <Text>{marker.stop_name}</Text>
+              </Callout>
+              {marker.timed_stop ? <Image source={require('./assets/clock.png')} style={{height: 40, width: 40}}/> : <Image source={require('./assets/bus-stop.png')} style={{height: 35, width: 35}}/>}
+              {/* {!marker.timed_stop && } */}
+              {/* { ShadowColor, overlayColor, tintColor (changes the color of the picture), borderColor,} */}
+              {/* <a href="https://www.flaticon.com/free-icons/bus-stop" title="bus stop icons">Bus stop icons created by Freepik - Flaticon</a> */}
+            </Marker>
+          ))}
           <Polyline
             //key={polyline.id}
             coordinates={waypoints}
@@ -232,8 +278,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     map: {
-        width: '98%',
-        height: '90%',
+        width: '100%',
+        height: '87%',
         marginBottom: 100
         ,
     },
