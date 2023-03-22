@@ -34,7 +34,6 @@ def update_db(json_, k):
         #print(query)
         cur.execute(query)
     conn.commit()
-    #output = cur.fetchall()
     print("db updated")
     conn.close()
 
@@ -58,7 +57,6 @@ def get_eta(bus_list, point_list):
             'origins': o,
             'destinations': d
         }
-        #a = url + "origins="+start_point+"&destinations="+end_point+"&key="+key
         #print(d)
         r = requests.get(url,params)
         #print(r.text)
@@ -93,15 +91,28 @@ def get_bus_location(route_id):
     output = cur.fetchall()
     #print(output)
     return output
-
+def clear_eta(route_id):
+    # establish db connection
+    try:
+        conn = ps.connect(
+            "dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
+    except:
+        print("Error connecting to the database!")
+        exit()
+    cur = conn.cursor()
+    query = 'update route_stop_bridge set eta_time = \'99999\' from route_stop_bridge B inner join stops S on B.stop_id = S.stop_id where (B.route_id = \'' + str(route_id) + '\') and (S.stop_name != \'Way Point\');'
+    cur.execute(query)
+    conn.commit()
+    print("eta clear")
+    conn.close()
 def update_etas():
-#get_eta(s,d)
     route_ids = ['01']
     #route_ids = ['01', '01-04','03','03-05','04','05','06','07','08','12','15','22','26','27','31','34','35','36','40','47','47-48','48', 'N15']
-    #update_db("a", route_ids)
     for id in route_ids:
         #print(id)
         points = get_points(id)
         bus_points = get_bus_location(id)
+        clear_eta(id)
         get_eta(bus_points, points)
+
 
