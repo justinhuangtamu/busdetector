@@ -51,7 +51,7 @@ function get_Announcements2(news) {
         )
     }
     if (hold.length == 0) {
-        announcements.push(<View ><Text style={theme.title}>No Current Announcements</Text></View>)
+        announcements.push(<View key={1}><Text style={theme.title}>No Current Announcements</Text></View>)
     }
     return announcements;
 }
