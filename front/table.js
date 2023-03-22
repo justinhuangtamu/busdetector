@@ -45,7 +45,7 @@ const ToggleButton = (unfiltered, stops, filtered) => {
                 {<Text style={table_style.button}>{toggleState ? 'Hide Expired Times' : 'Show Expired Times'}</Text>}
             </TouchableOpacity>
             <ScrollView horizontal={true} >
-                
+                <ScrollView horizontal={false}>
                 <Table borderStyle={{borderWidth: 1, borderColor: '#500000'}}>
                     <Row 
                         data={headers} 
@@ -53,6 +53,7 @@ const ToggleButton = (unfiltered, stops, filtered) => {
                         style={table_style.head}
                         textStyle={table_style.headText} 
                     />
+                    
                     <TableWrapper>
                             {/* <Col
                                 data={stops}
@@ -69,6 +70,7 @@ const ToggleButton = (unfiltered, stops, filtered) => {
                     </TableWrapper>
                     
                 </Table>
+                </ScrollView>
             </ScrollView>
         </View>
     );

@@ -119,11 +119,12 @@ export function Map({ navigation, route }) {
           horizontal={false} 
           loop={false} 
           showsButtons={false}
+        
         >
 
           {create_Map(navigation, waypoints, bus_ids, markers)}
-          <ScrollView horizontal={false}>
-            <SafeAreaView style={styles.item}>
+        <View>
+          <SafeAreaView style={styles.item}>
 
             <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
             <FlatList
@@ -154,7 +155,7 @@ export function Map({ navigation, route }) {
             }
             
           </SafeAreaView> 
-          </ScrollView>
+          </View>
         </Swiper> 
     );
 }
