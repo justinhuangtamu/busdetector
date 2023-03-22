@@ -4,7 +4,7 @@ import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline, Callout } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, Modal } from 'react-native';
 
 import {sort_times, create_table} from './table.js';
 import { useNavigation, CommonActions } from '@react-navigation/native';
@@ -40,19 +40,27 @@ export function Map({ navigation, route }) {
   //const { waypoints } = route.params || []; //route.params
   
   const [selectedId, setSelectedId] = useState();
-  //const [waypoint, setWaypoint] = useState([]);
-  // console.log(route.params);
+  const [dynamic, SetDynamic] = useState(true);
+   
+  
   var waypoints;
   var bus_ids = "01";
+  var static_times;
+  var eta_times;
   var markers;
   if (route.params === undefined) {
     waypoints = route.params || [];
     bus_ids = "01";
+    static_times = [];
     markers = [];
+    eta_times = [];
   } else {
     waypoints  = route.params["waypoint"] || [];
     bus_ids = route.params["bus_id"] || "";
     markers = route.params["stops"] || [];
+    static_times = route.params["static_time"] || [];
+    eta_times = [];
+
   }
   
   // gets the route number that is selected and processes it
@@ -65,15 +73,26 @@ export function Map({ navigation, route }) {
     // CallDatabase(queryString);
     const waypoint = await CallDatabase(queryString);
     const bus_id = id
+
+
+    //Querry for static tables
+    queryString = "Select static_time, stop_name, key from static_table where route_id='" + id + "' order by (key, index) asc";
+    const static_time = await CallDatabase(queryString);
+    //console.log(static_time);  
+    
     // get the stops from the database
     queryString = "select distinct stop_name, timed_stop, longitude, latitude from route_stop_bridge inner join stops on route_stop_bridge.stop_id = stops.stop_id where (stop_name != 'Way Point' and route_id='" + id + "');";
     const stops = await CallDatabase(queryString);
     // console.log(stops)
+    
+    
     // Navigate to the Map screen and pass the selected waypoints as a parameter
     navigation.dispatch(
       CommonActions.navigate({
         name: 'Home',
-        params: {waypoint, bus_id, stops}, 
+
+        params: {waypoint, bus_id, stops, static_time}, 
+
       })
     )
 
@@ -101,8 +120,11 @@ export function Map({ navigation, route }) {
           loop={false} 
           showsButtons={false}
         >
+
           {create_Map(navigation, waypoints, bus_ids, markers)}
-          <SafeAreaView style={styles.item}>
+          <ScrollView horizontal={false}>
+            <SafeAreaView style={styles.item}>
+
             <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
             <FlatList
               horizontal={true}
@@ -119,17 +141,21 @@ export function Map({ navigation, route }) {
               keyExtractor={item => item.id}
               extraData={selectedId}
             />
-            {/* <Button
-              title="Return to Map"
-              onPress={() => navigation.navigate('Home', { waypoint })}
-            /> 
             
-            
-            */}
-
-            {//table_view()
+            <TouchableWithoutFeedback >
+                <Text style={styles.buttonTable}   onPress={() => SetDynamic(!dynamic)}   >
+                {dynamic ? 'Show ETA Times' : 'Show Static Times'}
+                </Text> 
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Information')}>
+              <Image source={require('./assets/question.png')} style={styles.question} />
+            </TouchableWithoutFeedback>
+            {table_view(static_times, eta_times, dynamic)
             }
+            
+            
           </SafeAreaView> 
+          </ScrollView>
         </Swiper> 
     );
 }
@@ -278,21 +304,48 @@ export const styles = StyleSheet.create({
         marginBottom: 20,
         marginTop: 20,
       },
+      buttonTable: {
+        position: 'absolute',
+        zIndex: 2,
+        backgroundColor: '#E7E6E1', 
+        color: '#500000', 
+        fontWeight: 'bold',
+        width: 155, 
+        height: 43,
+        padding: 12,
+        top: 305,
+        left: 179,
+        borderWidth: 1,
+        
+      },
+      question: {
+        position:'absolute',
+        zIndex: 1,
+        backgroundColor: '#E7E6E1', 
+        top: 305,
+        left: 334,
+        width: 43,
+        height: 43,
+        borderWidth: 1,
+        
+      }
 });
 
-export function table_view() {
-
+export function table_view(time_array_static, time_array_eta, dynamic) {
+    
+  if (!(time_array_static === undefined || time_array_eta === undefined)) { // 
     return (
-        <View>
-            {sort_times()}
-        </View>
+      <View>
+        {sort_times(time_array_static, time_array_eta, dynamic)
+        }
+      </View>
     );
+  } else {
+    return <View></View>;
+  }
+    
 
 }
 
 
 
-
-
-
-  

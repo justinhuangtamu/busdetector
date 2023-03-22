@@ -12,7 +12,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Map, getRoutesFromAPI, styles, RouteSelection, test} from './MapClass.js';
 
 //import {} from './table.js';
-import {get_Announcements, theme} from "./News.js";
+import {get_Announcements, theme, Information} from "./News.js";
 
 
 
@@ -76,7 +76,7 @@ export default function App() {
               headerLeft: () => <Button title="Announcments" onPress={() => navigation.navigate('Announcments')} />,
             })}
           />
-          {/* <Stack.Screen name="RouteSelection" component={RouteSelection} /> */}
+          <Stack.Screen name="Information" component={Information} /> 
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="Announcments" component={Announcments} />
         </Stack.Navigator>

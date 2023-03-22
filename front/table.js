@@ -29,12 +29,12 @@ const ToggleButton = (unfiltered, stops, filtered) => {
 
     const handleToggle = () => {
         setToggleState(!toggleState);
-        console.log("Here: " + toggleState);
+        console.log("Toggle State of Hide table: " + toggleState);
         
     };
     var headers = ['Location ', "Timed Stops", ''];
 
-    console.log("IGNORE:  Warning: Failed prop type: Invalid prop `textStyle` ... ")
+    console.log("\x1B[32mIGNORE:  Warning: Failed prop type: Invalid prop `textStyle` ... \x1B[0m");
     return (
         // TERMINAL WILL DISPLAY
         //                      Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.
@@ -74,48 +74,28 @@ const ToggleButton = (unfiltered, stops, filtered) => {
     );
 };
 
-
-
-
-export function sort_times(times) {
-    var stops = ['Commons', 'Asbury Water Tower', 'Reed Arena', 'MSC', 'Commons2'];
+export function sort_times(time_array_static, time_array_eta, dynamic) {
+    var stops = ['Commons', 'Asbury Water Tower', 'Reed Arena', 'MSC', 'Commons'];
     var values = [];
     var filtered = [];
-    // console.log("sorting times");
-
-    for (var i = 0; i < times.length; i++) {
-        for (var j = 0; j < stops.length; j++) {
-
-            if (i == 0) { // set i < 0 to disable this portion
-                console.log(stops[j]);
-                
-                values.push([stops[j]]); // add stop names to table
-            }
-            if (times[i][stops[j]] == null) {
-                values[j].push("-- -- --");
-            } else {
-                values[j].push(times[i][stops[j]]);
-            }
+    
+    try {
+        if (dynamic) {
+        //     values = sort_eta(time_array_eta);
+            values = sort_static(time_array_static);
+            stops = populate_stops(values);
+            filtered = filter_array(values, stops);
+        } else {
+            values = sort_static(time_array_static);
+            stops = populate_stops(values);
+            filtered = filter_array(values, stops);
             
         }
-        
+        return create_table(values, stops, filtered);
+    } catch {
+        return;
     }
-    // console.log("Now filtering");
-    var filter_hold = [];
-    var longest = 0;
-    for (var i = 0; i < values.length; i++) {
-        var hold = filterTimesBeforeNow(values[i]);
-        if (hold.length >= longest) {
-            longest = hold.length;
-        }
-        hold.unshift(stops[i]);
-        filter_hold.push(hold);
-       
-        
-    }
-    console.log(longest);
-    filtered = makeSubarraysSameLength(filter_hold, longest + 1, "-- -- --");
-    return create_table(values, stops, filtered);
+    
 }
 
 
@@ -125,12 +105,10 @@ export function create_table(unfiltered, stops, filtered) {
     )
 }
 
-
-
-
 //Filter times
 function filterTimesBeforeNow(timesArray) {
-    // console.log("filtering times");
+    
+    
     const now = new Date(); // get current time
 
     // filter out times before current time
@@ -169,7 +147,48 @@ function makeSubarraysSameLength(arr, length, fillValue) {
 }
 
 
+function filter_array(values, stops) {
+    var filter_hold = [];
+    var longest = 0;
+    for (var i = 0; i < values.length; i++) {
+        var hold = filterTimesBeforeNow(values[i]);
+        if (hold.length >= longest) {
+            longest = hold.length;
+        }
+        hold.unshift(stops[i]);
+        filter_hold.push(hold);
+    }
+    return filtered = makeSubarraysSameLength(filter_hold, longest + 1, "-- -- --");
+}
+function populate_stops(values) {
+    var stops = [];
+    for (var i = 0; i < values.length; i++) {
+        stops.push(values[i][0]);
+    }
+    return stops; 
+}
 
+function sort_static(times) {
+    var values = [];
+    var curr_row = [];
+    var keys = "";
+    for (var i = 0; i < times.length; i++) {
+        if(times[i]["key"] != keys) {
+            if (i != 0) {
+                values.push(curr_row);
+            }
+            keys = times[i]["key"];
+            curr_row = [times[i]["stop_name"]];
+        }
+        var time = times[i]["static_time"];
+        if (time == null) {
+            curr_row.push("-- -- --");
+        } else {
+            curr_row.push(times[i]["static_time"]);
+        }        
+    }
+    return values;
+}
 
 
 const table_style = StyleSheet.create({
@@ -178,32 +197,46 @@ const table_style = StyleSheet.create({
     head: { height: 44, backgroundColor: '#500' },
     headText: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'white' },
     text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
-    button: {backgroundColor: '#E7E6E1',  color: '#500000', fontWeight: 'bold',  width: 175, padding: 12,},
+    button: {backgroundColor: '#E7E6E1',  color: '#500000', fontWeight: 'bold',  width: 179, padding: 12, zIndex: 2, borderWidth: 1,},
 });
 
 
-
-
 /*
-
-
-export function table_view() {
-    
-    return (
-    <View>
-        {sort_times(times)}
-    </View>
-    );
-    
-}
-
-
 
 const tableString = "select stop_name, static_time from route_stop_bridge " +
             "inner join stops on route_stop_bridge.stop_id = stops.stop_id " +
             "where(timed_stop and route_id = '" + id + "'); ";
         console.log(tableString);
         CallDatabase(tableString);
+
+
+
+
+
+
+
+
+
+
+for (var i = 0; i < times.length; i++) {
+        for (var j = 0; j < stops.length; j++) {
+
+            if (i == 0) { // set i < 0 to disable this portion
+                console.log(stops[j]);
+                
+                values.push([stops[j]]); // add stop names to table
+            }
+            if (times[i][stops[j]] == null) {
+                values[j].push("-- -- --");
+            } else {
+                values[j].push(times[i][stops[j]]);
+            }
+            
+        }
+        
+    }
+
+
 
 
 */
