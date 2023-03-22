@@ -4,10 +4,11 @@ import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 import {sort_times, create_table} from './table.js';
 import { useNavigation, CommonActions } from '@react-navigation/native';
+// import { ScrollView } from 'react-native-gesture-handler'
 // import * as turf from '@turf/turf'; // import Turf.js library
 import Swiper from 'react-native-swiper';
 // import * as turf from '@turf/turf'; // import Turf.js library
@@ -42,10 +43,13 @@ export function Map({ navigation, route }) {
   //const [waypoint, setWaypoint] = useState([]);
   console.log(route.params);
   var waypoints;
+  var bus_ids = "01";
   if (route.params === undefined) {
     waypoints = route.params || [];
+    bus_ids = "01";
   } else {
     waypoints  = route.params["waypoint"] || [];
+    bus_ids = route.params["bus_id"] || "";
   }
   
   // gets the route number that is selected and processes it
@@ -57,12 +61,13 @@ export function Map({ navigation, route }) {
     console.log(queryString);
     // CallDatabase(queryString);
     const waypoint = await CallDatabase(queryString);
+    const bus_id = id
 
     // Navigate to the Map screen and pass the selected waypoints as a parameter
     navigation.dispatch(
       CommonActions.navigate({
         name: 'Home',
-        params: {waypoint},
+        params: {waypoint, bus_id}, 
       })
     )
 
@@ -85,41 +90,45 @@ export function Map({ navigation, route }) {
     
   }
     return (
-      <Swiper horizontal={false} loop={false} showsButtons={false}>
-        {create_Map(navigation, waypoints)}
-        <SafeAreaView style={styles.item}>
-          <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
-          <FlatList
-            horizontal={true}
-            data={on_bus_buttons}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            extraData={selectedId}
-          />
-          <Text style={[styles.buttonTitle]}>Off Campus Routes</Text>
-          <FlatList
-            horizontal={true}
-            data={off_bus_buttons}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            extraData={selectedId}
-          />
-          {/* <Button
-            title="Return to Map"
-            onPress={() => navigation.navigate('Home', { waypoint })}
-          /> 
-          
-          
-          */}
+        <Swiper 
+          horizontal={false} 
+          loop={false} 
+          showsButtons={false}
+        >
+          {create_Map(navigation, waypoints, bus_ids)}
+          <SafeAreaView style={styles.item}>
+            <Text style={[styles.buttonTitle]}>On Campus Routes</Text>
+            <FlatList
+              horizontal={true}
+              data={on_bus_buttons}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+              extraData={selectedId}
+            />
+            <Text style={[styles.buttonTitle]}>Off Campus Routes</Text>
+            <FlatList
+              horizontal={true}
+              data={off_bus_buttons}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+              extraData={selectedId}
+            />
+            {/* <Button
+              title="Return to Map"
+              onPress={() => navigation.navigate('Home', { waypoint })}
+            /> 
+            
+            
+            */}
 
-          {//table_view()
-          }
-        </SafeAreaView> 
-      </Swiper>
+            {//table_view()
+            }
+          </SafeAreaView> 
+        </Swiper> 
     );
 }
 
-function create_Map(navigation, waypoints) {
+function create_Map(navigation, waypoints, bus_id) {
   var navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -127,14 +136,14 @@ function create_Map(navigation, waypoints) {
                 title="Go to Route Selection"
                 onPress={() => navigation.navigate('RouteSelection')}
             /> */}
-      <Button
+      {/* <Button
         title="Go to Settings"
         onPress={() => navigation.navigate('Settings')}
       />
       <Button
         title="Go to Announcments"
         onPress={() => navigation.navigate('Announcments')}
-      />
+      /> */}
 
       {
         // Google API block
@@ -151,14 +160,18 @@ function create_Map(navigation, waypoints) {
           <Polyline
             //key={polyline.id}
             coordinates={waypoints}
-
-            strokeColor={buses["01"]["color"]}
+            
+            strokeColor={buses[bus_id]["color"]}
             strokeWidth={6} />
 
         </MapView>
       }
       {/* <Text>Open up App.js to start working on your app!</Text> */}
       <StatusBar style="auto" />
+      {/* <Image
+      style={{ width: 50, height: 50 }}
+      source={require('./assets/settings.png')}
+    /> */}
     </View>
   )
   
@@ -168,9 +181,7 @@ function create_Map(navigation, waypoints) {
 // API connection function
 async function CallDatabase(query) {
     try {
-      // this still has to be set to the IP using ipConfig
-        const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
-
+      const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
         const response = await fetch(fetchString,
             {
                 method: 'GET',
@@ -204,7 +215,9 @@ export const styles = StyleSheet.create({
     },
     map: {
         width: '98%',
-        height: '75%',
+        height: '90%',
+        marginBottom: 100
+        ,
     },
     link: {
         flex: 1,
