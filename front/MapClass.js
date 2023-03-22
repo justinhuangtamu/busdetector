@@ -153,7 +153,6 @@ export function Map({ navigation, route }) {
             </TouchableWithoutFeedback>
             {table_view(static_times, eta_times, dynamic)
             }
-            <Text style={{ padding: 250 }}></Text>
             
           </SafeAreaView> 
           </View>
@@ -216,7 +215,7 @@ function create_Map(navigation, waypoints, bus_id, markers) {
               <Callout>
                 <Text>{marker.stop_name}</Text>
               </Callout>
-              {marker.timed_stop ? <Image source={require('./assets/clock.png')} style={{height: 40, width: 40}}/> : <Image source={require('./assets/bus-stop.png')} style={{height: 35, width: 35}}/>}
+              {marker.timed_stop ? <Image source={require('./assets/fast-time.png')} style={{height: 35, width: 35}}/> : <Image source={require('./assets/bus-stop.png')} style={{height: 35, width: 35}}/>}
               {/* {!marker.timed_stop && } */}
               {/* { ShadowColor, overlayColor, tintColor (changes the color of the picture), borderColor,} */}
               {/* <a href="https://www.flaticon.com/free-icons/bus-stop" title="bus stop icons">Bus stop icons created by Freepik - Flaticon</a> */}
