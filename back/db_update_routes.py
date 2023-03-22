@@ -1,3 +1,11 @@
+'''
+CSCE 482-933
+BusDetector
+
+Script runs once every night at midnight approximately
+Updates route patterns and scheduled timetable for the day
+'''
+
 import psycopg2 as ps  # PostgreSQL db library
 from pyproj import Transformer  # coordinate transformations
 import requests  # HTTP requests library

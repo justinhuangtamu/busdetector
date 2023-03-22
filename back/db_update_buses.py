@@ -1,3 +1,11 @@
+'''
+CSCE 482-933
+BusDetector
+
+Script runs very frequently (almost constantly)
+Updates bus location and passenger load and pushes to database
+'''
+
 import psycopg2 as ps  # PostgreSQL db library
 from pyproj import Transformer  # coordinate transformations
 import requests  # HTTP requests library

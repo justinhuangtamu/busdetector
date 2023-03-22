@@ -2,8 +2,7 @@
 CSCE 482-933
 BusDetector
 
-Script updates database periodically with new data pulled from TAMU Transit API
-Persistent connection, script is only executed once and remains running until user terminates
+!! TESTING PURPOSES ONLY !!
 '''
 
 import psycopg2 as ps  # PostgreSQL db library
