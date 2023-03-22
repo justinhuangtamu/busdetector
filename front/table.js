@@ -187,6 +187,7 @@ function sort_static(times) {
             curr_row.push(times[i]["static_time"]);
         }        
     }
+    values.push(curr_row);
     return values;
 }
 
