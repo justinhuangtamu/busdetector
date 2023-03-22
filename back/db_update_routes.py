@@ -28,6 +28,9 @@ def get_route_pattern(route_ids):
             lat, long = convert_coords(location.get("Longtitude"), location.get("Latitude"))
             stop = location.get("Stop")
             rank = location.get("Rank")
+            # Handles two erroneous points in the Bus API
+            if bridge_key == "29e91b30-4fe2-436c-bec0-dd8f02c56a07" or bridge_key == "2ffc52fe-c589-463e-b3a5-e6e9a55c8b22":
+                continue
             if stop != None:
                 stop_name = stop.get("Name")
                 stop_id = stop.get("StopCode")
@@ -45,31 +48,30 @@ def get_route_pattern(route_ids):
     return (route_data, route_bridge)
 
 def get_static_timetable(route_ids):
+    time_index = 1
     static_times = []
     for route_id in route_ids:
-        r = requests.get('https://transport.tamu.edu/BusRoutesFeed/api/Route/'+str(route_id)+'/TimeTable', auth=('user', 'pass'))
+        r = requests.get('https://transport.tamu.edu/BusRoutesFeed/api/Route/'+ str(route_id) +'/TimeTable', auth=('user', 'pass'))
         for group in r.json():
             for key, time in group.items():
                 if key == ' ' or time == "No Service Is Scheduled For This Date":
                     continue
+                name = key[36:]
                 key = key[:36]
-                static_times.append((time, str(key)))
+                static_times.append((time_index, key, str(route_id), name, time))
+                time_index += 1
     return static_times
 
 
+def update_routes():
 
-
-
-def main():
-
-    route_ids = ['01','01-04','03','03-05','04','05','06','07','08','12','15','22','26','27','31','34','35','36','40','47','47-48','48', 'N15']
+    route_ids = ["01","01-04","03","03-05","04","05","06","07","08","12","15","22","26","27","31","34","35","36","40","47","47-48","48", "N15"]
     route_names = ['Bonfire', 'Nights & Weekends', 'Yell Practice', 'Nights & Weekends', 'Gig Em', 'Bush School', '12th Man', 'Airport', 'Howdy', 
                    'Reveille', 'Old Army', 'Excel', 'Rudder', 'Ring Dance', 'E-Walk', 'Fish Camp', 'Hullabaloo', 'Matthew Gaines', 'Century Tree', 
                    'RELLIS', 'Nights & Weekends', 'RELLIS Circulator', 'Thursday & Friday']
     route_pattern, route_bridge = get_route_pattern(route_ids)
 
     static_times = get_static_timetable(route_ids)
-    
     # establish db connection
     try:
         conn = ps.connect("dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
@@ -82,9 +84,11 @@ def main():
 
     # Clear All Tables to meet constraints
     cur.execute('''DELETE FROM public.buses;''')
+    cur.execute('''DELETE FROM public.static_table;''')
     cur.execute('''DELETE FROM public.route_stop_bridge;''')
     cur.execute('''DELETE FROM public.routes;''')
     cur.execute('''DELETE FROM public.stops;''')
+    
 
     # Update Routes Tables
     for id, name in zip(route_ids, route_names):
@@ -102,10 +106,10 @@ def main():
     cur.executemany(bridge_sql, route_bridge)
 
     # Update Static Time Table Values in Bridge Table
-    static_time_sql = """Update public.route_stop_bridge set static_time = %s where key = %s"""
+    static_time_sql = '''INSERT INTO public.static_table (index, key, route_id, stop_name, static_time) VALUES (%s,%s,%s,%s,%s)'''
     cur.executemany(static_time_sql, static_times)
     conn.commit()
     conn.close()
     
 # Run Program
-main()
+update_routes()
