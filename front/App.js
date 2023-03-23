@@ -68,12 +68,16 @@ export default function App() {
             },
           }}
         >
-          <Stack.Screen name="Home"
+          <Stack.Screen 
+            name="Home"
             component={Map}
-            options={({navigation}) => ({
-              // headerTitle: () => <Text>Map</Text>,
-              headerRight: () => <Button title="Settings" onPress={() => navigation.navigate('Settings')} />,
-              headerLeft: () => <Button title="Announcments" onPress={() => navigation.navigate('Announcments')} />,
+            options={({ navigation }) => ({
+              headerTitle: () => <Text style={{color: 'white', fontSize: 20}}>Map</Text>,
+              headerRight: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('Announcments')}>
+                  <Image source={require('./assets/loudspeaker.png')} style={{height: 30, width: 30}}/>
+                </TouchableOpacity>
+              ),
             })}
           />
           <Stack.Screen name="Information" component={Information} /> 
