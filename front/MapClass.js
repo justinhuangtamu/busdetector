@@ -48,18 +48,21 @@ export function Map({ navigation, route }) {
   var static_times;
   var eta_times;
   var markers;
+  var buses_loc;
   if (route.params === undefined) {
     waypoints = route.params || [];
     bus_ids = "01";
     static_times = [];
     markers = [];
     eta_times = [];
+    buses_loc = [];
   } else {
     waypoints  = route.params["waypoint"] || [];
     bus_ids = route.params["bus_id"] || "";
     markers = route.params["stops"] || [];
     static_times = route.params["static_time"] || [];
     eta_times = [];
+    buses_loc = route.params["bus"] || [];
 
   }
   
@@ -84,6 +87,10 @@ export function Map({ navigation, route }) {
     queryString = "select distinct stop_name, timed_stop, longitude, latitude from route_stop_bridge inner join stops on route_stop_bridge.stop_id = stops.stop_id where (stop_name != 'Way Point' and route_id='" + id + "');";
     const stops = await CallDatabase(queryString);
     // console.log(stops)
+
+    //get the bus locations from the database
+    queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "';";
+    const bus = await CallDatabase(queryString);
     
     
     // Navigate to the Map screen and pass the selected waypoints as a parameter
@@ -91,7 +98,7 @@ export function Map({ navigation, route }) {
       CommonActions.navigate({
         name: 'Home',
 
-        params: {waypoint, bus_id, stops, static_time}, 
+        params: {waypoint, bus_id, stops, static_time, bus}, 
 
       })
     )
@@ -122,7 +129,7 @@ export function Map({ navigation, route }) {
         
         >
 
-          {create_Map(navigation, waypoints, bus_ids, markers)}
+          {create_Map(navigation, waypoints, bus_ids, markers, buses_loc)}
         <View>
           <SafeAreaView style={styles.item}>
 
@@ -160,9 +167,10 @@ export function Map({ navigation, route }) {
     );
 }
 
-function create_Map(navigation, waypoints, bus_id, markers) {
+function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
   var navigation = useNavigation();
   var id = 0;
+  var bus_key = 0;
   // console.log("in create map")
   // console.log(markers)
   return (
@@ -221,6 +229,30 @@ function create_Map(navigation, waypoints, bus_id, markers) {
               {/* <a href="https://www.flaticon.com/free-icons/bus-stop" title="bus stop icons">Bus stop icons created by Freepik - Flaticon</a> */}
             </Marker>
           ))}
+           {buses_loc.map(bus => (
+            <Marker
+              key={bus_key++}
+              
+            //   {var current_coordinate = {latitude: marker.latitude,
+            //   longitude: marker.longitude
+            // }}
+              coordinate={
+                {latitude: bus.latitude,
+                longitude: bus.longitude,
+                }
+              }
+              //pinColor={buses[bus_id]["color"]}
+              
+            >
+              <Callout>
+                <Text>{bus.occupancy}</Text>
+              </Callout>
+             <Image source={require('./assets/bus.png')} style={{height: 35, width: 35}}/> 
+              {/* {!marker.timed_stop && } */}
+              {/* { ShadowColor, overlayColor, tintColor (changes the color of the picture), borderColor,} */}
+              {/* <a href="https://www.flaticon.com/free-icons/bus-stop" title="bus stop icons">Bus stop icons created by Freepik - Flaticon</a> */}
+            </Marker>
+          ))} 
           <Polyline
             //key={polyline.id}
             coordinates={waypoints}
