@@ -10,7 +10,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 
 //import {AsyncStorage} from 
-//import news_ex from './temp/announcements.json';
+import news_ex from './temp/announcements.json';
 
 
 export const theme = StyleSheet.create({
@@ -45,7 +45,7 @@ export const theme = StyleSheet.create({
 
 function get_Announcements2(news) {
     
-    hold = news["Items"];
+    hold = news_ex["Items"];
     var announcements = [];
     announcements.push(<View key={0} style={theme.title}></View>);
     console.log(hold);

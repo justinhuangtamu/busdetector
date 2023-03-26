@@ -61,7 +61,7 @@ export function Map({ navigation, route }) {
     bus_ids = route.params["bus_id"] || "";
     markers = route.params["stops"] || [];
     static_times = route.params["static_time"] || [];
-    eta_times = [];
+    eta_times = route.params["dynamic"] || [];
     buses_loc = route.params["bus"] || [];
 
   }
@@ -78,10 +78,12 @@ export function Map({ navigation, route }) {
     const bus_id = id
 
 
-    //Querry for static tables
+    //Querry for static tables & dynamic tables
     queryString = "Select static_time, stop_name, key from static_table where route_id='" + id + "' order by (key, index) asc";
     const static_time = await CallDatabase(queryString);
-    //console.log(static_time);  
+
+    queryString = "Select eta_time, stop_name, stops.stop_id from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, rank) asc";
+    const dynamic = await CallDatabase(queryString); 
     
     // get the stops from the database
     queryString = "select distinct stop_name, timed_stop, longitude, latitude from route_stop_bridge inner join stops on route_stop_bridge.stop_id = stops.stop_id where (stop_name != 'Way Point' and route_id='" + id + "');";
@@ -98,7 +100,7 @@ export function Map({ navigation, route }) {
       CommonActions.navigate({
         name: 'Home',
 
-        params: {waypoint, bus_id, stops, static_time, bus}, 
+        params: {waypoint, bus_id, stops, static_time, bus, dynamic}, 
 
       })
     )
@@ -295,6 +297,7 @@ async function CallDatabase(query) {
             // waypoints = json;
         } else {
             console.log(response.status);
+            console.log(response);
         }
 
         return json;
