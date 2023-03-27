@@ -150,12 +150,18 @@ export function Information() {
                 Static VS ETA Times</Text>
             <Text style={theme.infoText }>
                 Static times are scheduled times provided by A&M. These are times that the bus will wait for at each stop. 
-                Some stops do not have a scheduled times.
+                Some stops do not have a scheduled time.
             </Text>
             <Text style={theme.infoText}>
                 ETA Times are create using google maps and are intended to be more accurate stop times. 
                 These times are calculated every minute to ensure they are updated. 
                 The ETA table also provides predicted times for stops along each bus route that are not scheduled stops. 
+            </Text>
+            <Text style={theme.title}>
+                Credits
+            </Text>
+            <Text style={theme.infoText}>
+            Icons made by Freepik from www.flaticon.com
             </Text>
         </View>
     );

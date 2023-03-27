@@ -177,18 +177,6 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
   // console.log(markers)
   return (
     <View style={styles.container}>
-      {/* <Button
-                title="Go to Route Selection"
-                onPress={() => navigation.navigate('RouteSelection')}
-            /> */}
-      {/* <Button
-        title="Go to Settings"
-        onPress={() => navigation.navigate('Settings')}
-      />
-      <Button
-        title="Go to Announcments"
-        onPress={() => navigation.navigate('Announcments')}
-      /> */}
 
       {
         // Google API block
@@ -198,28 +186,23 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           provider={PROVIDER_GOOGLE}
         // showsMyLocationButton={true}
         >
-          {/* <Marker
-            coordinate={MSC}
-            pinColor="grey"
-            //title="MSC"
-          > 
-            <Callout>
-              <Text>{'MSC'}</Text>
-            </Callout>
-          </Marker> */}
+
           {markers.map(marker => (
             <Marker
               key={id++}
 
+
               //   {var current_coordinate = {latitude: marker.latitude,
               //   longitude: marker.longitude
               // }}
+
               coordinate={
                 {
                   latitude: parseFloat(marker.latitude),
                   longitude: parseFloat(marker.longitude),
                 }
               }
+
               pinColor={marker.timed_stop ? buses[bus_id]["color"] : buses[bus_id]["color"]}
 
             >
@@ -256,6 +239,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
             ))
           }
           
+
           <Polyline
             //key={polyline.id}
             coordinates={waypoints}
@@ -265,7 +249,6 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
         </MapView>
       }
-      {/* <Text>Open up App.js to start working on your app!</Text> */}
       <StatusBar style="auto" />
       {/* <Image
       style={{ width: 50, height: 50 }}
