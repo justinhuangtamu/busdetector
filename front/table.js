@@ -49,10 +49,8 @@ const ToggleButton = (unfiltered, stops, filtered) => {
         //                      Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.
         // 
         // IGNORE THIS WARNING its an error in the <Rows>.js file but the table is building correctly
-        <View style={{ paddingTop: 30}}>
-            <TouchableOpacity onPress={handleToggle} >
-                {<Text style={table_style.button}>{toggleState ? 'Show expired times' : 'Remove expired times'}</Text>}
-            </TouchableOpacity>
+        <View style={{ top: -45}}>
+            
             <ScrollView horizontal={true} nestedScrollEnabled={true}>
                 <ScrollView horizontal={false} nestedscrollEnabled={true} style={table_style.scroll}>
                     <View style={table_style.viewContainer}>
@@ -255,14 +253,14 @@ function sort_dynamic(times) {
 
 
 const table_style = StyleSheet.create({
-    container: { padding: 4, paddingTop: 30, },
+    container: { padding: 2, paddingTop: 0, },
     rowSection: { height: 60, backgroundColor: '#E7E6E1' },
     head: { height: 44, backgroundColor: '#500' },
     headText: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'white' },
     text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
     button: {backgroundColor: '#E7E6E1',  color: '#500000', fontWeight: 'bold',  width: 179, padding: 12, zIndex: 2, borderWidth: 1,},
     viewContainer: {flexDirection:'row', flexWrap:'wrap', alignItems: 'flex-start', flex: 1},
-    scroll: {height: 370},
+    scroll: {height: 345},
 });
 
 

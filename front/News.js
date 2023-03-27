@@ -1,15 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import MapView from 'react-native-maps';
-import { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 
-import { WebView } from 'react-native-webview';
-import RenderHtml from 'react-native-render-html';
-
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
-
-//import {AsyncStorage} from 
+import { StyleSheet, Text, View, Image } from 'react-native';
 //import news_ex from './temp/announcements.json';
 
 
