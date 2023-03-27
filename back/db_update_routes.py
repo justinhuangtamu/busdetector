@@ -1,3 +1,9 @@
+'''
+CSCE 482-933
+BusDetector
+
+'''
+
 import psycopg2 as ps  # PostgreSQL db library
 from pyproj import Transformer  # coordinate transformations
 import requests  # HTTP requests library
