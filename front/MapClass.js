@@ -177,18 +177,6 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
   // console.log(markers)
   return (
     <View style={styles.container}>
-      {/* <Button
-                title="Go to Route Selection"
-                onPress={() => navigation.navigate('RouteSelection')}
-            /> */}
-      {/* <Button
-        title="Go to Settings"
-        onPress={() => navigation.navigate('Settings')}
-      />
-      <Button
-        title="Go to Announcments"
-        onPress={() => navigation.navigate('Announcments')}
-      /> */}
 
       {
         // Google API block
@@ -198,35 +186,23 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           provider={PROVIDER_GOOGLE}
         // showsMyLocationButton={true}
         >
-          {/* <Marker
-            coordinate={MSC}
-            pinColor="grey"
-            //title="MSC"
-          > 
-            <Callout>
-              <Text>{'MSC'}</Text>
-            </Callout>
-          </Marker> */}
+
           {markers.map(marker => (
             <Marker
               key={id++}
-              
-            //   {var current_coordinate = {latitude: marker.latitude,
-            //   longitude: marker.longitude
-            // }}
+
               coordinate={
                 {latitude: marker.latitude,
                 longitude: marker.longitude,
                 }
               }
-              pinColor={marker.timed_stop ? buses[bus_id]["color"] : buses[bus_id]["color"]}
+              // pinColor={marker.timed_stop ? buses[bus_id]["color"] : buses[bus_id]["color"]}
               
             >
-              <Callout>
-                <Text>{marker.stop_name}</Text>
+              <Callout style={{ flex: 1, justifyContent: 'center' }}>
+                <Text style={{/*height: 50,*/ width: 110, textAlign: 'center'}}>{marker.stop_name}</Text>
               </Callout>
               {marker.timed_stop ? <Image source={require('./assets/fast-time.png')} style={{height: 35, width: 35}}/> : <Image source={require('./assets/bus-stop.png')} style={{height: 35, width: 35}}/>}
-              {/* {!marker.timed_stop && } */}
               {/* { ShadowColor, overlayColor, tintColor (changes the color of the picture), borderColor,} */}
               {/* <a href="https://www.flaticon.com/free-icons/bus-stop" title="bus stop icons">Bus stop icons created by Freepik - Flaticon</a> */}
             </Marker>
@@ -235,22 +211,17 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
             <Marker
               key={bus_key++}
               
-            //   {var current_coordinate = {latitude: marker.latitude,
-            //   longitude: marker.longitude
-            // }}
               coordinate={
                 {latitude: bus.latitude,
                 longitude: bus.longitude,
                 }
               }
-              //pinColor={buses[bus_id]["color"]}
               
             >
-              <Callout>
-                <Text>{bus.occupancy}</Text>
+              <Callout style={{ flex: 1, justifyContent: 'center' }}>
+                <Text style={{width: 100, textAlign: 'center'}}>{"occupancy: " + bus.occupancy}</Text>
               </Callout>
              <Image source={require('./assets/bus.png')} style={{height: 35, width: 35}}/> 
-              {/* {!marker.timed_stop && } */}
               {/* { ShadowColor, overlayColor, tintColor (changes the color of the picture), borderColor,} */}
               {/* <a href="https://www.flaticon.com/free-icons/bus-stop" title="bus stop icons">Bus stop icons created by Freepik - Flaticon</a> */}
             </Marker>
@@ -264,7 +235,6 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
         </MapView>
       }
-      {/* <Text>Open up App.js to start working on your app!</Text> */}
       <StatusBar style="auto" />
       {/* <Image
       style={{ width: 50, height: 50 }}
