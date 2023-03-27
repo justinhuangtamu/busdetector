@@ -13,18 +13,18 @@ import { Map, getRoutesFromAPI, styles, RouteSelection, test} from './MapClass.j
 
 //import {} from './table.js';
 import {get_Announcements, theme, Information} from "./News.js";
+import {Settings} from './suggestion.js';
 
 
 
-
-function Settings() {
-  return (
-    <View style = {styles.link}>
+// function Settings() {
+//   return (
+//     <View style = {styles.link}>
       
-      <Text>Settings Screen</Text>
-    </View>
-  );
-}
+//       <Text>Settings Screen</Text>
+//     </View>
+//   );
+// }
 
 
 function Announcments() {

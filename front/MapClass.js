@@ -160,6 +160,9 @@ export function Map({ navigation, route }) {
             <TouchableWithoutFeedback onPress={() => navigation.navigate('Information')}>
               <Image source={require('./assets/question.png')} style={styles.question} />
             </TouchableWithoutFeedback>
+            <TouchableOpacity onPress={() => navigation.navigate('Settings')} >
+              {<Text style={styles.filterbutton}>Route Suggestion</Text>}
+            </TouchableOpacity>
             {table_view(static_times, eta_times, dynamic)
             }
             
@@ -323,28 +326,40 @@ export const styles = StyleSheet.create({
         marginBottom: 20,
         marginTop: 20,
       },
+      filterbutton: {
+        position: 'relative',
+        backgroundColor: '#E7E6E1',
+        color: '#500000',
+        fontWeight: 'bold',
+        borderWidth: 1,
+        width: 175,
+        height: 45,
+        padding: 12,
+        top: -50,
+        left: 200,
+      },
       buttonTable: {
-        position: 'absolute',
+        position: 'relative',
         zIndex: 2,
         backgroundColor: '#E7E6E1', 
         color: '#500000', 
         fontWeight: 'bold',
         width: 155, 
-        height: 43,
+        height: 45,
         padding: 12,
-        top: 305,
-        left: 179,
+        top: 40,
+        left: 0,
         borderWidth: 1,
         
       },
       question: {
-        position:'absolute',
+        position:'relative',
         zIndex: 1,
         backgroundColor: '#E7E6E1', 
-        top: 305,
-        left: 334,
-        width: 43,
-        height: 43,
+        top: -5,
+        left: 155,
+        width: 45,
+        height: 45,
         borderWidth: 1,
         
       }
