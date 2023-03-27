@@ -10,6 +10,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 
 //import {AsyncStorage} from 
+//import news_ex from './temp/announcements.json';
+
 
 export const theme = StyleSheet.create({
     base: {
@@ -25,6 +27,14 @@ export const theme = StyleSheet.create({
     },
     view: {
         marginBottom: 10.
+    },
+    info: {
+        marginTop: 20,
+        marginHorizontal: 20,
+    },
+    infoText:{
+        fontSize: 16,
+        marginBottom: 20,
     },
     categories: {
         fontSize: 8,
@@ -128,4 +138,25 @@ export function Trial() {
 export function get_Announcements() {
     //console.log(Trial());
     return Trial();   
+}
+
+
+
+export function Information() {
+    return (
+        <View style={theme.info}>
+
+            <Text style={theme.title}>
+                Static VS ETA Times</Text>
+            <Text style={theme.infoText }>
+                Static times are scheduled times provided by A&M. These are times that the bus will wait for at each stop. 
+                Some stops do not have a scheduled times.
+            </Text>
+            <Text style={theme.infoText}>
+                ETA Times are create using google maps and are intended to be more accurate stop times. 
+                These times are calculated every minute to ensure they are updated. 
+                The ETA table also provides predicted times for stops along each bus route that are not scheduled stops. 
+            </Text>
+        </View>
+    );
 }

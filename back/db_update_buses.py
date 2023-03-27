@@ -2,6 +2,8 @@
 CSCE 482-933
 BusDetector
 
+Script runs very frequently (almost constantly)
+Updates bus location and passenger load and pushes to database
 '''
 
 import psycopg2 as ps  # PostgreSQL db library
@@ -21,14 +23,11 @@ def get_bus_data(route_ids):
             bus_id = bus.get("Name")
             lat, long = convert_coords(bus.get("GPS").get("Long"), bus.get("GPS").get("Lat"))
             occupancy = bus.get("APC").get("TotalPassenger")
-            next_stop_id = bus.get("NextStops")[0].get("StopCode")
-            if next_stop_id == 3599:
-                next_stop_id = 3500
-            bus_data.append((bus_id,route_id,lat,long,occupancy,next_stop_id))
+            bus_data.append((bus_id,route_id,lat,long,occupancy))
     return bus_data
         
 
-def main():
+def update_buses():
 
     route_ids = ['01','01-04','03','03-05','04','05','06','07','08','12','15','22','26','27','31','34','35','36','40','47','47-48','48', 'N15']
     bus_data = get_bus_data(route_ids)
@@ -41,13 +40,16 @@ def main():
 
 
     cur = conn.cursor()
-    cur.execute('''DELETE FROM public.buses;''')
-    sql = '''INSERT INTO public.buses VALUES (%s,%s,%s,%s,%s,%s);'''
+    sql = '''INSERT INTO public.buses (bus_id, route_id, latitude,longitude,occupancy) 
+    VALUES (%s,%s,%s,%s,%s)
+    ON CONFLICT (bus_id) DO UPDATE 
+    SET latitude = excluded.latitude, 
+      longitude = excluded.longitude,
+      occupancy = excluded.occupancy;'''
     cur.executemany(sql, bus_data)
-
     conn.commit()
     conn.close()
 
 # Run Program
-main()
+update_buses()
 
