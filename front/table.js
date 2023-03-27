@@ -8,28 +8,37 @@ import { Table, TableWrapper,Col,  Row, Rows } from 'react-native-table-componen
 LogBox.ignoreLogs(["Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`."]);
 
 const ToggleButton = (unfiltered, stops, filtered) => {
+    
     const [toggleState, setToggleState] = useState(false);
 
     var rowsU = unfiltered;
     var sumU = (rowsU[0].length -4) * 90;
     var widthU = Array(rowsU[0].length - 1).fill(90);
+    var len = rowsU[0].length -1;
     widthU.unshift(105);
+    if (sumU < 0) {
+        sumU = 0;
+        widthU = Array(len).fill(270 / (len));
+        widthU.unshift(105);
+    }
+
 
     var rowsF = filtered;
     var sumF = (rowsF[0].length - 4) * 90;
-    var len = rowsF[0].length - 1;
+    len = rowsF[0].length - 1;
     var widthF = Array(len).fill(90);
     widthF.unshift(105);
-
     if (sumF < 0) {
-        sumF = 0; 
-        widthF = Array(len).fill(270/(len));
+        sumF = 0;
+        widthF = Array(len).fill(270 / (len));
         widthF.unshift(105);
     }
-
+    
+    
+    
     const handleToggle = () => {
         setToggleState(!toggleState);
-        console.log("Toggle State of Hide table: " + toggleState);
+        //console.log("Toggle State of Hide table: " + toggleState);
         
     };
     var headers = ['Location ', "Timed Stops", ''];
@@ -40,38 +49,40 @@ const ToggleButton = (unfiltered, stops, filtered) => {
         //                      Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.
         // 
         // IGNORE THIS WARNING its an error in the <Rows>.js file but the table is building correctly
-        <View style={{ paddingTop: 30 }}>
+        <View style={{ paddingTop: 30}}>
             <TouchableOpacity onPress={handleToggle} >
-                {<Text style={table_style.button}>{toggleState ? 'Hide Expired Times' : 'Show Expired Times'}</Text>}
+                {<Text style={table_style.button}>{toggleState ? 'Show expired times' : 'Remove expired times'}</Text>}
             </TouchableOpacity>
-            <ScrollView horizontal={true} >
-                <ScrollView horizontal={false}>
-                <Table borderStyle={{borderWidth: 1, borderColor: '#500000'}}>
-                    <Row 
-                        data={headers} 
-                        widthArr={toggleState ? [105, 270, sumU] : [105, 270, sumF]}
-                        style={table_style.head}
-                        textStyle={table_style.headText} 
-                    />
-                    
-                    <TableWrapper>
-                            {/* <Col
-                                data={stops}
-                                heightArr={[60, 60, 60, 60, 60]}
-                                style={table_style.rowSection}
-                                textStyle={table_style.text}
-                            /> */}
-                            <Rows
-                                data={toggleState ? rowsU : rowsF}
-                                widthArr={toggleState ? widthU : widthF}
-                                style={table_style.rowSection}
-                                textStyle={table_style.text}
+            <ScrollView horizontal={true} nestedScrollEnabled={true}>
+                <ScrollView horizontal={false} nestedscrollEnabled={true} style={table_style.scroll}>
+                    <View style={table_style.viewContainer}>
+                        <Table borderStyle={{borderWidth: 1, borderColor: '#500000'}}>
+                            <Row 
+                                data={headers} 
+                                widthArr={toggleState ? [105, 270, sumF] : [105, 270, sumU] }
+                                style={table_style.head}
+                                textStyle={table_style.headText} 
                             />
-                    </TableWrapper>
-                    
-                </Table>
+                                <TableWrapper>
+                                    {/* <Col
+                                        data={stops}
+                                        heightArr={[60, 60, 60, 60, 60]}
+                                        style={table_style.rowSection}
+                                        textStyle={table_style.text}
+                                    /> */}
+                                    <Rows
+                                        data={toggleState ? rowsF  : rowsU}
+                                        widthArr={toggleState ? widthF : widthU}
+                                        style={table_style.rowSection}
+                                        textStyle={table_style.text}
+                                    />
+                                </TableWrapper>
+
+                        </Table>
+                    </View>
                 </ScrollView>
             </ScrollView>
+            
         </View>
     );
 };
@@ -87,11 +98,14 @@ export function sort_times(time_array_static, time_array_eta, dynamic) {
             values = sort_static(time_array_static);
             stops = populate_stops(values);
             filtered = filter_array(values, stops);
+
         } else {
-            values = sort_static(time_array_static);
-            stops = populate_stops(values);
-            filtered = filter_array(values, stops);
             
+            values = sort_dynamic(time_array_eta);
+            
+            stops = populate_stops(values);
+            values = filter_eta(values, stops); 
+            filtered = values;
         }
         return create_table(values, stops, filtered);
     } catch {
@@ -108,34 +122,41 @@ export function create_table(unfiltered, stops, filtered) {
 }
 
 //Filter times
-function filterTimesBeforeNow(timesArray) {
+function filterTimesBeforeNow(timesArray, check) {
     
-    
-    const now = new Date(); // get current time
+    if (check) {
+        const now = new Date(); // get current time
 
-    // filter out times before current time
-    
-    const filterNull = timesArray.filter(time => {
-        return time != "-- -- --";
-    });
-    
-    const filteredTimes = filterNull.filter(time => {
-        const [timeStr, ampm] = time.split(' ');
-        const [hourStr, minuteStr] = timeStr.split(':');
-
-        var hour = parseInt(hourStr, 10);
-        const minute = parseInt(minuteStr, 10);
+        // filter out times before current time
         
-        if (ampm === 'PM' && hour !== 12) {
-            hour += 12;
-        }
+        const filterNull = timesArray.filter(time => {
+            return time != "-- -- --";
+        });
+        
+        const filteredTimes = filterNull.filter(time => {
+            const [timeStr, ampm] = time.split(' ');
+            const [hourStr, minuteStr] = timeStr.split(':');
 
-        const timeObj = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute);
-        return timeObj >= now;
-    });
+            var hour = parseInt(hourStr, 10);
+            const minute = parseInt(minuteStr, 10);
+            
+            if (ampm === 'PM' && hour !== 12) {
+                hour += 12;
+            }
+
+            const timeObj = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute);
+            return timeObj >= now;
+        });
+        
+        
+        return filteredTimes;
+    } else {
+        const filtered = timesArray.filter(time => {
+            return (!isNaN(time));
+        })
+        return filtered;
+    }
     
-    
-    return filteredTimes;
 }
 
 
@@ -153,7 +174,7 @@ function filter_array(values, stops) {
     var filter_hold = [];
     var longest = 0;
     for (var i = 0; i < values.length; i++) {
-        var hold = filterTimesBeforeNow(values[i]);
+        var hold = filterTimesBeforeNow(values[i], true);
         if (hold.length >= longest) {
             longest = hold.length;
         }
@@ -162,6 +183,22 @@ function filter_array(values, stops) {
     }
     return filtered = makeSubarraysSameLength(filter_hold, longest + 1, "-- -- --");
 }
+
+function filter_eta(values, stops) {
+    var filter_hold = [];
+    var longest = 0;
+    for (var i = 0; i < values.length; i++) {
+        var hold = filterTimesBeforeNow(values[i], false);
+        if (hold.length >= longest) {
+            longest = hold.length;
+        }
+        hold.unshift(stops[i]);
+        filter_hold.push(hold);
+    }
+    return makeSubarraysSameLength(filter_hold, longest + 1, "-- -- --");
+}
+
+
 function populate_stops(values) {
     var stops = [];
     for (var i = 0; i < values.length; i++) {
@@ -193,6 +230,29 @@ function sort_static(times) {
     return values;
 }
 
+function sort_dynamic(times) {
+    var values = [];
+    var curr_row = [];
+    var keys = "";
+    for (var i = 0; i < times.length; i++) {
+        if (times[i]["stop_id"] != keys) {
+            if (i != 0) {
+                values.push(curr_row);
+            }
+            keys = times[i]["stop_id"];
+            curr_row = [times[i]["stop_name"]];
+        }
+        var time = times[i]["eta_time"];
+        if (time == null) {
+            curr_row.push("-- -- --");
+        } else {
+            curr_row.push(times[i]["eta_time"]);
+        }
+    }
+    values.push(curr_row);
+    return values;
+}
+
 
 const table_style = StyleSheet.create({
     container: { padding: 4, paddingTop: 30, },
@@ -201,6 +261,8 @@ const table_style = StyleSheet.create({
     headText: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'white' },
     text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
     button: {backgroundColor: '#E7E6E1',  color: '#500000', fontWeight: 'bold',  width: 179, padding: 12, zIndex: 2, borderWidth: 1,},
+    viewContainer: {flexDirection:'row', flexWrap:'wrap', alignItems: 'flex-start', flex: 1},
+    scroll: {height: 370},
 });
 
 
