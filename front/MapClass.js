@@ -53,7 +53,7 @@ export function Map({ navigation, route }) {
     waypoints = route.params || [];
     bus_ids = "01";
     static_times = [];
-    markers = [];
+    markers = [{ 'stop_name': 'test', 'timed_stop': true, 'longitude': '60.001', 'latitude':'60.001' }];
     eta_times = [];
     buses_loc = [];
   } else {
@@ -210,55 +210,56 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           {markers.map(marker => (
             <Marker
               key={id++}
-              
-            //   {var current_coordinate = {latitude: marker.latitude,
-            //   longitude: marker.longitude
-            // }}
+
+              //   {var current_coordinate = {latitude: marker.latitude,
+              //   longitude: marker.longitude
+              // }}
               coordinate={
-                {latitude: marker.latitude,
-                longitude: marker.longitude,
+                {
+                  latitude: parseFloat(marker.latitude),
+                  longitude: parseFloat(marker.longitude),
                 }
               }
               pinColor={marker.timed_stop ? buses[bus_id]["color"] : buses[bus_id]["color"]}
-              
+
             >
+              
+              {marker.timed_stop ? <Image source={require('./assets/fast-time.png')} style={{ height: 35, width: 35 }} /> : <Image source={require('./assets/bus-stop.png')} style={{ height: 35, width: 35 }} />}
               <Callout>
                 <Text>{marker.stop_name}</Text>
               </Callout>
-              {marker.timed_stop ? <Image source={require('./assets/fast-time.png')} style={{height: 35, width: 35}}/> : <Image source={require('./assets/bus-stop.png')} style={{height: 35, width: 35}}/>}
-              {/* {!marker.timed_stop && } */}
-              {/* { ShadowColor, overlayColor, tintColor (changes the color of the picture), borderColor,} */}
-              {/* <a href="https://www.flaticon.com/free-icons/bus-stop" title="bus stop icons">Bus stop icons created by Freepik - Flaticon</a> */}
             </Marker>
           ))}
-           {buses_loc.map(bus => (
-            <Marker
-              key={bus_key++}
-              
-            //   {var current_coordinate = {latitude: marker.latitude,
-            //   longitude: marker.longitude
-            // }}
-              coordinate={
-                {latitude: bus.latitude,
-                longitude: bus.longitude,
+          {
+            buses_loc.map(bus => (
+              <Marker
+                key={bus_key++}
+
+                //   {var current_coordinate = {latitude: marker.latitude,
+                //   longitude: marker.longitude
+                // }}
+                coordinate={
+                  {
+                    latitude: bus.latitude,
+                    longitude: bus.longitude,
+                  }
                 }
-              }
               //pinColor={buses[bus_id]["color"]}
-              
-            >
-              <Callout>
-                <Text>{bus.occupancy}</Text>
-              </Callout>
-             <Image source={require('./assets/bus.png')} style={{height: 35, width: 35}}/> 
-              {/* {!marker.timed_stop && } */}
-              {/* { ShadowColor, overlayColor, tintColor (changes the color of the picture), borderColor,} */}
-              {/* <a href="https://www.flaticon.com/free-icons/bus-stop" title="bus stop icons">Bus stop icons created by Freepik - Flaticon</a> */}
-            </Marker>
-          ))} 
+
+              >
+                <Image source={require('./assets/bus.png')} style={{ height: 35, width: 35 }} />
+                <Callout>
+                  <Text>{bus.occupancy}</Text>
+                </Callout>
+
+              </Marker>
+            ))
+          }
+          
           <Polyline
             //key={polyline.id}
             coordinates={waypoints}
-            
+
             strokeColor={buses[bus_id]["color"]}
             strokeWidth={6} />
 

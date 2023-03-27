@@ -56,7 +56,7 @@ const ToggleButton = (unfiltered, stops, filtered) => {
             <ScrollView horizontal={true} nestedScrollEnabled={true}>
                 <ScrollView horizontal={false} nestedscrollEnabled={true} style={table_style.scroll}>
                     <View style={table_style.viewContainer}>
-                        <Table borderStyle={{borderWidth: 1, borderColor: '#500000'}}>
+                        <Table borderStyle={{borderWidth: 1, borderColor: '#500000'}}  >
                             <Row 
                                 data={headers} 
                                 widthArr={toggleState ? [105, 270, sumF] : [105, 270, sumU] }
