@@ -112,4 +112,4 @@ def update_routes():
     conn.close()
     
 # Run Program
-update_routes()
+# update_routes()  # DEBUG purposes, leave commented out when not testing

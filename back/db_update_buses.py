@@ -51,5 +51,5 @@ def update_buses():
     conn.close()
 
 # Run Program
-update_buses()
+# update_buses()  # DEBUG purposes, leave commented out when not testing
 
