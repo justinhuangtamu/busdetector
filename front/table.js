@@ -1,11 +1,10 @@
 import React, { Component, useState} from 'react';
 
 import { StatusBar } from 'expo-status-bar';
-import { TouchableOpacity, StyleSheet, Text, View, ScrollView, LogBox } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, ScrollView, LogBox, Platform } from 'react-native';
 
 import { Table, TableWrapper,Col,  Row, Rows } from 'react-native-table-component';
 // import { CallDatabase } from './MapClass.js';
-LogBox.ignoreLogs(["Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`."]);
 
 const ToggleButton = (unfiltered, stops, filtered) => {
     
@@ -49,11 +48,11 @@ const ToggleButton = (unfiltered, stops, filtered) => {
         //                      Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.
         // 
         // IGNORE THIS WARNING its an error in the <Rows>.js file but the table is building correctly
-        <View style={{ top: -45}}>
+        <View style={{ top: -45, width: 330}}>
             
-            <ScrollView horizontal={true} nestedScrollEnabled={true}>
-                <ScrollView horizontal={false} nestedscrollEnabled={true} style={table_style.scroll}>
-                    <View style={table_style.viewContainer}>
+            <ScrollView horizontal={true}  >
+                <ScrollView horizontal={false} style={table_style.scroll} nestedScrollEnabled={true}>
+                    <View style={table_style.viewContainer} >
                         <Table borderStyle={{borderWidth: 1, borderColor: '#500000'}}  >
                             <Row 
                                 data={headers} 
@@ -260,7 +259,10 @@ const table_style = StyleSheet.create({
     text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
     button: {backgroundColor: '#E7E6E1',  color: '#500000', fontWeight: 'bold',  width: 179, padding: 12, zIndex: 2, borderWidth: 1,},
     viewContainer: {flexDirection:'row', flexWrap:'wrap', alignItems: 'flex-start', flex: 1},
-    scroll: {height: 345},
+    scroll: {
+        height: 345,
+    },
+
 });
 
 
