@@ -187,7 +187,8 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           style={styles.map}
           initialRegion={MSC}
           provider={PROVIDER_GOOGLE}
-        // showsMyLocationButton={true}
+          showsUserLocation={true}
+          showsMyLocationButton={true}
         >
 
           {markers.map(marker => (
