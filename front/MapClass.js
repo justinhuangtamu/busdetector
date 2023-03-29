@@ -108,6 +108,24 @@ export function Map({ navigation, route }) {
 
   };
 
+  // refreshes the page
+  useEffect(() => {
+    // Function to automatically press the button every 15 seconds
+    const autoPressButton = () => {
+      // Check if an item is selected
+      if (selectedId) {
+        // Simulate button press by calling the onPress function with the selected item
+        handlePress(selectedId);
+      }
+    };
+
+    // Set up the interval to auto-press the button every 15 seconds
+    const intervalId = setInterval(autoPressButton, 15000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [selectedId]);
+
 
   const renderItem = ({ item }) => {
     const backgroundColor = item.id === selectedId ? '#dcdcdc' : item.color;
@@ -194,11 +212,6 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
             <Marker
               key={id++}
 
-
-              //   {var current_coordinate = {latitude: marker.latitude,
-              //   longitude: marker.longitude
-              // }}
-
               coordinate={
                 {
                   latitude: parseFloat(marker.latitude),
@@ -216,21 +229,18 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
               </Callout>
             </Marker>
           ))}
+
           {
             buses_loc.map(bus => (
               <Marker
                 key={bus_key++}
 
-                //   {var current_coordinate = {latitude: marker.latitude,
-                //   longitude: marker.longitude
-                // }}
                 coordinate={
                   {
                     latitude: bus.latitude,
                     longitude: bus.longitude,
                   }
                 }
-              //pinColor={buses[bus_id]["color"]}
 
               >
                 <Image source={require('./assets/bus.png')} style={{ height: 35, width: 35 }} />
@@ -244,7 +254,6 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           
 
           <Polyline
-            //key={polyline.id}
             coordinates={waypoints}
 
             strokeColor={buses[bus_id]["color"]}
