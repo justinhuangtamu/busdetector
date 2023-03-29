@@ -43,11 +43,13 @@ def update_db(json_, k,bid, route_id):
 url = "https://maps.googleapis.com/maps/api/distancematrix/json?"
 key = 'AIzaSyAu6nlbhY5f261wk7EGJRDpQosx844VG5Q'
 def get_eta(bus_list, point_list, route_id):
+    print(route_id+"|"+str(len(point_list)))
     for j in bus_list:
         s1,s2,bid = j
         o = str(s1) + ', '+str(s2)
         d = ''
         stop_keys = []
+
         for i in point_list[:25]:
             lat, long, stop_key, stop_id = i
             d += str(lat) + ', '+str(long)+'|'
@@ -63,7 +65,7 @@ def get_eta(bus_list, point_list, route_id):
         r = requests.get(url,params)
         #print(r.text)
         update_db(r.json(), stop_keys,bid, route_id)
-
+    print(route_id+" done")
 
 def get_points(route_id):
     # establish db connection
@@ -93,7 +95,7 @@ def get_bus_location(route_id):
     output = cur.fetchall()
     #print(output)
     return output
-def clear_eta(route_id):
+def clear_eta():
     # establish db connection
     try:
         conn = ps.connect(
@@ -111,10 +113,9 @@ def clear_eta(route_id):
 def update_etas():
     route_ids = ['01']
     #route_ids = ['01', '01-04','03','03-05','04','05','06','07','08','12','15','22','26','27','31','34','35','36','40','47','47-48','48']
+    clear_eta()
     for id in route_ids:
         #print(id)
         points = get_points(id)
         bus_points = get_bus_location(id)
-        clear_eta(id)
         get_eta(bus_points, points,id)
-update_etas()
