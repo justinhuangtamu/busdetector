@@ -75,11 +75,11 @@ def update_routes():
     cur = conn.cursor()
 
     # Clear All Tables to meet constraints
-    cur.execute('''DELETE FROM public.buses;''')
     cur.execute('''DELETE FROM public.static_table;''')
     cur.execute('''DELETE FROM public.route_stop_bridge;''')
     cur.execute('''DELETE FROM public.routes;''')
     cur.execute('''DELETE FROM public.stops;''')
+    cur.execute('''DELETE FROM public.buses;''')
     
 
     # Update Routes Tables
