@@ -4,7 +4,7 @@ import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Polyline, Callout } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, FlatList, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, Modal } from 'react-native';
+import { StyleSheet, Text, View, Platform, FlatList, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, Modal } from 'react-native';
 
 import {sort_times, create_table} from './table.js';
 import { useNavigation, CommonActions } from '@react-navigation/native';
@@ -311,56 +311,124 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     item: {
-        padding: 20,
-        // marginVertical: 8,
-        marginHorizontal: 8,
-        // flexDirection: 'row',
-        borderRadius: 20,
+      ...Platform.select({
+        ios: {
+          padding: 20,
+          marginHorizontal: 8,
+          borderRadius: 10,
+        },
+        android: {
+          padding: 15,
+          marginHorizontal: 4,
+          borderRadius: 10,
+        },
+      }),
+        
       },
       title: {
         fontSize: 24,
       },
       buttonTitle: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        marginTop: 20,
+        ...Platform.select({
+          ios: {
+            fontSize: 24,
+            fontWeight: 'bold',
+            marginBottom: 20,
+            marginTop: 20,
+          },
+          android: {
+            fontSize: 24,
+            fontWeight: 'bold',
+            marginBottom: 10,
+            marginTop: 10,
+          },
+        }),
+  
       },
       filterbutton: {
-        position: 'relative',
-        backgroundColor: '#E7E6E1',
-        color: '#500000',
-        fontWeight: 'bold',
-        borderWidth: 1,
-        width: 175,
-        height: 45,
-        padding: 12,
-        top: -50,
-        left: 200,
+        ...Platform.select({
+          ios: {
+            position: 'relative',
+            backgroundColor: '#E7E6E1',
+            color: '#500000',
+            fontWeight: 'bold',
+            borderWidth: 1,
+            width: 175,
+            height: 45,
+            padding: 12,
+            top: -50,
+            left: 200,
+          },
+          android: {
+            position: 'relative',
+            backgroundColor: '#E7E6E1',
+            color: '#500000',
+            fontWeight: 'bold',
+            borderWidth: 1,
+            width: 139,
+            height: 45,
+            padding: 12,
+            top: -50,
+            left: 190,
+          },
+        }),
       },
       buttonTable: {
-        position: 'relative',
-        zIndex: 2,
-        backgroundColor: '#E7E6E1', 
-        color: '#500000', 
-        fontWeight: 'bold',
-        width: 155, 
-        height: 45,
-        padding: 12,
-        top: 40,
-        left: 0,
-        borderWidth: 1,
+        ...Platform.select({
+          ios: {
+            position: 'relative',
+            zIndex: 2,
+            backgroundColor: '#E7E6E1',
+            color: '#500000',
+            fontWeight: 'bold',
+            width: 155,
+            height: 45,
+            padding: 12,
+            top: 40,
+            left: 0,
+            borderWidth: 1,
+          },
+          android: {
+            position: 'relative',
+            zIndex: 2,
+            backgroundColor: '#E7E6E1',
+            color: '#500000',
+            fontWeight: 'bold',
+            width: 145,
+            height: 45,
+            padding: 12,
+            top: 40,
+            left: 0,
+            borderWidth: 1,
+          },
+        }),
+        
         
       },
       question: {
-        position:'relative',
-        zIndex: 1,
-        backgroundColor: '#E7E6E1', 
-        top: -5,
-        left: 155,
-        width: 45,
-        height: 45,
-        borderWidth: 1,
+        ...Platform.select({
+          ios: {
+            position: 'relative',
+            zIndex: 1,
+            backgroundColor: '#E7E6E1',
+            top: -5,
+            left: 155,
+            width: 45,
+            height: 45,
+            borderWidth: 1,
+          },
+          android: {
+            position: 'relative',
+            zIndex: 1,
+            backgroundColor: '#E7E6E1',
+            top: -5,
+            left: 145,
+            width: 45,
+            height: 45,
+            borderWidth: 1,
+          },
+        }),
+        
         
       }
 });
