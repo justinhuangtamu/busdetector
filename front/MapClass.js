@@ -109,6 +109,34 @@ export function Map({ navigation, route }) {
 
   };
 
+  // requeries for bus routes and etas
+  refreshPress = async (id) => {
+    const bus_id = id
+
+    queryString = "Select eta_time, stop_name, stops.stop_id from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, rank) asc";
+    const dynamic = await CallDatabase(queryString); 
+
+    //get the bus locations from the database
+    queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "';";
+    const bus = await CallDatabase(queryString);
+    console.log(bus);
+
+    // set params to route, stops, and static time selected by the user
+    const waypoint = waypoints;
+    const stops = markers;
+    const static_time = static_times;
+    
+    // Navigate to the Map screen and pass the selected waypoints as a parameter
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'Home',
+
+        params: {waypoint, bus_id, stops, static_time, bus, dynamic}, 
+
+      })
+    )
+  };
+
   // refreshes the page
   useEffect(() => {
     // Function to automatically press the button every 15 seconds
@@ -118,7 +146,7 @@ export function Map({ navigation, route }) {
       if (selectedId) {
         // Simulate button press by calling the onPress function with the selected item
         console.log("selectedId is inside the if: " + selectedId);
-        handlePress(selectedId);
+        refreshPress(selectedId);
       }
     };
 
