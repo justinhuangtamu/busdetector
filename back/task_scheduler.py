@@ -47,7 +47,7 @@ while not exit:
         db_update_buses.update_buses()
         print("DONE")
 
-        if (etaupdate_counter is 60):
+        if (etaupdate_counter == 60):
             print("[" + time.ctime() + "] Updating bus ETAs... ", end="", flush=True)
             db_update_eta.update_etas()
             print("DONE")
