@@ -93,6 +93,7 @@ export function Map({ navigation, route }) {
     //get the bus locations from the database
     queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "';";
     const bus = await CallDatabase(queryString);
+    console.log(bus);
     
     
     // Navigate to the Map screen and pass the selected waypoints as a parameter
@@ -113,8 +114,10 @@ export function Map({ navigation, route }) {
     // Function to automatically press the button every 15 seconds
     const autoPressButton = () => {
       // Check if an item is selected
+      console.log("selectedId is outside the if: " + selectedId);
       if (selectedId) {
         // Simulate button press by calling the onPress function with the selected item
+        console.log("selectedId is inside the if: " + selectedId);
         handlePress(selectedId);
       }
     };
@@ -223,9 +226,9 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
             >
               
-              {marker.timed_stop ? <Image source={require('./assets/fast-time.png')} style={{ height: 35, width: 35 }} /> : <Image source={require('./assets/bus-stop.png')} style={{ height: 35, width: 35 }} />}
-              <Callout>
-                <Text>{marker.stop_name}</Text>
+              {marker.timed_stop ? <Image source={require("./assets/fast-time.png")} style={{ height: 35, width: 35 }} /> : <Image source={require("./assets/bus-stop.png")} style={{ height: 35, width: 35 }} />}
+              <Callout style={{justifyContent: 'center'}}>
+                <Text style={{width: 100, textAlign: 'center'}}>{marker.stop_name}</Text>
               </Callout>
             </Marker>
           ))}
@@ -243,9 +246,9 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
                 }
 
               >
-                <Image source={require('./assets/bus.png')} style={{ height: 35, width: 35 }} />
+                <Image source={require("./assets/bus.png")} style={{ height: 35, width: 35 }} />
                 <Callout>
-                  <Text>{bus.occupancy}</Text>
+                  <Text style={{width: 150, textAlign: 'center'}}>{bus.occupancy + " people on board" + "\n" + Math.round((bus.occupancy / 75) * 100) + "% full"}</Text>
                 </Callout>
 
               </Marker>
