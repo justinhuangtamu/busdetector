@@ -239,6 +239,11 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           showsUserLocation={true}
           showsMyLocationButton={true}
         >
+          <Marker
+            coordinate={{"latitude": MSC.latitude, "longitude": MSC.longitude}}
+            title={"Desired Location"}
+            draggable={true}
+            />
 
           {markers.map(marker => (
             <Marker
