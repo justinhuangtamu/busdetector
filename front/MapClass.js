@@ -82,7 +82,7 @@ export function Map({ navigation, route }) {
     queryString = "Select static_time, stop_name, key from static_table where route_id='" + id + "' order by (key, index) asc";
     const static_time = await CallDatabase(queryString);
 
-    queryString = "Select eta_time, stop_name, stops.stop_id from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, rank) asc";
+    queryString = "Select eta_time, stop_name, stops.stop_id from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, eta_time) asc";
     const dynamic = await CallDatabase(queryString); 
     
     // get the stops from the database
@@ -113,7 +113,7 @@ export function Map({ navigation, route }) {
   refreshPress = async (id) => {
     const bus_id = id
 
-    queryString = "Select eta_time, stop_name, stops.stop_id from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, rank) asc";
+    queryString = "Select eta_time, stop_name, stops.stop_id from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, eta_time) asc";
     const dynamic = await CallDatabase(queryString); 
 
     //get the bus locations from the database
