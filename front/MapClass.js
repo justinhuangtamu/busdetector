@@ -83,7 +83,7 @@ export function Map({ navigation, route }) {
     const static_time = await CallDatabase(queryString);
     //console.log("handlePress static times " + static_time);
 
-    queryString = "Select eta_time, stop_name, stops.stop_id from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, eta_time) asc";
+    queryString = "Select eta_time, stop_name, stops.stop_id, raw_time from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, raw_time) asc";
     const dynamic = await CallDatabase(queryString); 
     
     // get the stops from the database
@@ -114,7 +114,7 @@ export function Map({ navigation, route }) {
   refreshPress = async (id) => {
     const bus_id = id
 
-    queryString = "Select eta_time, stop_name, stops.stop_id from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, eta_time) asc";
+    queryString = "Select eta_time, stop_name, stops.stop_id, raw_time from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, raw_time) asc";
     const dynamic = await CallDatabase(queryString); 
 
     //get the bus locations from the database
@@ -210,7 +210,7 @@ export function Map({ navigation, route }) {
             <TouchableWithoutFeedback onPress={() => navigation.navigate('Information')}>
               <Image source={require('./assets/question.png')} style={styles.question} />
             </TouchableWithoutFeedback>
-            <TouchableOpacity onPress={() => navigation.navigate('Settings')} >
+            <TouchableOpacity onPress={() => navigation.navigate('Route Suggestion')} >
               {<Text style={styles.filterbutton}>Route Suggestion</Text>}
             </TouchableOpacity>
             {table_view(static_times, eta_times, dynamic)

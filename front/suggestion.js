@@ -55,7 +55,7 @@ export function Settings({ navigation, route }) {
             //console.log(res);
             navigation.dispatch(
                 CommonActions.navigate({
-                    name: 'Settings',
+                    name: 'Route Selection',
 
                     params: {res},
 
