@@ -9,6 +9,9 @@ Updates ETA for all buses and pushes to database
 from pyproj import Transformer  # coordinate transformations
 import requests  # HTTP requests library
 import psycopg2 as ps  # PostgreSQL db library
+from datetime import datetime
+from datetime import timedelta
+import math
 
 
 def update_db(json_, k,bid, route_id):
@@ -25,12 +28,16 @@ def update_db(json_, k,bid, route_id):
     b = json_['rows'][0]['elements']
     counter = 0
     time = 0
+    now = datetime.now()
     for i in b:
         #print(i)
         time += i['duration']['value']
-        #print(time)
+        tdisplay = now + timedelta(seconds=time)
+        #display = str(tdisplay.time().replace(microsecond=0))
+        display = tdisplay.time().replace(microsecond=0).strftime("%I:%M:%S %p")
+        #print(display)
         key,stop_id = k[counter]
-        query = "insert into route_stop_bridge (key, bus_id, eta_time, stop_id, route_id) values ('"+key+bid+"','"+bid+"','"+str(time)+"','"+stop_id+"','"+route_id+"');"
+        query = "insert into route_stop_bridge (key, bus_id, eta_time, stop_id, route_id, raw_time) values ('"+key+bid+"','"+bid+"','"+str(display)+"','"+stop_id+"','"+route_id+"','"+str(time)+"');"
         #query = 'update route_stop_bridge set eta_time = \''+str(time)+'\' where (key = \''+k[counter]+bid+'\') and (eta_time > \''+str(time)+'\' or (COALESCE(eta_time,\'a\') = \'a\'));'
         counter += 1
         #print(query)
