@@ -70,7 +70,7 @@ export function Map({ navigation, route }) {
   handlePress = async (id) => {
     setSelectedId(id);
 
-    queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where route_id='" + id + "' order by route_stop_bridge.rank asc;";
+    queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where (route_id='" + id + "' and rank is not null) order by route_stop_bridge.rank asc;";
 
     console.log(queryString);
     // CallDatabase(queryString);
