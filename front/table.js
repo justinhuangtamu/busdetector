@@ -11,13 +11,13 @@ const ToggleButton = (unfiltered, stops, filtered) => {
     const [toggleState, setToggleState] = useState(false);
 
     var rowsU = unfiltered;
-    var sumU = (rowsU[0].length -4) * 90;
-    var widthU = Array(rowsU[0].length - 1).fill(90);
+    var sumU = (rowsU[0].length -4) * 100;
+    var widthU = Array(rowsU[0].length - 1).fill(100);
     var len = rowsU[0].length -1;
     widthU.unshift(105);
     if (sumU < 0) {
         sumU = 0;
-        widthU = Array(len).fill(270 / (len));
+        widthU = Array(len).fill(300 / (len));
         widthU.unshift(105);
     }
 
@@ -44,7 +44,7 @@ const ToggleButton = (unfiltered, stops, filtered) => {
                         <Table borderStyle={{borderWidth: 1, borderColor: '#500000'}}  >
                             <Row 
                                 data={headers} 
-                                widthArr={ [105, 270, sumU] }
+                                widthArr={ [105, 300, sumU] }
                                 style={table_style.head}
                                 textStyle={table_style.headText} 
                             />
