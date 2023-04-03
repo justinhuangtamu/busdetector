@@ -70,7 +70,7 @@ export function Settings({ navigation, route }) {
             <TouchableOpacity onPress={get_routes} style={{ alignItems: 'center', height: 45, }} >
                 {<Text style={table_style.button}>Selection</Text>}
             </TouchableOpacity>               
-                <View style={{zindex:4}}>
+                {/* <View style={{zindex:4}}>
                 <DropDownPicker
                     multiple={true}
                     autoScroll={true}
@@ -89,7 +89,7 @@ export function Settings({ navigation, route }) {
 
                     extendableBadgeContainer={true}
                 />
-            </View>
+            </View> */}
             <View style={{ zindex: 3 }}>
                 
                 {create_table2(table_info)} 
