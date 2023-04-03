@@ -81,6 +81,7 @@ export function Map({ navigation, route }) {
     //Querry for static tables & dynamic tables
     queryString = "Select static_time, stop_name, key from static_table where route_id='" + id + "' order by (key, index) asc";
     const static_time = await CallDatabase(queryString);
+    //console.log("handlePress static times " + static_time);
 
     queryString = "Select eta_time, stop_name, stops.stop_id from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, rank) asc";
     const dynamic = await CallDatabase(queryString); 
@@ -142,10 +143,10 @@ export function Map({ navigation, route }) {
     // Function to automatically press the button every 15 seconds
     const autoPressButton = () => {
       // Check if an item is selected
-      console.log("selectedId is outside the if: " + selectedId);
+      //console.log("selectedId is outside the if: " + selectedId);
       if (selectedId) {
         // Simulate button press by calling the onPress function with the selected item
-        console.log("selectedId is inside the if: " + selectedId);
+        //console.log("selectedId is inside the if: " + selectedId);
         refreshPress(selectedId);
       }
     };
@@ -276,7 +277,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
               >
                 <Image source={require("./assets/bus.png")} style={{ height: 35, width: 35 }} />
                 <Callout>
-                  <Text style={{width: 150, textAlign: 'center'}}>{bus.occupancy + " people on board" + "\n" + Math.round((bus.occupancy / 75) * 100) + "% full"}</Text>
+                  <Text style={{width: 150, textAlign: 'center'}}>{"People on board: " + bus.occupancy + "\n" + Math.round((bus.occupancy / 75) * 100) + "% full"}</Text>
                 </Callout>
 
               </Marker>
