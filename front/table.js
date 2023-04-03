@@ -48,7 +48,7 @@ const ToggleButton = (unfiltered, stops, filtered) => {
         //                      Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.
         // 
         // IGNORE THIS WARNING its an error in the <Rows>.js file but the table is building correctly
-        <View style={{ top: -45, width: 330}}>
+        <View style={{ top: -45}}>
             
             <ScrollView horizontal={true}  >
                 <ScrollView horizontal={false} style={table_style.scroll} nestedScrollEnabled={true}>

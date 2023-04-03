@@ -8,6 +8,8 @@ import { StyleSheet, Text, View, Platform, FlatList, SafeAreaView, TouchableOpac
 
 import {sort_times, create_table} from './table.js';
 import { useNavigation, CommonActions } from '@react-navigation/native';
+import { useLocation } from "react-router-dom";
+
 // import { ScrollView } from 'react-native-gesture-handler'
 // import * as turf from '@turf/turf'; // import Turf.js library
 import Swiper from 'react-native-swiper';
@@ -41,6 +43,7 @@ export function Map({ navigation, route }) {
   
   const [selectedId, setSelectedId] = useState();
   const [dynamic, SetDynamic] = useState(true);
+  const [refresh, setRefresh] = useState(true);
    
   
   var waypoints;
@@ -147,7 +150,7 @@ export function Map({ navigation, route }) {
       if (selectedId) {
         // Simulate button press by calling the onPress function with the selected item
         //console.log("selectedId is inside the if: " + selectedId);
-        refreshPress(selectedId);
+        handlePress(selectedId);
       }
     };
 
@@ -157,6 +160,23 @@ export function Map({ navigation, route }) {
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, [selectedId]);
+
+  // useEffect(() => {
+  //   // Function to automatically press the button every 15 seconds
+  //   const autoPressButton = () => {
+  //     // Check if an item is selected
+  //     if (selectedId) {
+  //       // Simulate button press by calling the onPress function with the selected item
+  //       handlePress(selectedId);
+  //     }
+  //   };
+
+  //   // Set up the interval to auto-press the button every 15 seconds only if we are on the home page
+  //   if (location.pathname === "/") {
+  //     const intervalId = setInterval(autoPressButton, 15000);
+  //     return () => clearInterval(intervalId);
+  //   }
+  // }, [location.pathname, selectedId]);
 
 
   const renderItem = ({ item }) => {
@@ -210,6 +230,7 @@ export function Map({ navigation, route }) {
             <TouchableWithoutFeedback onPress={() => navigation.navigate('Information')}>
               <Image source={require('./assets/question.png')} style={styles.question} />
             </TouchableWithoutFeedback>
+            {/* TODO set onpress to turn refresh off */}
             <TouchableOpacity onPress={() => navigation.navigate('Settings')} >
               {<Text style={styles.filterbutton}>Route Suggestion</Text>}
             </TouchableOpacity>
