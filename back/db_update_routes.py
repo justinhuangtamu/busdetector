@@ -73,11 +73,7 @@ def update_routes():
 
     static_times = get_static_timetable(route_ids)
     # establish db connection
-    try:
-        conn = ps.connect("dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
-    except:
-        print("Error connecting to the database!")
-        exit()
+    conn = ps.connect("dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
 
 
     cur = conn.cursor()
