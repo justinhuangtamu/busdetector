@@ -34,7 +34,7 @@ def handler(signum, frame):
 print("BusDetector Backend Task Scheduler")
 print("CSCE 482-933 Senior Capstone Design")
 print("Spring 2023")
-print("Timezone offset = " + timezone_offset)
+print("Timezone offset = " + str(timezone_offset))
 signal.signal(signal.SIGINT, handler)
 print("\n[" + time.ctime() + "] Updating routes... ", end="", flush=True)
 for i in range(5):
@@ -42,7 +42,7 @@ for i in range(5):
         db_update_routes.update_routes()
         break
     except:
-        print("Error occurred. Sleeping for " + 10 ** (i + 1) + " seconds. (" + i + "/5)")
+        print("Error occurred. Sleeping for " + str(10 ** (i + 1)) + " seconds. (" + str(i) + "/5)")
         time.sleep(10 ** (i + 1))
         pass
 print("DONE\n")
@@ -58,7 +58,7 @@ while not exit:
                 db_update_buses.update_buses()
                 break
             except:
-                print("Error occurred. Sleeping for " + 10 ** (i + 1) + " seconds. (" + i + "/5)")
+                print("Error occurred. Sleeping for " + str(10 ** (i + 1)) + " seconds. (" + str(i) + "/5)")
                 time.sleep(10 ** (i + 1))
                 pass
         print("DONE")
@@ -70,7 +70,7 @@ while not exit:
                     db_update_eta.update_etas()
                     break
                 except:
-                    print("Error occurred. Sleeping for " + 10 ** (i + 1) + " seconds. (" + i + "/5)")
+                    print("Error occurred. Sleeping for " + str(10 ** (i + 1)) + " seconds. (" + str(i) + "/5)")
                     time.sleep(10 ** (i + 1))
                     pass
             print("DONE")
@@ -87,7 +87,7 @@ while not exit:
                 db_update_routes.update_routes()
                 break
             except:
-                print("Error occurred. Sleeping for " + 10 ** (i + 1) + " seconds. (" + i + "/5)")
+                print("Error occurred. Sleeping for " + str(10 ** (i + 1)) + " seconds. (" + str(i) + "/5)")
                 time.sleep(10 ** (i + 1))
                 pass
         print("DONE\n")

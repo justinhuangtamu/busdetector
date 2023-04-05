@@ -23,7 +23,8 @@ def get_bus_data(route_ids):
             bus_id = bus.get("Name")
             lat, long = convert_coords(bus.get("GPS").get("Long"), bus.get("GPS").get("Lat"))
             occupancy = bus.get("APC").get("TotalPassenger")
-            bus_data.append((bus_id,route_id,lat,long,occupancy))
+            next_stop_name = bus.get("NextStops")[0].get("Name")
+            bus_data.append((bus_id,route_id,lat,long,occupancy,next_stop_name))
     return bus_data
         
 
@@ -36,12 +37,11 @@ def update_buses():
 
 
     cur = conn.cursor()
-    sql = '''INSERT INTO public.buses (bus_id, route_id, latitude,longitude,occupancy) 
-    VALUES (%s,%s,%s,%s,%s)
-    ON CONFLICT (bus_id) DO UPDATE 
-    SET latitude = excluded.latitude, 
-      longitude = excluded.longitude,
-      occupancy = excluded.occupancy;'''
+    # Remove all buses from the table so only active buses are present
+    cur.execute('''DELETE FROM public.buses;''')
+
+    # Insert all buses into table
+    sql = '''INSERT INTO public.buses VALUES (%s,%s,%s,%s,%s,%s);'''
     cur.executemany(sql, bus_data)
     conn.commit()
     conn.close()
