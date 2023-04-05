@@ -77,44 +77,60 @@ export function Map({ navigation, route }) {
   // gets the route number that is selected and processes it
   handlePress = async (id) => {
     setSelectedId(id);
+    console.log(id);
+    try {
+      queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where (route_id='" + id + "' and rank is not null) order by route_stop_bridge.rank asc;";
+      
+      // CallDatabase(queryString);
+      const waypoint = await CallDatabase(queryString);
+      const bus_id = id;
 
-    queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where (route_id='" + id + "' and rank is not null) order by route_stop_bridge.rank asc;";
-
-    console.log(queryString);
-    // CallDatabase(queryString);
-    const waypoint = await CallDatabase(queryString);
-    const bus_id = id
+      //Querry for static tables & dynamic tables
+      queryString = "Select static_time, stop_name, key from static_table where route_id='" + id + "' order by (key, index) asc";
+      const static_time = await CallDatabase(queryString);
 
 
-    //Querry for static tables & dynamic tables
-    queryString = "Select static_time, stop_name, key from static_table where route_id='" + id + "' order by (key, index) asc";
-    const static_time = await CallDatabase(queryString);
-    //console.log("handlePress static times " + static_time);
+      queryString = "Select eta_time, stop_name, stops.stop_id, raw_time from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, raw_time) asc";
+      const dynamic = await CallDatabase(queryString);
 
-    queryString = "Select eta_time, stop_name, stops.stop_id, raw_time from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, raw_time) asc";
-    const dynamic = await CallDatabase(queryString); 
+      // get the stops from the database
+      queryString = "select distinct stop_name, timed_stop, longitude, latitude from route_stop_bridge inner join stops on route_stop_bridge.stop_id = stops.stop_id where (stop_name != 'Way Point' and route_id='" + id + "');";
+      const stops = await CallDatabase(queryString);
+      // console.log(stops)
+
+      //get the bus locations from the database
+      queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "' order by bus_id;";
+      const bus = await CallDatabase(queryString);
+      //console.log(bus);
+
+      // Navigate to the Map screen and pass the selected waypoints as a parameter
+      navigation.dispatch(
+        CommonActions.navigate({
+          name: 'Home',
+
+          params: { waypoint, bus_id, stops, static_time, bus, dynamic },
+
+        }));
+    } catch (e) {
+      console.log("ERROR ERROR ERROR ERROR ERROR ERROR ERROR")
+      console.log(e);
+
+      const waypoint = route.params["waypoint"] || [];
+      const bus_id = route.params["bus_id"] || "";
+      const stops = route.params["stops"] || [];
+      const static_time = route.params["static_time"] || [];
+      const dynamic = route.params["dynamic"] || [];
+      const bus  = route.params["bus"] || [];
+      navigation.dispatch(
+        CommonActions.navigate({
+          name: 'Home',
+
+          params: { waypoint, bus_id, stops, static_time, bus, dynamic },
+
+        }));
+
+    }
     
-    // get the stops from the database
-    queryString = "select distinct stop_name, timed_stop, longitude, latitude from route_stop_bridge inner join stops on route_stop_bridge.stop_id = stops.stop_id where (stop_name != 'Way Point' and route_id='" + id + "');";
-    const stops = await CallDatabase(queryString);
-    // console.log(stops)
-
-    //get the bus locations from the database
-    queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "' order by bus_id;";
-    const bus = await CallDatabase(queryString);
-    console.log(bus);
-    
-    
-    // Navigate to the Map screen and pass the selected waypoints as a parameter
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: 'Home',
-
-        params: {waypoint, bus_id, stops, static_time, bus, dynamic}, 
-
-      })
-    )
-
 
   };
 
@@ -218,7 +234,8 @@ export function Map({ navigation, route }) {
               <Image source={require('./assets/question.png')} style={styles.question} />
             </TouchableWithoutFeedback>
             
-            {table_view(static_times, eta_times, dynamic)
+            {
+            table_view(static_times, eta_times, dynamic)
             }
             
           </SafeAreaView> 
@@ -240,42 +257,62 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
   suggestRoutes = async () => {
     // Write 
-    console.log(coords);
+    console.log(coords[0]);
+
+    console.log(coords[1]);
     // var ids = "";
     var queryString = "select stop_name, stop_id from stops s where stop_name != 'Way Point'"+
     " order by distance(s.latitude, s.longitude," + coords[0]["latitude"] + ',' + 
-    coords[0]["longitude"] + ") asc limit 4;";
+    coords[0]["longitude"] + ") asc limit 3;";
     const start = await CallDatabase(queryString);
-    console.log(start);
+  
 
 
 
     queryString = "select stop_name, stop_id from stops s where stop_name != 'Way Point'" +
       " order by distance(s.latitude, s.longitude," + coords[1]["latitude"] + ',' +
-      coords[1]["longitude"] + ") asc limit 4 ;";
+      coords[1]["longitude"] + ") asc limit 3;";
     const end = await CallDatabase(queryString);
-    console.log(end);
+   
 
     var list1 = "(";
     var list2 = "(";
+    var list3 = "(";
     for (var i = 0; i < 3; i++) {
       list1 += "'" + start[i]["stop_name"] + "'";
       list2 += "'" + end[i]["stop_name"] + "'";
+      list3 += "'" + start[i]["stop_name"] + "', '" + end[i]["stop_name"] + "'";
       if (i != 2) {
         list1 += ",";
         list2 += ",";
+        list3 += ",";
       }
     }
     list1 += ")";
     list2 += ")";
+    list3 += ")";
 
     // Create the needed functions in suggestion.js and import them for here to make it easier to read
     
-    queryString = "select r.route_id, route_name from route_stop_bridge b " +
-    "join routes r on r.route_id = b.route_id join stops s on b.stop_id = s.stop_id " +
-    "group by r.route_id HAVING  count(distinct stop_name IN " + list1 + ") > 1 " +
-    "and count (distinct stop_name IN " + list2 + ") > 1;";
-
+    
+    // console.log("Start\n End");
+    // console.log(start)
+    // console.log(end);
+    
+    queryString = "select route_id, route_name, stops " +
+    "from( " +
+      "select r.route_id, route_name, STRING_AGG(distinct s.stop_name, ', ') as stops, " +
+      "SUM(CASE WHEN stop_name IN " + list3 + " THEN 1 ELSE 0 END) AS count3, " +
+      "SUM(CASE WHEN stop_name IN " + list1 + " THEN 1 ELSE 0 END) AS count1, " +
+      "SUM(CASE WHEN stop_name IN " + list2 + " THEN 1 ELSE 0 END) AS count2  " +
+		"from route_stop_bridge b " + 
+		"join routes r on r.route_id = b.route_id " +
+		"join stops s on b.stop_id = s.stop_id " +
+    "where s.stop_name in " + list3 + " " +
+		"group by r.route_id " +
+    ") temp " +
+    "where(count1 < 4 and count1 > 0 and count2 < 4 and count2 > 0 and count3 > 1);";
+    
     /*
     select r.route_id, route_name from route_stop_bridge b
     join routes r on r.route_id = b.route_id join stops s 
@@ -284,9 +321,12 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     count(distinct stop_name IN ('Jones Butler @ Harvey Mitchell', 'Woodsman')) > 1
     AND count (distinct stop_name IN ('MSC')) > 1;
     */
+
+
     console.log(queryString);
     const res = await CallDatabase(queryString);
-    //console.log
+    
+
     navigation.dispatch(
       CommonActions.navigate({
         name: 'Route Suggestion',
@@ -306,10 +346,15 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           showsMyLocationButton={true}
+          
 
           onPress= {(e) => {
             var cords = pin ? [coords[0], e.nativeEvent.coordinate] : [e.nativeEvent.coordinate, coords[1]]
             //coords[counter ? 0 : 1] = e.nativeEvent.coordinate;
+            console.log("\n trial");
+            console.log(e.nativeEvent.coordinate);
+            console.log('\n');
+
             setCoords(cords);
             setPin(!pin);
         }}
@@ -323,8 +368,8 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
             draggable={true}
           />
           ))}
-         
-
+          
+            
           {markers.map(marker => (
             <Marker
               key={id++}
@@ -375,6 +420,9 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
             strokeColor={buses[bus_id]["color"]}
             strokeWidth={6} />
+
+          
+
         </MapView>
         
       }
@@ -384,7 +432,9 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
       source={require('./assets/settings.png')}
     /> */}
       <TouchableOpacity style={styles.mapButton} onPress={suggestRoutes} >
-        <Text style={{ color: 'black', fontSize: 12, top: 7, textAlign: 'center', fontWeight: 'bold' }}>Suggest Routes</Text>
+        <Image 
+          style={{ width: 40, height: 40, backgroundColor:'#72b2fc', borderRadius:3, }}
+          source={require('./assets/test2.png')}/>
       </TouchableOpacity> 
     </View>
   )
@@ -430,9 +480,9 @@ export const styles = StyleSheet.create({
     },
     mapButton: {
       position: 'absolute',
-      bottom: '90%',
-      right: '85%',
-      backgroundColor: 'white', //#2196F3
+      top:5,
+      left:5,
+      backgroundColor: '#72b2fc', //#72b2fc
       borderColor: 'black',
       borderBottomColor: 'black',
       borderRadius: 30,
@@ -441,12 +491,18 @@ export const styles = StyleSheet.create({
       height: 60,
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.54,
     },
     map: {
         width: '100%',
-        height: '87%',
-        marginBottom: 100
-        ,
+        height: '100%',
+        marginBottom: 100,
     },
     link: {
         flex: 1,
@@ -566,12 +622,14 @@ export const styles = StyleSheet.create({
 });
 
 export function table_view(time_array_static, time_array_eta, dynamic) {
-    
+  
   if (!(time_array_static === undefined || time_array_eta === undefined)) { // 
+    
     return (
       <View>
         {sort_times(time_array_static, time_array_eta, dynamic)
         }
+
       </View>
     );
   } else {

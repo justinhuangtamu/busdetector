@@ -3,12 +3,11 @@ import React, { Component, useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { TouchableOpacity, StyleSheet, Text, View, ScrollView, LogBox, Platform } from 'react-native';
 
-import { Table, TableWrapper,Col,  Row, Rows } from 'react-native-table-component';
+import { Table, TableWrapper,  Row, Rows } from 'react-native-table-component';
 // import { CallDatabase } from './MapClass.js';
-LogBox.ignoreAllLogs("Warning:");
+LogBox.ignoreAllLogs("Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.");
 const ToggleButton = (unfiltered, stops, filtered) => {
-    
-    const [toggleState, setToggleState] = useState(false);
+
 
     var rowsU = unfiltered;
     var sumU = (rowsU[0].length -4) * 100;
@@ -21,16 +20,8 @@ const ToggleButton = (unfiltered, stops, filtered) => {
         widthU.unshift(105);
     }
 
-    
-    
-    
-    const handleToggle = () => {
-        setToggleState(!toggleState);
-        //console.log("Toggle State of Hide table: " + toggleState);
-        
-    };
     var headers = ['Location ', "Timed Stops", ''];
-
+    
     return (
         // TERMINAL WILL DISPLAY
         //                      Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.
@@ -49,12 +40,7 @@ const ToggleButton = (unfiltered, stops, filtered) => {
                                 textStyle={table_style.headText} 
                             />
                                 <TableWrapper>
-                                    {/* <Col
-                                        data={stops}
-                                        heightArr={[60, 60, 60, 60, 60]}
-                                        style={table_style.rowSection}
-                                        textStyle={table_style.text}
-                                    /> */}
+                                    
                                     <Rows
                                         data={rowsU}
                                         widthArr={widthU}
@@ -94,6 +80,7 @@ export function sort_times(time_array_static, time_array_eta, dynamic) {
             values = filter_eta(values, stops); 
             filtered = filterTimesBeforeNow(values);
         }
+        
         return create_table(values, stops, filtered);
     } catch {
         return;
@@ -103,7 +90,9 @@ export function sort_times(time_array_static, time_array_eta, dynamic) {
 
 
 export function create_table(unfiltered, stops, filtered) {
+    
     return (
+        
         ToggleButton(unfiltered, stops, filtered)
     )
 }
@@ -242,9 +231,9 @@ function sort_dynamic(times) {
 
 
 const table_style = StyleSheet.create({
-    container: { padding: 2, paddingTop: 0},
+    container: { padding: 2, paddingTop: 2},
     rowSection: { height: 60, backgroundColor: '#E7E6E1' },
-    head: { height: 44, backgroundColor: '#500' },
+    head: { height: 44,  backgroundColor: '#500' },
     headText: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'white' },
     text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
     button: {backgroundColor: '#E7E6E1',  color: '#500000', fontWeight: 'bold',  width: 179, padding: 12, zIndex: 2, borderWidth: 1,},
