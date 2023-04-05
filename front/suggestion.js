@@ -1,19 +1,17 @@
 import React, { Component, useState } from 'react';
 
-import { StatusBar } from 'expo-status-bar';
-import { TouchableOpacity, Text, View, StyleSheet, ScrollView, Platform} from 'react-native';
 
-import { Table, TableWrapper, Col, Row, Rows } from 'react-native-table-component';
-import { useNavigation, CommonActions } from '@react-navigation/native';
+import { Text, View, StyleSheet, ScrollView, Platform} from 'react-native';
 
-import DropDownPicker from 'react-native-dropdown-picker';
-import stops from './stops.json';
+import { Table, TableWrapper, Row, Rows } from 'react-native-table-component';
+
+
+
+
 
 export function Settings({ navigation, route }) {
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [items, setItems] = useState(stops);
-    var routes = [];
+    
+    
     var table_info;
 
 
@@ -22,47 +20,9 @@ export function Settings({ navigation, route }) {
     } else {
         table_info = route.params['res'];
     }
-    var prev_label ="";
-    for (var i = 0; i < stops.length; i++) {
-        if (stops[i]["label"] != prev_label) {
-            routes.push(
-                {
-                    "value": stops[i]["label"],
-                    "label": stops[i]["label"],
-                }
-            )
-            prev_label = stops[i]["label"];
-        }
-    }
     
-    get_routes = async () => {
-        //console.log(value);
-        var ids = "";
-        if (value != null) {
-            for (var i = 0; i < value.length; i++ ) {
-                if (i != 0) {
-                    ids += ", ";
-                }
-                ids += "'" + value[i] + "'";
-            }
-            const queryString = "select r.route_id, route_name from route_stop_bridge b" +
-            " join routes r on r.route_id = b.route_id join stops s on b.stop_id = s.stop_id " +
-            "where stop_name IN (" + ids + ") group by r.route_id" +
-            " having count(distinct stop_name) =" + value.length + ';';
+    
 
-            //console.log(queryString);
-            const res = await CallDatabase(queryString);
-            //console.log(res);
-            navigation.dispatch(
-                CommonActions.navigate({
-                    name: 'Route Selection',
-
-                    params: {res},
-
-                })
-            )
-        }
-    }
     //DropDownPicker.setMode("BADGE");
     return (
         <View >
@@ -79,10 +39,14 @@ function create_table2(info) {
     console.log(info);
     if (info) {
         var rows = [];
-        var row_width = [150,150];
-        var headers = ["Route Number", "Route Name"];
+        var row_width = [60, 100, 240];
+        var headers = ["Route #", "Name", "Stops on Route"];
         for(var i = 0; i < info.length; i++) {
-            rows.push([info[i]["route_id"], info[i]["route_name"]]);
+            var check = info[i]["stops"].split(',');
+            if (check.length > 1) {
+                rows.push([info[i]["route_id"], info[i]["route_name"], info[i]["stops"]]);
+            }
+            
         }
         return (
                 <ScrollView horizontal={false}  nestedScrollView={true} style={table_style.scroll}>
@@ -110,8 +74,14 @@ function create_table2(info) {
     } else {
         if (info == undefined ||  info.length == 0) {
             return (
-                    <Text style={{top:300}}>Tap on the map to place a start marker and tap again to place an end marker. This pattern will repeat everytime you press the screen. Press the Route Suggestion button and a table will appear with possible routes</Text>
-            )
+                <View>
+                    <Text style={{ fontSize: 18, padding: 12 }}>Tap on the map to place a start point. Tapping again will place an end marker.</Text>
+                    <Text style={{ fontSize: 13, padding: 3, textAlign:'center'}}>(Pressing the screen again will restart the pattern.)</Text>
+                    <Text style={{ fontSize: 18, padding: 12 }}>Press the Route Suggestion button and a table will appear here with possible routes</Text>
+                    <Text style={{ fontSize: 18, padding: 12 }}>If no routes appear it means that the closest stops to the locations selected do not share a route.</Text>
+                </View>
+                
+            )   
         } else {
             return (
                 <Text>Pending...</Text>
@@ -131,15 +101,35 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     label: {
-        fontSize: 18,
+        fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: -200,
+        marginBottom: 0,
         padding: 10,
         zIndex:1,
     },
     value: {
         fontSize: 16,
         marginBottom: 0,
+    },
+});
+const table_style = StyleSheet.create({
+    container: { padding: 4, paddingTop: 30, },
+    rowSection: { height: 60, backgroundColor: '#E7E6E1' },
+    head: { height: 44, backgroundColor: '#500' },
+    headText: { fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: 'white' },
+    text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
+    button: {
+        backgroundColor: '#E7E6E1', color: '#500000', fontWeight: 'bold', width: 179,
+        padding: 12, borderWidth: 1, top: 0, textAlign: 'center',
+    },
+    viewContainer: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', height: '100%' },
+    scroll: {
+        ...Platform.select({
+            android: {
+                height: 650,
+            }
+        }),
+        height: 650,
     },
 });
 
@@ -175,32 +165,6 @@ async function CallDatabase(query) {
 
 }
 
-const table_style = StyleSheet.create({
-    container: { padding: 4, paddingTop: 30, },
-    rowSection: { height: 60, backgroundColor: '#E7E6E1' },
-    head: { height: 44, backgroundColor: '#500' },
-    headText: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'white' },
-    text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
-    button: { backgroundColor: '#E7E6E1', color: '#500000', fontWeight: 'bold', width: 179, 
-              padding: 12, borderWidth: 1, top:0, textAlign:'center',
-            },
-    viewContainer: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', height: '100%'},
-    scroll: { 
-        ...Platform.select({
-            ios: {
-                left: 45,
-                height: 350,
 
-            },
-            android: {
-                left: 30,
-                height: 285,
-            }
-        }),
-        
-        top: 200,
-       // height: 370,
-    },
-});
 
 
