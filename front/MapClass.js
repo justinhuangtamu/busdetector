@@ -100,7 +100,7 @@ export function Map({ navigation, route }) {
     // console.log(stops)
 
     //get the bus locations from the database
-    queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "';";
+    queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "' order by bus_id;";
     const bus = await CallDatabase(queryString);
     console.log(bus);
     
