@@ -105,4 +105,4 @@ def update_routes():
     conn.close()
     
 # Run Program
-update_routes()
+# update_routes()

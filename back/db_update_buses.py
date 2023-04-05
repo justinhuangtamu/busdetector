@@ -43,5 +43,5 @@ def update_buses():
     conn.close()
 
 # Run Program
-update_buses()
+# update_buses()
 
