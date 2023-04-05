@@ -244,11 +244,17 @@ export function Map({ navigation, route }) {
 }
 
 function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
-  var navigation = useNavigation();
+  
   var id = 0;
   var bus_key = 0;
   // console.log("in create map")
   // console.log(markers)
+  const [coords, setCoords] = useState([{ "latitude": 37.00, "longitude": -96.00 },
+    { "latitude": 37.00, "longitude": -96.00 }]);
+  const [pin, setPin] = useState(false);
+  suggestRoutes = () => {
+    console.log(coords);
+  }
   return (
     <View style={styles.container}>
 
@@ -260,12 +266,28 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           showsMyLocationButton={true}
+
+          onPress= {(e) => {
+            var cords = pin ? [coords[0], e.nativeEvent.coordinate] : [e.nativeEvent.coordinate, coords[1]]
+            //coords[counter ? 0 : 1] = e.nativeEvent.coordinate;
+            setCoords(cords);
+            setPin(!pin);
+        }}
         >
+          {coords.map(marker => (
           <Marker
-            coordinate={{"latitude": MSC.latitude, "longitude": MSC.longitude}}
-            title={"Desired Location"}
+            key = {id++}
+            coordinate={marker}
+            title={id%2==0 ? "Start" : "End"}
             draggable={true}
-            />
+            onDragEnd={(e) => {
+              console.log(e.nativeEvent.coordinate);
+            }}
+          />
+          ))}
+          <TouchableOpacity style={styles.mapButton} onPress={suggestRoutes}>
+            <Text style={{ color: 'black',  fontSize:12, top:7, textAlign:'center', fontWeight:'bold'}}>Suggest Routes</Text>
+          </TouchableOpacity>
 
           {markers.map(marker => (
             <Marker
@@ -366,6 +388,20 @@ export const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    mapButton: {
+      position: 'absolute',
+      bottom: '90%',
+      right: '85%',
+      backgroundColor: 'white', //#2196F3
+      borderColor: 'black',
+      borderBottomColor: 'black',
+      borderRadius: 30,
+      borderWidth: 1,
+      width: 60,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     map: {
         width: '100%',
