@@ -187,7 +187,7 @@ export function Map({ navigation, route }) {
           showsButtons={false}
         
         >
-
+          
           {create_Map(navigation, waypoints, bus_ids, markers, buses_loc)}
         <View>
           <SafeAreaView style={styles.item}>
@@ -217,9 +217,7 @@ export function Map({ navigation, route }) {
             <TouchableWithoutFeedback onPress={() =>{setRefresh(false); navigation.navigate('Information')}}>
               <Image source={require('./assets/question.png')} style={styles.question} />
             </TouchableWithoutFeedback>
-            <TouchableOpacity onPress={() => {setRefresh(false); navigation.navigate('Route Suggestion')}} >
-              {<Text style={styles.filterbutton}>Route Suggestion</Text>}
-            </TouchableOpacity>
+            
             {table_view(static_times, eta_times, dynamic)
             }
             
@@ -238,9 +236,65 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
   const [coords, setCoords] = useState([{ "latitude": 37.00, "longitude": -96.00 },
     { "latitude": 37.00, "longitude": -96.00 }]);
   const [pin, setPin] = useState(false);
-  suggestRoutes = () => {
+
+
+  suggestRoutes = async () => {
+    // Write 
     console.log(coords);
-  }
+    // var ids = "";
+    var queryString = "select stop_name, stop_id from stops s where stop_name != 'Way Point'"+
+    " order by distance(s.latitude, s.longitude," + coords[0]["latitude"] + ',' + 
+    coords[0]["longitude"] + ") asc limit 4;";
+    const start = await CallDatabase(queryString);
+    console.log(start);
+
+
+
+    queryString = "select stop_name, stop_id from stops s where stop_name != 'Way Point'" +
+      " order by distance(s.latitude, s.longitude," + coords[1]["latitude"] + ',' +
+      coords[1]["longitude"] + ") asc limit 4 ;";
+    const end = await CallDatabase(queryString);
+    console.log(end);
+
+    var list1 = "(";
+    var list2 = "(";
+    for (var i = 0; i < 3; i++) {
+      list1 += "'" + start[i]["stop_name"] + "'";
+      list2 += "'" + end[i]["stop_name"] + "'";
+      if (i != 2) {
+        list1 += ",";
+        list2 += ",";
+      }
+    }
+    list1 += ")";
+    list2 += ")";
+
+    // Create the needed functions in suggestion.js and import them for here to make it easier to read
+    
+    queryString = "select r.route_id, route_name from route_stop_bridge b " +
+    "join routes r on r.route_id = b.route_id join stops s on b.stop_id = s.stop_id " +
+    "group by r.route_id HAVING  count(distinct stop_name IN " + list1 + ") > 1 " +
+    "and count (distinct stop_name IN " + list2 + ") > 1;";
+
+    /*
+    select r.route_id, route_name from route_stop_bridge b
+    join routes r on r.route_id = b.route_id join stops s 
+    on b.stop_id = s.stop_id
+    group by r.route_id HAVING 
+    count(distinct stop_name IN ('Jones Butler @ Harvey Mitchell', 'Woodsman')) > 1
+    AND count (distinct stop_name IN ('MSC')) > 1;
+    */
+    console.log(queryString);
+    const res = await CallDatabase(queryString);
+    //console.log
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'Route Suggestion',
+        params: { res },
+        }));
+    }
+  
+
   return (
     <View style={styles.container}>
 
@@ -265,15 +319,11 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
             key = {id++}
             coordinate={marker}
             title={id%2==0 ? "Start" : "End"}
+            pinColor={id%2==0 ? "blue" : "red"}
             draggable={true}
-            onDragEnd={(e) => {
-              console.log(e.nativeEvent.coordinate);
-            }}
           />
           ))}
-          <TouchableOpacity style={styles.mapButton} onPress={suggestRoutes}>
-            <Text style={{ color: 'black',  fontSize:12, top:7, textAlign:'center', fontWeight:'bold'}}>Suggest Routes</Text>
-          </TouchableOpacity>
+         
 
           {markers.map(marker => (
             <Marker
@@ -325,14 +375,17 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
             strokeColor={buses[bus_id]["color"]}
             strokeWidth={6} />
-
         </MapView>
+        
       }
       <StatusBar style="auto" />
       {/* <Image
       style={{ width: 50, height: 50 }}
       source={require('./assets/settings.png')}
     /> */}
+      <TouchableOpacity style={styles.mapButton} onPress={suggestRoutes} >
+        <Text style={{ color: 'black', fontSize: 12, top: 7, textAlign: 'center', fontWeight: 'bold' }}>Suggest Routes</Text>
+      </TouchableOpacity> 
     </View>
   )
   
@@ -438,25 +491,12 @@ export const styles = StyleSheet.create({
       filterbutton: {
         ...Platform.select({
           ios: {
-            position: 'relative',
-            backgroundColor: '#E7E6E1',
-            color: '#500000',
-            fontWeight: 'bold',
-            borderWidth: 1,
-            width: 175,
-            height: 45,
-            padding: 12,
+
             top: -50,
             left: 200,
           },
           android: {
-            position: 'relative',
-            backgroundColor: '#E7E6E1',
-            color: '#500000',
-            fontWeight: 'bold',
-            borderWidth: 1,
-            width: 139,
-            height: 45,
+
             padding: 12,
             top: -50,
             left: 190,
@@ -506,11 +546,13 @@ export const styles = StyleSheet.create({
             width: 45,
             height: 45,
             borderWidth: 1,
+            padding: 12,
           },
           android: {
             position: 'relative',
             zIndex: 1,
             backgroundColor: '#E7E6E1',
+            padding: 12,
             top: -5,
             left: 145,
             width: 45,
