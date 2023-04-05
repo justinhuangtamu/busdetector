@@ -5,7 +5,7 @@ import { TouchableOpacity, StyleSheet, Text, View, ScrollView, LogBox, Platform 
 
 import { Table, TableWrapper,  Row, Rows } from 'react-native-table-component';
 // import { CallDatabase } from './MapClass.js';
-LogBox.ignoreAllLogs("Warning:");
+LogBox.ignoreAllLogs("Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.");
 const ToggleButton = (unfiltered, stops, filtered) => {
 
 

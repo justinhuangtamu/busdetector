@@ -257,21 +257,23 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
   suggestRoutes = async () => {
     // Write 
-    console.log(coords);
+    console.log(coords[0]);
+
+    console.log(coords[1]);
     // var ids = "";
     var queryString = "select stop_name, stop_id from stops s where stop_name != 'Way Point'"+
     " order by distance(s.latitude, s.longitude," + coords[0]["latitude"] + ',' + 
-    coords[0]["longitude"] + ") asc limit 4;";
+    coords[0]["longitude"] + ") asc limit 3;";
     const start = await CallDatabase(queryString);
-    console.log(start);
+  
 
 
 
     queryString = "select stop_name, stop_id from stops s where stop_name != 'Way Point'" +
       " order by distance(s.latitude, s.longitude," + coords[1]["latitude"] + ',' +
-      coords[1]["longitude"] + ") asc limit 4 ;";
+      coords[1]["longitude"] + ") asc limit 3;";
     const end = await CallDatabase(queryString);
-    console.log(end);
+   
 
     var list1 = "(";
     var list2 = "(";
@@ -288,11 +290,23 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
     // Create the needed functions in suggestion.js and import them for here to make it easier to read
     
-    queryString = "select r.route_id, route_name from route_stop_bridge b " +
-    "join routes r on r.route_id = b.route_id join stops s on b.stop_id = s.stop_id " +
-    "group by r.route_id HAVING  count(distinct stop_name IN " + list1 + ") > 1 " +
-    "and count (distinct stop_name IN " + list2 + ") > 1;";
-
+    
+    // console.log("Start\n End");
+    // console.log(start)
+    // console.log(end);
+    
+    queryString = "select route_id, route_name " +
+    "from( " +
+      "select r.route_id, route_name, " +
+      "SUM(CASE WHEN stop_name IN " + list1 + " THEN 1 ELSE 0 END) AS count1, " +
+      "SUM(CASE WHEN stop_name IN " + list2 + " THEN 1 ELSE 0 END) AS count2  " +
+		"from route_stop_bridge b " + 
+		"join routes r on r.route_id = b.route_id " +
+		"join stops s on b.stop_id = s.stop_id " +
+		"group by r.route_id " +
+    ") temp " +
+    "where(count1 < 4 and count1 > 0 and count2 < 4 and count2 > 0);";
+    
     /*
     select r.route_id, route_name from route_stop_bridge b
     join routes r on r.route_id = b.route_id join stops s 
@@ -301,9 +315,12 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     count(distinct stop_name IN ('Jones Butler @ Harvey Mitchell', 'Woodsman')) > 1
     AND count (distinct stop_name IN ('MSC')) > 1;
     */
+
+
     console.log(queryString);
     const res = await CallDatabase(queryString);
-    //console.log
+    
+
     navigation.dispatch(
       CommonActions.navigate({
         name: 'Route Suggestion',
@@ -323,10 +340,15 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           showsMyLocationButton={true}
+          
 
           onPress= {(e) => {
             var cords = pin ? [coords[0], e.nativeEvent.coordinate] : [e.nativeEvent.coordinate, coords[1]]
             //coords[counter ? 0 : 1] = e.nativeEvent.coordinate;
+            console.log("\n trial");
+            console.log(e.nativeEvent.coordinate);
+            console.log('\n');
+
             setCoords(cords);
             setPin(!pin);
         }}
@@ -340,8 +362,8 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
             draggable={true}
           />
           ))}
-         
-
+          
+            
           {markers.map(marker => (
             <Marker
               key={id++}
@@ -392,6 +414,9 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
             strokeColor={buses[bus_id]["color"]}
             strokeWidth={6} />
+
+          
+
         </MapView>
         
       }
@@ -401,7 +426,9 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
       source={require('./assets/settings.png')}
     /> */}
       <TouchableOpacity style={styles.mapButton} onPress={suggestRoutes} >
-        <Text style={{ color: 'black', fontSize: 12, top: 7, textAlign: 'center', fontWeight: 'bold' }}>Suggest Routes</Text>
+        <Image 
+          style={{ width: 40, height: 40, backgroundColor:'#72b2fc', borderRadius:3, }}
+          source={require('./assets/test2.png')}/>
       </TouchableOpacity> 
     </View>
   )
@@ -447,9 +474,9 @@ export const styles = StyleSheet.create({
     },
     mapButton: {
       position: 'absolute',
-      bottom: '90%',
-      right: '85%',
-      backgroundColor: 'white', //#2196F3
+      top:5,
+      left:5,
+      backgroundColor: '#72b2fc', //#72b2fc
       borderColor: 'black',
       borderBottomColor: 'black',
       borderRadius: 30,
@@ -458,12 +485,18 @@ export const styles = StyleSheet.create({
       height: 60,
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.54,
     },
     map: {
         width: '100%',
-        height: '87%',
-        marginBottom: 100
-        ,
+        height: '100%',
+        marginBottom: 100,
     },
     link: {
         flex: 1,

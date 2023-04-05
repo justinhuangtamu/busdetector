@@ -1,12 +1,12 @@
 import React, { Component, useState } from 'react';
 
-import { StatusBar } from 'expo-status-bar';
-import { TouchableOpacity, Text, View, StyleSheet, ScrollView, Platform} from 'react-native';
 
-import { Table, TableWrapper, Col, Row, Rows } from 'react-native-table-component';
-import { useNavigation, CommonActions } from '@react-navigation/native';
+import { Text, View, StyleSheet, ScrollView, Platform} from 'react-native';
 
-import DropDownPicker from 'react-native-dropdown-picker';
+import { Table, TableWrapper, Row, Rows } from 'react-native-table-component';
+
+
+
 import stops from './stops.json';
 
 export function Settings({ navigation, route }) {
@@ -81,8 +81,14 @@ function create_table2(info) {
     } else {
         if (info == undefined ||  info.length == 0) {
             return (
-                <Text style={{top:300}}>Tap on the map to place a start marker and tap again to place an end marker. This pattern will repeat everytime you press the screen. Press the Route Suggestion button and a table will appear with possible routes</Text>
-            )
+                <View>
+                    <Text style={{ fontSize: 18, padding: 12 }}>Tap on the map to place a start point. Tapping again will place an end marker.</Text>
+                    <Text style={{ fontSize: 13, padding: 3, textAlign:'center'}}>(Pressing the screen again will restart the pattern.)</Text>
+                    <Text style={{ fontSize: 18, padding: 12 }}>Press the Route Suggestion button and a table will appear here with possible routes</Text>
+                    <Text style={{ fontSize: 18, padding: 12 }}>If no routes appear it means that the closest stops to the locations selected do not share a route.</Text>
+                </View>
+                
+            )   
         } else {
             return (
                 <Text>Pending...</Text>
@@ -102,15 +108,41 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     label: {
-        fontSize: 18,
+        fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: -200,
+        marginBottom: 0,
         padding: 10,
         zIndex:1,
     },
     value: {
         fontSize: 16,
         marginBottom: 0,
+    },
+});
+const table_style = StyleSheet.create({
+    container: { padding: 4, paddingTop: 30, },
+    rowSection: { height: 60, backgroundColor: '#E7E6E1' },
+    head: { height: 44, backgroundColor: '#500' },
+    headText: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'white' },
+    text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
+    button: {
+        backgroundColor: '#E7E6E1', color: '#500000', fontWeight: 'bold', width: 179,
+        padding: 12, borderWidth: 1, top: 0, textAlign: 'center',
+    },
+    viewContainer: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', height: '100%' },
+    scroll: {
+        ...Platform.select({
+            ios: {
+                left: 45,
+                height: 350,
+
+            },
+            android: {
+                left: 30,
+                height: 285,
+            }
+        }),
+        height: 370,
     },
 });
 
@@ -146,32 +178,6 @@ async function CallDatabase(query) {
 
 }
 
-const table_style = StyleSheet.create({
-    container: { padding: 4, paddingTop: 30, },
-    rowSection: { height: 60, backgroundColor: '#E7E6E1' },
-    head: { height: 44, backgroundColor: '#500' },
-    headText: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'white' },
-    text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
-    button: { backgroundColor: '#E7E6E1', color: '#500000', fontWeight: 'bold', width: 179, 
-              padding: 12, borderWidth: 1, top:0, textAlign:'center',
-            },
-    viewContainer: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', height: '100%'},
-    scroll: { 
-        ...Platform.select({
-            ios: {
-                left: 45,
-                height: 350,
 
-            },
-            android: {
-                left: 30,
-                height: 285,
-            }
-        }),
-        
-        top: 200,
-       // height: 370,
-    },
-});
 
 
