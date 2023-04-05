@@ -34,9 +34,17 @@ def handler(signum, frame):
 print("BusDetector Backend Task Scheduler")
 print("CSCE 482-933 Senior Capstone Design")
 print("Spring 2023")
+print("Timezone offset = " + timezone_offset)
 signal.signal(signal.SIGINT, handler)
 print("\n[" + time.ctime() + "] Updating routes... ", end="", flush=True)
-db_update_routes.update_routes()
+for i in range(5):
+    try:
+        db_update_routes.update_routes()
+        break
+    except:
+        print("Error occurred. Sleeping for " + 10 ** (i + 1) + " seconds. (" + i + "/5)")
+        time.sleep(10 ** (i + 1))
+        pass
 print("DONE\n")
 
 # periodic updates
@@ -45,12 +53,26 @@ while not exit:
         routeupdate_flag = False
 
         print("[" + time.ctime() + "] Updating bus locations... ", end="", flush=True)
-        db_update_buses.update_buses()
+        for i in range(5):
+            try:
+                db_update_buses.update_buses()
+                break
+            except:
+                print("Error occurred. Sleeping for " + 10 ** (i + 1) + " seconds. (" + i + "/5)")
+                time.sleep(10 ** (i + 1))
+                pass
         print("DONE")
 
         if (etaupdate_counter == 60):
             print("[" + time.ctime() + "] Updating bus ETAs... ", end="", flush=True)
-            db_update_eta.update_etas()
+            for i in range(5):
+                try:
+                    db_update_eta.update_etas()
+                    break
+                except:
+                    print("Error occurred. Sleeping for " + 10 ** (i + 1) + " seconds. (" + i + "/5)")
+                    time.sleep(10 ** (i + 1))
+                    pass
             print("DONE")
             etaupdate_counter = 0
 
@@ -60,7 +82,14 @@ while not exit:
         routeupdate_flag = True
 
         print("\n[" + time.ctime() + "] Updating routes... ", end="", flush=True)
-        db_update_routes.update_routes()
+        for i in range(5):
+            try:
+                db_update_routes.update_routes()
+                break
+            except:
+                print("Error occurred. Sleeping for " + 10 ** (i + 1) + " seconds. (" + i + "/5)")
+                time.sleep(10 ** (i + 1))
+                pass
         print("DONE\n")
     else:
         time.sleep(1)
