@@ -34,7 +34,7 @@ def handler(signum, frame):
 print("BusDetector Backend Task Scheduler")
 print("CSCE 482-933 Senior Capstone Design")
 print("Spring 2023")
-print("Timezone offset = " + timezone_offset)
+print("Timezone offset = " + str(timezone_offset))
 signal.signal(signal.SIGINT, handler)
 print("\n[" + time.ctime() + "] Updating routes... ", end="", flush=True)
 for i in range(5):
