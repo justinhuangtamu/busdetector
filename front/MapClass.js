@@ -57,6 +57,7 @@ export function Map({ navigation, route }) {
   var eta_times;
   var markers;
   var buses_loc;
+  //console.log(route.params);
   if (route.params === undefined) {
     waypoints = route.params || [];
     bus_ids = "01";
@@ -105,7 +106,7 @@ export function Map({ navigation, route }) {
     console.log(bus);
     
     
-    // Navigate to the Map screen and pass the selected waypoints as a parameter
+    // Navigate to the Map screen and pass the selected waypoints as a parameter  // 47, 12, 26, 47-48, 01-04
     navigation.dispatch(
       CommonActions.navigate({
         name: 'Home',
