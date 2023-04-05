@@ -53,10 +53,16 @@ def get_static_timetable(route_ids):
     for route_id in route_ids:
         r = requests.get('https://transport.tamu.edu/BusRoutesFeed/api/Route/'+ str(route_id) +'/TimeTable', auth=('user', 'pass'))
         for group in r.json():
+            first_name = ''
             for key, time in group.items():
                 if key == ' ' or time == "No Service Is Scheduled For This Date":
                     continue
                 name = key[36:]
+                if first_name == '':
+                    first_name = name
+                    name = name + ' - Depart'
+                elif name == first_name:
+                    name = name + ' - Arrive'
                 key = key[:36]
                 static_times.append((time_index, key, str(route_id), name, time))
                 time_index += 1
