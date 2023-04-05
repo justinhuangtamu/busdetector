@@ -8,12 +8,8 @@ import { StyleSheet, Text, View, Platform, FlatList, SafeAreaView, TouchableOpac
 
 import {sort_times, create_table} from './table.js';
 import { useNavigation, CommonActions } from '@react-navigation/native';
-import { useLocation } from "react-router-dom";
 
-// import { ScrollView } from 'react-native-gesture-handler'
-// import * as turf from '@turf/turf'; // import Turf.js library
 import Swiper from 'react-native-swiper';
-// import * as turf from '@turf/turf'; // import Turf.js library
 
 import buses from "./buses.json";
 import on_bus_buttons from "./bus-on-campus-button.json";
@@ -44,6 +40,15 @@ export function Map({ navigation, route }) {
   const [selectedId, setSelectedId] = useState();
   const [dynamic, SetDynamic] = useState(true);
   const [refresh, setRefresh] = useState(true);
+
+  // listens for when the map page is navigated to and sets refresh to true
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setRefresh(true);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
    
   
   var waypoints;
@@ -114,32 +119,32 @@ export function Map({ navigation, route }) {
   };
 
   // requeries for bus routes and etas
-  refreshPress = async (id) => {
-    const bus_id = id
+  // refreshPress = async (id) => {
+  //   const bus_id = id
 
-    queryString = "Select eta_time, stop_name, stops.stop_id, raw_time from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, raw_time) asc";
-    const dynamic = await CallDatabase(queryString); 
+  //   queryString = "Select eta_time, stop_name, stops.stop_id, raw_time from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, raw_time) asc";
+  //   const dynamic = await CallDatabase(queryString); 
 
-    //get the bus locations from the database
-    queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "';";
-    const bus = await CallDatabase(queryString);
-    console.log(bus);
+  //   //get the bus locations from the database
+  //   queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "';";
+  //   const bus = await CallDatabase(queryString);
+  //   console.log(bus);
 
-    // set params to route, stops, and static time selected by the user
-    const waypoint = waypoints;
-    const stops = markers;
-    const static_time = static_times;
+  //   // set params to route, stops, and static time selected by the user
+  //   const waypoint = waypoints;
+  //   const stops = markers;
+  //   const static_time = static_times;
     
-    // Navigate to the Map screen and pass the selected waypoints as a parameter
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: 'Home',
+  //   // Navigate to the Map screen and pass the selected waypoints as a parameter
+  //   navigation.dispatch(
+  //     CommonActions.navigate({
+  //       name: 'Home',
 
-        params: {waypoint, bus_id, stops, static_time, bus, dynamic}, 
+  //       params: {waypoint, bus_id, stops, static_time, bus, dynamic}, 
 
-      })
-    )
-  };
+  //     })
+  //   )
+  // };
 
   // refreshes the page
   useEffect(() => {
@@ -147,7 +152,7 @@ export function Map({ navigation, route }) {
     const autoPressButton = () => {
       // Check if an item is selected
       //console.log("selectedId is outside the if: " + selectedId);
-      if (selectedId) {
+      if (selectedId && refresh) {
         // Simulate button press by calling the onPress function with the selected item
         //console.log("selectedId is inside the if: " + selectedId);
         handlePress(selectedId);
@@ -159,25 +164,7 @@ export function Map({ navigation, route }) {
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [selectedId]);
-
-  // useEffect(() => {
-  //   // Function to automatically press the button every 15 seconds
-  //   const autoPressButton = () => {
-  //     // Check if an item is selected
-  //     if (selectedId) {
-  //       // Simulate button press by calling the onPress function with the selected item
-  //       handlePress(selectedId);
-  //     }
-  //   };
-
-  //   // Set up the interval to auto-press the button every 15 seconds only if we are on the home page
-  //   if (location.pathname === "/") {
-  //     const intervalId = setInterval(autoPressButton, 15000);
-  //     return () => clearInterval(intervalId);
-  //   }
-  // }, [location.pathname, selectedId]);
-
+  }, [selectedId, refresh]);
 
   const renderItem = ({ item }) => {
     const backgroundColor = item.id === selectedId ? '#dcdcdc' : item.color;
@@ -227,11 +214,10 @@ export function Map({ navigation, route }) {
                 {dynamic ? 'Show ETA Times' : 'Show Static Times'}
                 </Text> 
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('Information')}>
+            <TouchableWithoutFeedback onPress={() =>{setRefresh(false); navigation.navigate('Information')}}>
               <Image source={require('./assets/question.png')} style={styles.question} />
             </TouchableWithoutFeedback>
-            {/* set refresh to false when going to route suggestion page */}
-            <TouchableOpacity onPress={() => navigation.navigate('Route Suggestion')} >
+            <TouchableOpacity onPress={() => {setRefresh(false); navigation.navigate('Route Suggestion')}} >
               {<Text style={styles.filterbutton}>Route Suggestion</Text>}
             </TouchableOpacity>
             {table_view(static_times, eta_times, dynamic)
