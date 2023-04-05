@@ -2,3 +2,5 @@ front/node_modules
 node_postgres/node_modules
 front/temp
 hold.js
+./front/table.js
+back/__pycache__

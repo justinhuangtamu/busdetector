@@ -1,3 +1,11 @@
+'''
+CSCE 482-933
+BusDetector
+
+Script runs once every night at midnight approximately
+Updates route patterns and scheduled timetable for the day
+'''
+
 import psycopg2 as ps  # PostgreSQL db library
 from pyproj import Transformer  # coordinate transformations
 import requests  # HTTP requests library
@@ -65,11 +73,7 @@ def update_routes():
 
     static_times = get_static_timetable(route_ids)
     # establish db connection
-    try:
-        conn = ps.connect("dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
-    except:
-        print("Error connecting to the database!")
-        exit()
+    conn = ps.connect("dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
 
 
     cur = conn.cursor()
@@ -105,4 +109,4 @@ def update_routes():
     conn.close()
     
 # Run Program
-# update_routes()
+# update_routes()  # DEBUG purposes, leave commented out when not testing

@@ -1,3 +1,11 @@
+'''
+CSCE 482-933
+BusDetector
+
+Script runs very frequently (almost constantly)
+Updates bus location and passenger load and pushes to database
+'''
+
 import psycopg2 as ps  # PostgreSQL db library
 from pyproj import Transformer  # coordinate transformations
 import requests  # HTTP requests library
@@ -25,11 +33,7 @@ def update_buses():
     route_ids = ['01','01-04','03','03-05','04','05','06','07','08','12','15','22','26','27','31','34','35','36','40','47','47-48','48', 'N15']
     bus_data = get_bus_data(route_ids)
     # establish db connection
-    try:
-        conn = ps.connect("dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
-    except:
-        print("Error connecting to the database!")
-        exit()
+    conn = ps.connect("dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
 
 
     cur = conn.cursor()
@@ -43,5 +47,5 @@ def update_buses():
     conn.close()
 
 # Run Program
-# update_buses()
+# update_buses()  # DEBUG purposes, leave commented out when not testing
 
