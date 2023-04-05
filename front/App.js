@@ -81,7 +81,7 @@ export default function App() {
             })}
           />
           <Stack.Screen name="Information" component={Information} /> 
-          <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen name="Route Suggestion" component={Settings} />
           <Stack.Screen name="Announcments" component={Announcments} />
         </Stack.Navigator>
 

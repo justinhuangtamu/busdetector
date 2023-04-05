@@ -5,33 +5,22 @@ import { TouchableOpacity, StyleSheet, Text, View, ScrollView, LogBox, Platform 
 
 import { Table, TableWrapper,Col,  Row, Rows } from 'react-native-table-component';
 // import { CallDatabase } from './MapClass.js';
-
+LogBox.ignoreAllLogs("Warning:");
 const ToggleButton = (unfiltered, stops, filtered) => {
     
     const [toggleState, setToggleState] = useState(false);
 
     var rowsU = unfiltered;
-    var sumU = (rowsU[0].length -4) * 90;
-    var widthU = Array(rowsU[0].length - 1).fill(90);
+    var sumU = (rowsU[0].length -4) * 100;
+    var widthU = Array(rowsU[0].length - 1).fill(100);
     var len = rowsU[0].length -1;
     widthU.unshift(105);
     if (sumU < 0) {
         sumU = 0;
-        widthU = Array(len).fill(270 / (len));
+        widthU = Array(len).fill(300 / (len));
         widthU.unshift(105);
     }
 
-
-    var rowsF = filtered;
-    var sumF = (rowsF[0].length - 4) * 90;
-    len = rowsF[0].length - 1;
-    var widthF = Array(len).fill(90);
-    widthF.unshift(105);
-    if (sumF < 0) {
-        sumF = 0;
-        widthF = Array(len).fill(270 / (len));
-        widthF.unshift(105);
-    }
     
     
     
@@ -42,7 +31,6 @@ const ToggleButton = (unfiltered, stops, filtered) => {
     };
     var headers = ['Location ', "Timed Stops", ''];
 
-    console.log("\x1B[32mIGNORE:  Warning: Failed prop type: Invalid prop `textStyle` ... \x1B[0m");
     return (
         // TERMINAL WILL DISPLAY
         //                      Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.
@@ -56,7 +44,7 @@ const ToggleButton = (unfiltered, stops, filtered) => {
                         <Table borderStyle={{borderWidth: 1, borderColor: '#500000'}}  >
                             <Row 
                                 data={headers} 
-                                widthArr={toggleState ? [105, 270, sumF] : [105, 270, sumU] }
+                                widthArr={ [105, 300, sumU] }
                                 style={table_style.head}
                                 textStyle={table_style.headText} 
                             />
@@ -68,8 +56,8 @@ const ToggleButton = (unfiltered, stops, filtered) => {
                                         textStyle={table_style.text}
                                     /> */}
                                     <Rows
-                                        data={toggleState ? rowsF  : rowsU}
-                                        widthArr={toggleState ? widthF : widthU}
+                                        data={rowsU}
+                                        widthArr={widthU}
                                         style={table_style.rowSection}
                                         textStyle={table_style.text}
                                     />
@@ -93,6 +81,7 @@ export function sort_times(time_array_static, time_array_eta, dynamic) {
         if (dynamic) {
         //     values = sort_eta(time_array_eta);
             values = sort_static(time_array_static);
+            values = filter_array(values, stops);
             stops = populate_stops(values);
             filtered = filter_array(values, stops);
 
@@ -101,8 +90,9 @@ export function sort_times(time_array_static, time_array_eta, dynamic) {
             values = sort_dynamic(time_array_eta);
             
             stops = populate_stops(values);
+            console.log("Stops" + stops);
             values = filter_eta(values, stops); 
-            filtered = values;
+            filtered = filterTimesBeforeNow(values);
         }
         return create_table(values, stops, filtered);
     } catch {
@@ -149,7 +139,7 @@ function filterTimesBeforeNow(timesArray, check) {
         return filteredTimes;
     } else {
         const filtered = timesArray.filter(time => {
-            return (!isNaN(time));
+            return (time != "-- -- --");
         })
         return filtered;
     }
@@ -189,7 +179,7 @@ function filter_eta(values, stops) {
         if (hold.length >= longest) {
             longest = hold.length;
         }
-        hold.unshift(stops[i]);
+        //hold.unshift(stops[i]);
         filter_hold.push(hold);
     }
     return makeSubarraysSameLength(filter_hold, longest + 1, "-- -- --");
@@ -237,7 +227,7 @@ function sort_dynamic(times) {
                 values.push(curr_row);
             }
             keys = times[i]["stop_id"];
-            curr_row = [times[i]["stop_name"]];
+            curr_row = [times[i]["stop_name"]]; //
         }
         var time = times[i]["eta_time"];
         if (time == null) {
