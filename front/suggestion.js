@@ -63,35 +63,11 @@ export function Settings({ navigation, route }) {
             )
         }
     }
-    DropDownPicker.setMode("BADGE");
+    //DropDownPicker.setMode("BADGE");
     return (
         <View >
             <Text style={styles.label}>Select Bus Stops</Text>
-            <TouchableOpacity onPress={get_routes} style={{ alignItems: 'center', height: 45, }} >
-                {<Text style={table_style.button}>Selection</Text>}
-            </TouchableOpacity>               
-                {/* <View style={{zindex:4}}>
-                <DropDownPicker
-                    multiple={true}
-                    autoScroll={true}
-                    nestedScrollView={true}
-                    min={0}
-                    max={2}
-                    searchable={true}
-                    open={open}
-                    value={value}
-                    items={routes}
-                    containerStyle={{ width: '80%', left: '10%' }}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    setItems={setItems}
-                    showBadgeDot={false}
-
-                    extendableBadgeContainer={true}
-                />
-            </View> */}
             <View style={{ zindex: 3 }}>
-                
                 {create_table2(table_info)} 
             </View>
             
@@ -100,8 +76,8 @@ export function Settings({ navigation, route }) {
 }
 
 function create_table2(info) {
-    
-    if (info.length > 0) {
+    console.log(info);
+    if (info) {
         var rows = [];
         var row_width = [150,150];
         var headers = ["Route Number", "Route Name"];
@@ -110,7 +86,7 @@ function create_table2(info) {
         }
         return (
                 <ScrollView horizontal={false}  nestedScrollView={true} style={table_style.scroll}>
-                <View style={table_style.viewContainer}>
+                    <View style={table_style.viewContainer}>
                         <Table borderStyle={{ borderWidth: 1, borderColor: '#500000'}}   >
                             <Row
                                 data={headers}
@@ -134,15 +110,11 @@ function create_table2(info) {
     } else {
         if (info == undefined ||  info.length == 0) {
             return (
-                <View style={{ left: '40%', top: 250 }}>
-                    <Text>No Routes Exist</Text>
-                </View>
+                    <Text style={{top:300}}>Tap on the map to place a start marker and tap again to place an end marker. This pattern will repeat everytime you press the screen. Press the Route Suggestion button and a table will appear with possible routes</Text>
             )
         } else {
             return (
-            <View style={{left:'40%', top:250}}>
                 <Text>Pending...</Text>
-            </View>
         )
         }
         
@@ -161,13 +133,13 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: -200,
         padding: 10,
         zIndex:1,
     },
     value: {
         fontSize: 16,
-        marginBottom: 20,
+        marginBottom: 0,
     },
 });
 

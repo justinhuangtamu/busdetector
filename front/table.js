@@ -36,15 +36,15 @@ const ToggleButton = (unfiltered, stops, filtered) => {
         //                      Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.
         // 
         // IGNORE THIS WARNING its an error in the <Rows>.js file but the table is building correctly
-        <View style={{ top: -45}}>
+        <View style={{ top:0}}>
             
             <ScrollView horizontal={true}  >
                 <ScrollView horizontal={false} style={table_style.scroll} nestedScrollEnabled={true}>
                     <View style={table_style.viewContainer} >
-                        <Table borderStyle={{borderWidth: 1, borderColor: '#500000'}}  >
+                        <Table borderStyle={{borderWidth: 1, borderColor: '#500000'} }  >
                             <Row 
-                                data={headers} 
-                                widthArr={ [105, 300, sumU] }
+                                data={headers}
+                               widthArr={ [105, 300, sumU] }
                                 style={table_style.head}
                                 textStyle={table_style.headText} 
                             />
@@ -242,7 +242,7 @@ function sort_dynamic(times) {
 
 
 const table_style = StyleSheet.create({
-    container: { padding: 2, paddingTop: 0, },
+    container: { padding: 2, paddingTop: 0},
     rowSection: { height: 60, backgroundColor: '#E7E6E1' },
     head: { height: 44, backgroundColor: '#500' },
     headText: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'white' },
@@ -250,7 +250,7 @@ const table_style = StyleSheet.create({
     button: {backgroundColor: '#E7E6E1',  color: '#500000', fontWeight: 'bold',  width: 179, padding: 12, zIndex: 2, borderWidth: 1,},
     viewContainer: {flexDirection:'row', flexWrap:'wrap', alignItems: 'flex-start', flex: 1},
     scroll: {
-        height: 345,
+        height: 325,
     },
 
 });
