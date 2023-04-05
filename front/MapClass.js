@@ -277,16 +277,20 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
     var list1 = "(";
     var list2 = "(";
+    var list3 = "(";
     for (var i = 0; i < 3; i++) {
       list1 += "'" + start[i]["stop_name"] + "'";
       list2 += "'" + end[i]["stop_name"] + "'";
+      list3 += "'" + start[i]["stop_name"] + "', '" + end[i]["stop_name"] + "'";
       if (i != 2) {
         list1 += ",";
         list2 += ",";
+        list3 += ",";
       }
     }
     list1 += ")";
     list2 += ")";
+    list3 += ")";
 
     // Create the needed functions in suggestion.js and import them for here to make it easier to read
     
@@ -295,17 +299,19 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     // console.log(start)
     // console.log(end);
     
-    queryString = "select route_id, route_name " +
+    queryString = "select route_id, route_name, stops " +
     "from( " +
-      "select r.route_id, route_name, " +
+      "select r.route_id, route_name, STRING_AGG(distinct s.stop_name, ', ') as stops, " +
+      "SUM(CASE WHEN stop_name IN " + list3 + " THEN 1 ELSE 0 END) AS count3, " +
       "SUM(CASE WHEN stop_name IN " + list1 + " THEN 1 ELSE 0 END) AS count1, " +
       "SUM(CASE WHEN stop_name IN " + list2 + " THEN 1 ELSE 0 END) AS count2  " +
 		"from route_stop_bridge b " + 
 		"join routes r on r.route_id = b.route_id " +
 		"join stops s on b.stop_id = s.stop_id " +
+    "where s.stop_name in " + list3 + " " +
 		"group by r.route_id " +
     ") temp " +
-    "where(count1 < 4 and count1 > 0 and count2 < 4 and count2 > 0);";
+    "where(count1 < 4 and count1 > 0 and count2 < 4 and count2 > 0 and count3 > 1);";
     
     /*
     select r.route_id, route_name from route_stop_bridge b

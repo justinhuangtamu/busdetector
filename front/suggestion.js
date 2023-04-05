@@ -7,11 +7,11 @@ import { Table, TableWrapper, Row, Rows } from 'react-native-table-component';
 
 
 
-import stops from './stops.json';
+
 
 export function Settings({ navigation, route }) {
     
-    var routes = [];
+    
     var table_info;
 
 
@@ -20,18 +20,7 @@ export function Settings({ navigation, route }) {
     } else {
         table_info = route.params['res'];
     }
-    var prev_label ="";
-    for (var i = 0; i < stops.length; i++) {
-        if (stops[i]["label"] != prev_label) {
-            routes.push(
-                {
-                    "value": stops[i]["label"],
-                    "label": stops[i]["label"],
-                }
-            )
-            prev_label = stops[i]["label"];
-        }
-    }
+    
     
 
     //DropDownPicker.setMode("BADGE");
@@ -50,10 +39,14 @@ function create_table2(info) {
     console.log(info);
     if (info) {
         var rows = [];
-        var row_width = [150,150];
-        var headers = ["Route Number", "Route Name"];
+        var row_width = [60, 100, 240];
+        var headers = ["Route #", "Name", "Stops on Route"];
         for(var i = 0; i < info.length; i++) {
-            rows.push([info[i]["route_id"], info[i]["route_name"]]);
+            var check = info[i]["stops"].split(',');
+            if (check.length > 1) {
+                rows.push([info[i]["route_id"], info[i]["route_name"], info[i]["stops"]]);
+            }
+            
         }
         return (
                 <ScrollView horizontal={false}  nestedScrollView={true} style={table_style.scroll}>
@@ -123,7 +116,7 @@ const table_style = StyleSheet.create({
     container: { padding: 4, paddingTop: 30, },
     rowSection: { height: 60, backgroundColor: '#E7E6E1' },
     head: { height: 44, backgroundColor: '#500' },
-    headText: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'white' },
+    headText: { fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: 'white' },
     text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
     button: {
         backgroundColor: '#E7E6E1', color: '#500000', fontWeight: 'bold', width: 179,
@@ -132,17 +125,11 @@ const table_style = StyleSheet.create({
     viewContainer: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', height: '100%' },
     scroll: {
         ...Platform.select({
-            ios: {
-                left: 45,
-                height: 350,
-
-            },
             android: {
-                left: 30,
-                height: 285,
+                height: 650,
             }
         }),
-        height: 370,
+        height: 650,
     },
 });
 

@@ -233,7 +233,7 @@ function sort_dynamic(times) {
 const table_style = StyleSheet.create({
     container: { padding: 2, paddingTop: 2},
     rowSection: { height: 60, backgroundColor: '#E7E6E1' },
-    head: { height: 44, backgroundColor: '#500' },
+    head: { height: 44,  backgroundColor: '#500' },
     headText: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: 'white' },
     text: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
     button: {backgroundColor: '#E7E6E1',  color: '#500000', fontWeight: 'bold',  width: 179, padding: 12, zIndex: 2, borderWidth: 1,},
