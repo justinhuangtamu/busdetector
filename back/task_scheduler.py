@@ -21,6 +21,7 @@ import signal
 exit = False
 routeupdate_flag = False  # only update routes once a day
 etaupdate_counter = 0
+timezone_offset = 5  # 5 UTC->CDT, 6 UTC->CST
 
 # ctrl-c signal handler
 def handler(signum, frame):
@@ -40,7 +41,7 @@ print("DONE\n")
 
 # periodic updates
 while not exit:
-    if ((time.localtime().tm_hour - 6) > 6 or (time.localtime().tm_hour - 6) < 2):
+    if ((time.localtime().tm_hour - timezone_offset) > 6 or (time.localtime().tm_hour - timezone_offset) < 2):
         routeupdate_flag = False
 
         print("[" + time.ctime() + "] Updating bus locations... ", end="", flush=True)
@@ -53,9 +54,9 @@ while not exit:
             print("DONE")
             etaupdate_counter = 0
 
-        etaupdate_counter += 15
+        # etaupdate_counter += 15
         time.sleep(15)
-    elif ((time.localtime().tm_hour - 6) < 6 and (time.localtime().tm_hour - 6) > 2 and routeupdate_flag is not True):
+    elif ((time.localtime().tm_hour - timezone_offset) < 6 and (time.localtime().tm_hour - timezone_offset) > 2 and routeupdate_flag is not True):
         routeupdate_flag = True
 
         print("\n[" + time.ctime() + "] Updating routes... ", end="", flush=True)
