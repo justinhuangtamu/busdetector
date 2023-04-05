@@ -23,7 +23,11 @@ def get_bus_data(route_ids):
             bus_id = bus.get("Name")
             lat, long = convert_coords(bus.get("GPS").get("Long"), bus.get("GPS").get("Lat"))
             occupancy = bus.get("APC").get("TotalPassenger")
-            next_stop_name = bus.get("NextStops")[0].get("Name")
+            next_stops = bus.get("NextStops")
+            if next_stops != None:
+                next_stop_name = next_stops[0].get("Name")
+            else:
+                next_stop_name = ''
             bus_data.append((bus_id,route_id,lat,long,occupancy,next_stop_name))
     return bus_data
         
