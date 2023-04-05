@@ -10,9 +10,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import stops from './stops.json';
 
 export function Settings({ navigation, route }) {
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [items, setItems] = useState(stops);
+    
     var routes = [];
     var table_info;
 
@@ -35,34 +33,7 @@ export function Settings({ navigation, route }) {
         }
     }
     
-    get_routes = async () => {
-        //console.log(value);
-        var ids = "";
-        if (value != null) {
-            for (var i = 0; i < value.length; i++ ) {
-                if (i != 0) {
-                    ids += ", ";
-                }
-                ids += "'" + value[i] + "'";
-            }
-            const queryString = "select r.route_id, route_name from route_stop_bridge b" +
-            " join routes r on r.route_id = b.route_id join stops s on b.stop_id = s.stop_id " +
-            "where stop_name IN (" + ids + ") group by r.route_id" +
-            " having count(distinct stop_name) =" + value.length + ';';
 
-            //console.log(queryString);
-            const res = await CallDatabase(queryString);
-            //console.log(res);
-            navigation.dispatch(
-                CommonActions.navigate({
-                    name: 'Route Selection',
-
-                    params: {res},
-
-                })
-            )
-        }
-    }
     //DropDownPicker.setMode("BADGE");
     return (
         <View >
@@ -110,7 +81,7 @@ function create_table2(info) {
     } else {
         if (info == undefined ||  info.length == 0) {
             return (
-                    <Text style={{top:300}}>Tap on the map to place a start marker and tap again to place an end marker. This pattern will repeat everytime you press the screen. Press the Route Suggestion button and a table will appear with possible routes</Text>
+                <Text style={{top:300}}>Tap on the map to place a start marker and tap again to place an end marker. This pattern will repeat everytime you press the screen. Press the Route Suggestion button and a table will appear with possible routes</Text>
             )
         } else {
             return (
