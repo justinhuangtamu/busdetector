@@ -259,12 +259,6 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     { "latitude": 37.00, "longitude": -96.00 }]);
   const [pin, setPin] = useState(false);
 
-  // let coords = [{ "latitude": 37.00, "longitude": -96.00 },
-  //   { "latitude": 37.00, "longitude": -96.00 }];
-
-  // let pin = false;
-
-
   suggestRoutes = async () => {
     // Write 
     console.log(coords[0]);
