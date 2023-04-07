@@ -23,6 +23,7 @@ const MSC = {
 }
 
 var queryString = "";
+var refresh = true;
 
 
 // this is for the button list
@@ -39,12 +40,14 @@ export function Map({ navigation, route }) {
   
   const [selectedId, setSelectedId] = useState();
   const [dynamic, SetDynamic] = useState(true);
-  const [refresh, setRefresh] = useState(true);
+  // const [refresh, setRefresh] = useState(true);
+  
 
   // listens for when the map page is navigated to and sets refresh to true
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      setRefresh(true);
+      // setRefresh(true);
+      refresh = true;
     });
 
     return unsubscribe;
@@ -57,6 +60,7 @@ export function Map({ navigation, route }) {
   var eta_times;
   var markers;
   var buses_loc;
+  //console.log(route.params);
   if (route.params === undefined) {
     waypoints = route.params || [];
     bus_ids = "01";
@@ -171,6 +175,7 @@ export function Map({ navigation, route }) {
       if (selectedId && refresh) {
         // Simulate button press by calling the onPress function with the selected item
         //console.log("selectedId is inside the if: " + selectedId);
+        console.log("refresh");
         handlePress(selectedId);
       }
     };
@@ -230,7 +235,7 @@ export function Map({ navigation, route }) {
                 {dynamic ? 'Show ETA Times' : 'Show Static Times'}
                 </Text> 
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() =>{setRefresh(false); navigation.navigate('Information')}}>
+            <TouchableWithoutFeedback onPress={() =>{refresh = false; navigation.navigate('Information')}}>
               <Image source={require('./assets/question.png')} style={styles.question} />
             </TouchableWithoutFeedback>
             
@@ -248,20 +253,20 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
   
   var id = 0;
   var bus_key = 0;
-  // console.log("in create map")
+  console.log("in create map")
   // console.log(markers)
   const [coords, setCoords] = useState([{ "latitude": 37.00, "longitude": -96.00 },
     { "latitude": 37.00, "longitude": -96.00 }]);
   const [pin, setPin] = useState(false);
 
-
   suggestRoutes = async () => {
     // Write 
-    console.log(coords[0]);
+    // console.log(coords[0]);
+    // console.log(coords[1]);
 
-    console.log(coords[1]);
     var limit = 5;
-    // var ids = "";
+    refresh = false;
+
     var queryString = "select stop_name, MIN(" + "distance(s.latitude, s.longitude, " + coords[0]["latitude"] + ',' + 
     coords[0]["longitude"] + ")) as min_distance from stops s where stop_name != 'Way Point'" +
     " group by stop_name order by min_distance asc limit " + limit + ";";
@@ -371,7 +376,9 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
             console.log('\n');
 
             setCoords(cords);
+            // coords = cords;
             setPin(!pin);
+            // pin = !pin;
         }}
         >
           {coords.map(marker => (
@@ -446,7 +453,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
       style={{ width: 50, height: 50 }}
       source={require('./assets/settings.png')}
     /> */}
-      <TouchableOpacity style={styles.mapButton} onPress={suggestRoutes} >
+    <TouchableOpacity style={styles.mapButton} onPress={suggestRoutes} >
         <Image 
           style={{ width: 40, height: 40, backgroundColor:'#72b2fc', borderRadius:3, }}
           source={require('./assets/test2.png')}/>
