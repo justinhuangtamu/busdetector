@@ -336,7 +336,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     "where s.stop_name in " + list3 + " " +
 		"group by r.route_id " +
     ") temp " +
-    "where(count1 > 0 and count2 > 0 and count3 >= (count1 + count2));";
+    "where(count1 > 0 and count2 > 0 and count3 > 1);";
     
     
 
