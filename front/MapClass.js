@@ -557,7 +557,7 @@ export const styles = StyleSheet.create({
     map: {
         width: '100%',
         height: '87%',
-        marginBottom: 40,
+        marginBottom: 100,
     },
     link: {
         flex: 1,
