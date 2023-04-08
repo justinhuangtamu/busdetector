@@ -23,7 +23,12 @@ const MSC = {
 }
 
 var queryString = "";
-var refresh = true;
+export var refresh = true;
+
+// this is literally only used in App.js to stop the announcments page from refreshing while a user is on it
+export function updateRefresh(newValue) {
+  refresh = newValue;
+}
 
 
 // this is for the button list

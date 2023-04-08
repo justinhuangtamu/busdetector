@@ -9,7 +9,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-import { Map, getRoutesFromAPI, styles, RouteSelection, test} from './MapClass.js';
+import { Map, getRoutesFromAPI, styles, RouteSelection, test, refresh, updateRefresh} from './MapClass.js';
 
 //import {} from './table.js';
 import {get_Announcements, theme, Information} from "./News.js";
@@ -74,7 +74,7 @@ export default function App() {
             options={({ navigation }) => ({
               headerTitle: () => <Text style={{color: 'white', fontSize: 20}}>Map</Text>,
               headerRight: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('Announcments')}>
+                <TouchableOpacity onPress={() => {updateRefresh(false); navigation.navigate('Announcments')}}>
                   <Image source={require('./assets/loudspeaker.png')} style={{height: 30, width: 30}}/>
                 </TouchableOpacity>
               ),
