@@ -366,7 +366,42 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           showsMyLocationButton={true}
-          
+          customMapStyle={[
+            {
+              featureType: "administrative",
+              elementType: "geometry",
+              stylers: [
+              {
+                  visibility: "off"
+              }
+              ]
+            },
+            {
+              featureType: "poi",
+              stylers: [
+                {
+                  visibility: "off"
+                }
+              ]
+            },
+            {
+              featureType: "road",
+              elementType: "labels.icon",
+              stylers: [
+                {
+                  visibility: "off"
+                }
+              ]
+            },
+            {
+              featureType: "transit",
+              stylers: [
+                {
+                  visibility: "off"
+                }
+              ]
+            }
+          ]}
 
           onPress= {(e) => {
             var cords = pin ? [coords[0], e.nativeEvent.coordinate] : [e.nativeEvent.coordinate, coords[1]]
@@ -449,10 +484,10 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
         
       }
       <StatusBar style="auto" />
-      {/* <Image
-      style={{ width: 50, height: 50 }}
-      source={require('./assets/settings.png')}
-    /> */}
+      <Image
+      style={{ width: 80, height: 50, marginBottom: 40 }}
+      source={require('./assets/bar.png')}
+    />
     <TouchableOpacity style={styles.mapButton} onPress={suggestRoutes} >
         <Image 
           style={{ width: 40, height: 40, backgroundColor:'#72b2fc', borderRadius:3, }}
@@ -523,8 +558,8 @@ export const styles = StyleSheet.create({
     },
     map: {
         width: '100%',
-        height: '100%',
-        marginBottom: 100,
+        height: '87%',
+        marginBottom: 40,
     },
     link: {
         flex: 1,
