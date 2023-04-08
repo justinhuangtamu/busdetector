@@ -4,9 +4,12 @@ import { StatusBar } from 'expo-status-bar';
 import { TouchableOpacity, StyleSheet, Text, View, ScrollView, LogBox, Platform } from 'react-native';
 
 import { Table, TableWrapper,  Row, Rows } from 'react-native-table-component';
+
 // import { CallDatabase } from './MapClass.js';
-LogBox.ignoreAllLogs("Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.");
-const ToggleButton = (unfiltered, stops, filtered) => {
+LogBox.ignoreLogs(["Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.", "There was a problem sending log messages to your development environment [PrettyFormatPluginError: undefined is not a function"]);
+
+
+const ToggleButton = (unfiltered, stops) => {
 
 
     var rowsU = unfiltered;
@@ -67,21 +70,22 @@ export function sort_times(time_array_static, time_array_eta, dynamic) {
         if (dynamic) {
         //     values = sort_eta(time_array_eta);
             values = sort_static(time_array_static);
+            stops = populate_stops(values); 
             values = filter_array(values, stops);
-            stops = populate_stops(values);
-            filtered = filter_array(values, stops);
+            
+            //filtered = filter_array(values, stops);
 
         } else {
             
             values = sort_dynamic(time_array_eta);
             
             stops = populate_stops(values);
-            console.log("Stops" + stops);
+            //console.log("Stops" + stops);
             values = filter_eta(values, stops); 
-            filtered = filterTimesBeforeNow(values);
+           // filtered = filterTimesBeforeNow(values);
         }
         
-        return create_table(values, stops, filtered);
+        return create_table(values, stops);
     } catch {
         return;
     }
@@ -89,11 +93,11 @@ export function sort_times(time_array_static, time_array_eta, dynamic) {
 }
 
 
-export function create_table(unfiltered, stops, filtered) {
+export function create_table(unfiltered, stops) {
     
     return (
         
-        ToggleButton(unfiltered, stops, filtered)
+        ToggleButton(unfiltered, stops)
     )
 }
 

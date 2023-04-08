@@ -261,33 +261,46 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
   suggestRoutes = async () => {
     // Write 
-    console.log(coords[0]);
+    // console.log(coords[0]);
+    // console.log(coords[1]);
 
-    console.log(coords[1]);
+    var limit = 5;
     refresh = false;
-    // var ids = "";
-    var queryString = "select stop_name, stop_id from stops s where stop_name != 'Way Point'"+
-    " order by distance(s.latitude, s.longitude," + coords[0]["latitude"] + ',' + 
-    coords[0]["longitude"] + ") asc limit 3;";
+
+    var queryString = "select stop_name, MIN(" + "distance(s.latitude, s.longitude, " + coords[0]["latitude"] + ',' + 
+    coords[0]["longitude"] + ")) as min_distance from stops s where stop_name != 'Way Point'" +
+    " group by stop_name order by min_distance asc limit " + limit + ";";
     const start = await CallDatabase(queryString);
-  
+    console.log(queryString);
 
 
-
-    queryString = "select stop_name, stop_id from stops s where stop_name != 'Way Point'" +
-      " order by distance(s.latitude, s.longitude," + coords[1]["latitude"] + ',' +
-      coords[1]["longitude"] + ") asc limit 3;";
+    queryString = "select stop_name, MIN(" + "distance(s.latitude, s.longitude, " + coords[1]["latitude"] + ',' +
+      coords[1]["longitude"] + ")) as min_distance from stops s where stop_name != 'Way Point'" +
+      " group by stop_name order by min_distance asc limit " + limit + ";";
+      //console.log(queryString);
     const end = await CallDatabase(queryString);
    
 
     var list1 = "(";
     var list2 = "(";
     var list3 = "(";
-    for (var i = 0; i < 3; i++) {
-      list1 += "'" + start[i]["stop_name"] + "'";
-      list2 += "'" + end[i]["stop_name"] + "'";
-      list3 += "'" + start[i]["stop_name"] + "', '" + end[i]["stop_name"] + "'";
-      if (i != 2) {
+    for (var i = 0; i < limit; i++) {
+      var s = "'" + start[i]["stop_name"] + "'";
+      var e = "'" + end[i]["stop_name"] + "'";
+
+      if (s.indexOf('/') !== -1) {
+        s = encodeURIComponent(s);
+        s = s;
+      }
+      if (e.indexOf('/') !== -1) {
+        e = encodeURIComponent(e);
+        e = e;
+      }
+
+      list1 +=  s;
+      list2 +=  e;
+      list3 +=  s + ", " + e;
+      if (i != (limit -1)) {
         list1 += ",";
         list2 += ",";
         list3 += ",";
@@ -296,7 +309,9 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     list1 += ")";
     list2 += ")";
     list3 += ")";
-
+    console.log(list1);
+    console.log(list2);
+    console.log(list3);
     // Create the needed functions in suggestion.js and import them for here to make it easier to read
     
     
