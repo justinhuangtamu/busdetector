@@ -255,7 +255,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
   var bus_key = 0;
   console.log("in create map")
   // console.log(markers)
-  const [coords, setCoords] = useState([{ "latitude": 37.00, "longitude": -96.00 },
+  const [coords, setCoords] = useState([{ "latitude": 33.00, "longitude": -94.00 },
     { "latitude": 37.00, "longitude": -96.00 }]);
   const [pin, setPin] = useState(false);
 
@@ -264,7 +264,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     // console.log(coords[0]);
     // console.log(coords[1]);
 
-    var limit = 3;
+    var limit = 5;
     refresh = false;
 
     var queryString = "select stop_name, MIN(" + "distance(s.latitude, s.longitude, " + coords[0]["latitude"] + ',' + 
@@ -331,7 +331,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     "where s.stop_name in " + list3 + " " +
 		"group by r.route_id " +
     ") temp " +
-    "where(count1 > 0 and count2 > 0 and count3 >= (count1 + count2));";
+    "where(count1 > 0 and count2 > 0 and count3 > 1);";
     
     
 
@@ -516,7 +516,7 @@ export const styles = StyleSheet.create({
     },
     map: {
         width: '100%',
-        height: '100%',
+        height: '87%',
         marginBottom: 100,
     },
     link: {

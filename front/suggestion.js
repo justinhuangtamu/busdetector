@@ -24,72 +24,76 @@ export function Settings({ navigation, route }) {
     
 
     //DropDownPicker.setMode("BADGE");
-    return (
-        <View >
-            <Text style={styles.label}>Select Bus Stops</Text>
-            <View style={{ zindex: 3 }}>
-                {create_table2(table_info)} 
-            </View>
+    return ( create_table2(table_info) );
             
-        </View>
-    );
 }
 
 function create_table2(info) {
     console.log(info);
     if (info) {
-        var rows = [];
-        var row_width = [60, 100, 240];
-        var headers = ["Route #", "Name", "Stops on Route"];
-        for(var i = 0; i < info.length; i++) {
-            var check = info[i]["stops"].split(',');
-            if (check.length > 1) {
-                rows.push([info[i]["route_id"], info[i]["route_name"], info[i]["stops"]]);
-            }
-            
-        }
-        return (
-                <ScrollView horizontal={false}  nestedScrollView={true} style={table_style.scroll}>
-                    <View style={table_style.viewContainer}>
-                        <Table borderStyle={{ borderWidth: 1, borderColor: '#500000'}}   >
-                            <Row
-                                data={headers}
-                                widthArr={row_width}
-                                style={table_style.head}
-                                textStyle={table_style.headText}
-                            />
-                            <TableWrapper>
-                                <Rows
-                                    data={rows}
-                                    widthArr={row_width}
-                                    style={table_style.rowSection}
-                                    textStyle={table_style.text}
-                                />
-                            </TableWrapper>
-
-                        </Table>
-                    </View>
-                </ScrollView>
-        );
-    } else {
-        if (info == undefined ||  info.length == 0) {
+        
+        if (info.length === 0) {
             return (
                 <View>
+                    <Text style={styles.label}>No Routes Found</Text>
                     <Text style={{ fontSize: 18, padding: 12 }}>Tap on the map to place a start point. Tapping again will place an end marker.</Text>
-                    <Text style={{ fontSize: 13, padding: 3, textAlign:'center'}}>(Pressing the screen again will restart the pattern.)</Text>
+                    <Text style={{ fontSize: 13, padding: 3, textAlign: 'center' }}>(Pressing the screen again will restart the pattern.)</Text>
                     <Text style={{ fontSize: 18, padding: 12 }}>Press the Route Suggestion button and a table will appear here with possible routes</Text>
                     <Text style={{ fontSize: 18, padding: 12 }}>If no routes appear it means that the closest stops to the locations selected do not share a route.</Text>
                 </View>
-                
-            )   
+
+            );
         } else {
+            var rows = [];
+            var row_width = [60, 100, 240];
+            var headers = ["Route #", "Name", "Stops on Route"];
+            for (var i = 0; i < info.length; i++) {
+                var check = info[i]["stops"].split(',');
+                if (check.length > 1) {
+                    rows.push([info[i]["route_id"], info[i]["route_name"], info[i]["stops"]]);
+                }
+
+            }
             return (
-                <Text>Pending...</Text>
-        )
+                <View style={{ zindex: 3 }}>
+                    <Text style={styles.label}>Suggested Routes</Text>
+                    <ScrollView horizontal={false} nestedScrollView={true} style={table_style.scroll}>
+                        <View style={table_style.viewContainer}>
+                            <Table borderStyle={{ borderWidth: 1, borderColor: '#500000' }}   >
+                                <Row
+                                    data={headers}
+                                    widthArr={row_width}
+                                    style={table_style.head}
+                                    textStyle={table_style.headText}
+                                />
+                                <TableWrapper>
+                                    <Rows
+                                        data={rows}
+                                        widthArr={row_width}
+                                        style={table_style.rowSection}
+                                        textStyle={table_style.text}
+                                    />
+                                </TableWrapper>
+
+                            </Table>
+                        </View>
+                    </ScrollView>
+                </View>
+            );
         }
         
-    }
-    
+    } else {
+        return (
+            <View>
+                <Text style={styles.label}>How to use Route Suggestion</Text>
+                <Text style={{ fontSize: 18, padding: 12 }}>Tap on the map to place a start point. Tapping again will place an end marker.</Text>
+                <Text style={{ fontSize: 13, padding: 3, textAlign: 'center' }}>(Pressing the screen again will restart the pattern.)</Text>
+                <Text style={{ fontSize: 18, padding: 12 }}>Press the Route Suggestion button and a table will appear here with possible routes</Text>
+                <Text style={{ fontSize: 18, padding: 12 }}>If no routes appear it means that the closest stops to the locations selected do not share a route.</Text>
+            </View>
+
+        );
+    }   
 }
 
 
