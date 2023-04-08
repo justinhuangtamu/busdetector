@@ -264,7 +264,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     // console.log(coords[0]);
     // console.log(coords[1]);
 
-    var limit = 5;
+    var limit = 3;
     refresh = false;
 
     var queryString = "select stop_name, MIN(" + "distance(s.latitude, s.longitude, " + coords[0]["latitude"] + ',' + 
@@ -290,12 +290,12 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
       if (s.indexOf('/') !== -1) {
         s = encodeURIComponent(s);
-        s = s;
-      }
+        //s =  s;
+      } 
       if (e.indexOf('/') !== -1) {
         e = encodeURIComponent(e);
-        e = e;
-      }
+        //e = e;
+      } 
 
       list1 +=  s;
       list2 +=  e;
@@ -331,16 +331,9 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     "where s.stop_name in " + list3 + " " +
 		"group by r.route_id " +
     ") temp " +
-    "where(count1 < 4 and count1 > 0 and count2 < 4 and count2 > 0 and count3 > 1);";
+    "where(count1 > 0 and count2 > 0 and count3 >= (count1 + count2));";
     
-    /*
-    select r.route_id, route_name from route_stop_bridge b
-    join routes r on r.route_id = b.route_id join stops s 
-    on b.stop_id = s.stop_id
-    group by r.route_id HAVING 
-    count(distinct stop_name IN ('Jones Butler @ Harvey Mitchell', 'Woodsman')) > 1
-    AND count (distinct stop_name IN ('MSC')) > 1;
-    */
+    
 
 
     console.log(queryString);
