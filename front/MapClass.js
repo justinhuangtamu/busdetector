@@ -108,7 +108,7 @@ export function Map({ navigation, route }) {
       // console.log(stops)
 
       //get the bus locations from the database
-      queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "' order by bus_id;";
+      queryString = "select latitude, longitude, occupancy, next_stop from buses where route_id='" + id + "' order by bus_id;";
       const bus = await CallDatabase(queryString);
       //console.log(bus);
 
@@ -462,7 +462,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
               >
                 <Image source={require("./assets/bus.png")} style={{ height: 35, width: 35 }} />
                 <Callout>
-                  <Text style={{width: 150, textAlign: 'center'}}>{"People on board: " + bus.occupancy + "\n" + Math.round((bus.occupancy / 75) * 100) + "% full"}</Text>
+                  <Text style={{width: 150, textAlign: 'center'}}>{"People on board: " + bus.occupancy + "\n" + Math.round((bus.occupancy / 75) * 100) + "% full\nNext stop: " + bus.next_stop}</Text>
                 </Callout>
 
               </Marker>
