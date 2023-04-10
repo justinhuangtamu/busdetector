@@ -41,8 +41,9 @@ for i in range(5):
     try:
         db_update_routes.update_routes()
         break
-    except:
+    except Exception as e:
         print("Error occurred. Sleeping for " + str(10 ** (i + 1)) + " seconds. (" + str(i) + "/5)")
+        print(e)
         time.sleep(10 ** (i + 1))
         pass
 print("DONE\n")
@@ -57,8 +58,9 @@ while not exit:
             try:
                 db_update_buses.update_buses()
                 break
-            except:
+            except Exception as e:
                 print("Error occurred. Sleeping for " + str(10 ** (i + 1)) + " seconds. (" + str(i) + "/5)")
+                print(e)
                 time.sleep(10 ** (i + 1))
                 pass
         print("DONE")
@@ -69,14 +71,15 @@ while not exit:
                 try:
                     db_update_eta.update_etas()
                     break
-                except:
+                except Exception as e:
                     print("Error occurred. Sleeping for " + str(10 ** (i + 1)) + " seconds. (" + str(i) + "/5)")
+                    print(e)
                     time.sleep(10 ** (i + 1))
                     pass
             print("DONE")
             etaupdate_counter = 0
 
-        # etaupdate_counter += 15
+        etaupdate_counter += 15  # comment to turn on/off
         time.sleep(15)
     elif ((time.localtime().tm_hour - timezone_offset) < 6 and (time.localtime().tm_hour - timezone_offset) > 2 and routeupdate_flag is not True):
         routeupdate_flag = True
@@ -86,8 +89,9 @@ while not exit:
             try:
                 db_update_routes.update_routes()
                 break
-            except:
+            except Exception as e:
                 print("Error occurred. Sleeping for " + str(10 ** (i + 1)) + " seconds. (" + str(i) + "/5)")
+                print(e)
                 time.sleep(10 ** (i + 1))
                 pass
         print("DONE\n")
