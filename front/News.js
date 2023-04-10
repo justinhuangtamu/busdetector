@@ -118,7 +118,7 @@ export function Trial() {
     console.log(news);
     if (news.length == 0) {
         console.log("News is Undefined");
-        return <View style={theme.title}><Text >No Current Announcements</Text></View>;
+        return <View style={theme.info}><Text style={theme.title} >All Buses Running Smoothly</Text></View>;
        
     } else {
         //console.log(news);

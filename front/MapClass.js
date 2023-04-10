@@ -460,7 +460,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
                 }
 
               >
-                <Image source={require("./assets/bus.png")} style={{ height: 35, width: 35 }} />
+                <Image source={require("./assets/bus.jpg")} style={{ height: 50, width: 50 }} />
                 <Callout>
                   <Text style={{width: 150, textAlign: 'center'}}>{"People on board: " + bus.occupancy + "\n" + Math.round((bus.occupancy / 75) * 100) + "% full\nNext stop: " + bus.next_stop}</Text>
                 </Callout>
