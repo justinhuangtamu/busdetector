@@ -12,6 +12,7 @@ import psycopg2 as ps  # PostgreSQL db library
 from datetime import datetime
 from datetime import timedelta
 import math
+import pytz
 
 
 def update_db(json_, k,bid, route_id):
@@ -23,7 +24,7 @@ def update_db(json_, k,bid, route_id):
     b = json_['rows'][0]['elements']
     counter = 0
     time = 0
-    now = datetime.now()
+    now = datetime.now().astimezone(pytz.timezone('US/Central'))
     for i in b:
         #print(i)
         time += i['duration']['value']
@@ -99,8 +100,11 @@ def clear_eta():
     print("eta clear")
     conn.close()
 def update_etas():
+<<<<<<< Updated upstream
     route_ids = ['01']
     #route_ids = ['01', '01-04','03','03-05','04','05','06','07','08','12','15','22','26','27','31','34','35','36','40','47','47-48','48']
+    #route_ids = ['01']
+    route_ids = ['01', '01-04','03','03-05','04','05','06','07','08','12','15','22','26','27','31','34','35','36','40','47','47-48','48']
     clear_eta()
     for id in route_ids:
         #print(id)
