@@ -12,6 +12,7 @@ import psycopg2 as ps  # PostgreSQL db library
 from datetime import datetime
 from datetime import timedelta
 import math
+import pytz
 
 
 def update_db(json_, k,bid, route_id):
@@ -23,7 +24,7 @@ def update_db(json_, k,bid, route_id):
     b = json_['rows'][0]['elements']
     counter = 0
     time = 0
-    now = datetime.now()
+    now = datetime.now().astimezone(pytz.timezone('US/Central'))
     for i in b:
         #print(i)
         time += i['duration']['value']
