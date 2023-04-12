@@ -1,0 +1,314 @@
+{
+    "AttributeExtensions": {},
+    "Authors": [],
+    "BaseUri": null,
+    "Categories": [],
+    "Contributors": [],
+    "Copyright": null,
+    "Description": {
+        "Text": "An aggregation of announcements related to TAMU bus routes",
+        "Type": "text",
+        "AttributeExtensions": {}
+    },
+    "ElementExtensions": [],
+    "Generator": null,
+    "Id": null,
+    "ImageUrl": null,
+    "Items": [
+        {
+            "AttributeExtensions": {},
+            "Authors": [],
+            "BaseUri": null,
+            "Categories": [
+                {
+                    "AttributeExtensions": {},
+                    "ElementExtensions": [],
+                    "Label": null,
+                    "Name": "Emergency",
+                    "Scheme": null
+                },
+                {
+                    "AttributeExtensions": {},
+                    "ElementExtensions": [],
+                    "Label": null,
+                    "Name": "Transit",
+                    "Scheme": null
+                }
+            ],
+            "Content": null,
+            "Contributors": [],
+            "Copyright": null,
+            "ElementExtensions": [],
+            "Id": "//transport.tamu.edu/Transit/updates.aspx#3091",
+            "LastUpdatedTime": "0001-01-01T00:00:00+00:00",
+            "Links": [
+                {
+                    "AttributeExtensions": {},
+                    "BaseUri": null,
+                    "ElementExtensions": [],
+                    "Length": 0,
+                    "MediaType": null,
+                    "RelationshipType": "alternate",
+                    "Title": null,
+                    "Uri": "//transport.tamu.edu/Transit/updates.aspx#3091"
+                }
+            ],
+            "PublishDate": "2023-02-27T13:32:05+00:00",
+            "SourceFeed": null,
+            "Summary": {
+                "Text": "Due to construction, The Texas Avenue stop on Hensel will be temporarily moved, starting Monday 2/27, to the other side of Meadowland St still on Hensel, until further notice.",
+                "Type": "text",
+                "AttributeExtensions": {}
+            },
+            "Title": {
+                "Text": "Route 04 Hensel stop moved starting 2/27",
+                "Type": "text",
+                "AttributeExtensions": {}
+            }
+        },
+        {
+            "AttributeExtensions": {},
+            "Authors": [],
+            "BaseUri": null,
+            "Categories": [
+                {
+                    "AttributeExtensions": {},
+                    "ElementExtensions": [],
+                    "Label": null,
+                    "Name": "Emergency",
+                    "Scheme": null
+                },
+                {
+                    "AttributeExtensions": {},
+                    "ElementExtensions": [],
+                    "Label": null,
+                    "Name": "Transit",
+                    "Scheme": null
+                }
+            ],
+            "Content": null,
+            "Contributors": [],
+            "Copyright": null,
+            "ElementExtensions": [],
+            "Id": "//transport.tamu.edu/Transit/updates.aspx#3092",
+            "LastUpdatedTime": "0001-01-01T00:00:00+00:00",
+            "Links": [
+                {
+                    "AttributeExtensions": {},
+                    "BaseUri": null,
+                    "ElementExtensions": [],
+                    "Length": 0,
+                    "MediaType": null,
+                    "RelationshipType": "alternate",
+                    "Title": null,
+                    "Uri": "//transport.tamu.edu/Transit/updates.aspx#3092"
+                }
+            ],
+            "PublishDate": "2023-03-07T17:41:45+00:00",
+            "SourceFeed": null,
+            "Summary": {
+                "Text": "The outbound April Bloom stop will be closed starting Tuesday 3/7 due to construction until further notice.",
+                "Type": "text",
+                "AttributeExtensions": {}
+            },
+            "Title": {
+                "Text": "Route 12 April Bloom stop closed starting 2/27",
+                "Type": "text",
+                "AttributeExtensions": {}
+            }
+        },
+        {
+            "AttributeExtensions": {},
+            "Authors": [],
+            "BaseUri": null,
+            "Categories": [
+                {
+                    "AttributeExtensions": {},
+                    "ElementExtensions": [],
+                    "Label": null,
+                    "Name": "Emergency",
+                    "Scheme": null
+                },
+                {
+                    "AttributeExtensions": {},
+                    "ElementExtensions": [],
+                    "Label": null,
+                    "Name": "Transit",
+                    "Scheme": null
+                }
+            ],
+            "Content": null,
+            "Contributors": [],
+            "Copyright": null,
+            "ElementExtensions": [],
+            "Id": "//transport.tamu.edu/Transit/updates.aspx#3095",
+            "LastUpdatedTime": "0001-01-01T00:00:00+00:00",
+            "Links": [
+                {
+                    "AttributeExtensions": {},
+                    "BaseUri": null,
+                    "ElementExtensions": [],
+                    "Length": 0,
+                    "MediaType": null,
+                    "RelationshipType": "alternate",
+                    "Title": null,
+                    "Uri": "//transport.tamu.edu/Transit/updates.aspx#3095"
+                }
+            ],
+            "PublishDate": "2023-03-09T16:28:57+00:00",
+            "SourceFeed": null,
+            "Summary": {
+                "Text": "Route 5 will be on reroute Mon. 3/13 ? Thur. 3/16 due to construction. The UPD stop will be closed temporarily.  \r\nRoute 15 will be on reroute Mon. 3/13 ? Wed. 3/15. The College Main Parking garage and Spruce St. stops will be closed on both sides of the street. A temp stop will be placed at College Main and Foch St.",
+                "Type": "text",
+                "AttributeExtensions": {}
+            },
+            "Title": {
+                "Text": "Multiple Reroutes Beginning Mon. 3/13",
+                "Type": "text",
+                "AttributeExtensions": {}
+            }
+        },
+        {
+            "AttributeExtensions": {},
+            "Authors": [],
+            "BaseUri": null,
+            "Categories": [
+                {
+                    "AttributeExtensions": {},
+                    "ElementExtensions": [],
+                    "Label": null,
+                    "Name": "Calendar-Today",
+                    "Scheme": null
+                }
+            ],
+            "Content": null,
+            "Contributors": [],
+            "Copyright": null,
+            "ElementExtensions": [
+                {
+                    "OuterName": "type",
+                    "OuterNamespace": "http://www.livewhale.com/"
+                },
+                {
+                    "OuterName": "id",
+                    "OuterNamespace": "http://www.livewhale.com/"
+                },
+                {
+                    "OuterName": "timezone",
+                    "OuterNamespace": "http://www.livewhale.com/"
+                },
+                {
+                    "OuterName": "all_day",
+                    "OuterNamespace": "http://www.livewhale.com/"
+                },
+                {
+                    "OuterName": "point",
+                    "OuterNamespace": "http://www.georss.org/georss"
+                },
+                {
+                    "OuterName": "featurename",
+                    "OuterNamespace": "http://www.georss.org/georss"
+                },
+                {
+                    "OuterName": "image",
+                    "OuterNamespace": "http://www.livewhale.com/"
+                },
+                {
+                    "OuterName": "image_full",
+                    "OuterNamespace": "http://www.livewhale.com/"
+                },
+                {
+                    "OuterName": "categories",
+                    "OuterNamespace": "http://www.livewhale.com/"
+                }
+            ],
+            "Id": "https://calendar.tamu.edu/transportation/event/281957-transit-no-service#281957-1678514400",
+            "LastUpdatedTime": "0001-01-01T00:00:00+00:00",
+            "Links": [
+                {
+                    "AttributeExtensions": {},
+                    "BaseUri": null,
+                    "ElementExtensions": [],
+                    "Length": 0,
+                    "MediaType": null,
+                    "RelationshipType": "alternate",
+                    "Title": null,
+                    "Uri": "https://calendar.tamu.edu/transportation/event/281957-transit-no-service"
+                },
+                {
+                    "AttributeExtensions": {},
+                    "BaseUri": null,
+                    "ElementExtensions": [],
+                    "Length": 18927,
+                    "MediaType": "image/jpeg",
+                    "RelationshipType": "enclosure",
+                    "Title": null,
+                    "Uri": "https://calendar.tamu.edu/live/image/gid/147/width/200/height/200/crop/1/src_region/0,0,1365,2048/315_ambusstop2010.rev.1523399611.jpg"
+                }
+            ],
+            "PublishDate": "2023-03-11T06:00:00+00:00",
+            "SourceFeed": {
+                "AttributeExtensions": {},
+                "Authors": [],
+                "BaseUri": null,
+                "Categories": [],
+                "Contributors": [],
+                "Copyright": null,
+                "Description": null,
+                "ElementExtensions": [],
+                "Generator": null,
+                "Id": null,
+                "ImageUrl": null,
+                "Items": [],
+                "Language": null,
+                "LastUpdatedTime": "0001-01-01T00:00:00+00:00",
+                "Links": [
+                    {
+                        "AttributeExtensions": {},
+                        "BaseUri": null,
+                        "ElementExtensions": [],
+                        "Length": 0,
+                        "MediaType": null,
+                        "RelationshipType": "self",
+                        "Title": null,
+                        "Uri": "https://calendar.tamu.edu/live/rss/events/group/Transportation%20Services/only_today/true"
+                    }
+                ],
+                "Title": {
+                    "Text": "TAMU Events",
+                    "Type": "text",
+                    "AttributeExtensions": {}
+                }
+            },
+            "Summary": {
+                "Text": "<picture class=\"lw_image\">\n\t<source type=\"image/webp\" srcset=\"https://calendar.tamu.edu/live/image/gid/147/width/200/height/200/crop/1/src_region/0,0,1365,2048/315_ambusstop2010.rev.1523399611.webp 1x, https://calendar.tamu.edu/live/image/scale/2x/gid/147/width/200/height/200/crop/1/src_region/0,0,1365,2048/315_ambusstop2010.rev.1523399611.webp 2x, https://calendar.tamu.edu/live/image/scale/3x/gid/147/width/200/height/200/crop/1/src_region/0,0,1365,2048/315_ambusstop2010.rev.1523399611.webp 3x\"/>\n\t<source type=\"image/jpeg\" srcset=\"https://calendar.tamu.edu/live/image/scale/2x/gid/147/width/200/height/200/crop/1/src_region/0,0,1365,2048/315_ambusstop2010.rev.1523399611.jpg 2x, https://calendar.tamu.edu/live/image/scale/3x/gid/147/width/200/height/200/crop/1/src_region/0,0,1365,2048/315_ambusstop2010.rev.1523399611.jpg 3x\"/>\n\t<img src=\"https://calendar.tamu.edu/live/image/gid/147/width/200/height/200/crop/1/src_region/0,0,1365,2048/315_ambusstop2010.rev.1523399611.jpg\" alt=\"\" width=\"200\" height=\"200\" srcset=\"https://calendar.tamu.edu/live/image/scale/2x/gid/147/width/200/height/200/crop/1/src_region/0,0,1365,2048/315_ambusstop2010.rev.1523399611.jpg 2x, https://calendar.tamu.edu/live/image/scale/3x/gid/147/width/200/height/200/crop/1/src_region/0,0,1365,2048/315_ambusstop2010.rev.1523399611.jpg 3x\" data-max-w=\"1365\" data-max-h=\"2048\" loading=\"lazy\"/>\n</picture>\n University is Closed.&#160; Service does not operate today.",
+                "Type": "text",
+                "AttributeExtensions": {}
+            },
+            "Title": {
+                "Text": "Transit: No Service",
+                "Type": "text",
+                "AttributeExtensions": {}
+            }
+        }
+    ],
+    "Language": null,
+    "LastUpdatedTime": "0001-01-01T00:00:00+00:00",
+    "Links": [
+        {
+            "AttributeExtensions": {},
+            "BaseUri": null,
+            "ElementExtensions": [],
+            "Length": 0,
+            "MediaType": null,
+            "RelationshipType": "alternate",
+            "Title": null,
+            "Uri": "https://transport.tamu.edu/BusRoutesFeeds/api/Announcements"
+        }
+    ],
+    "Title": {
+        "Text": "Bus Routes Announcements",
+        "Type": "text",
+        "AttributeExtensions": {}
+    }
+}

@@ -243,7 +243,14 @@ const table_style = StyleSheet.create({
     button: {backgroundColor: '#E7E6E1',  color: '#500000', fontWeight: 'bold',  width: 179, padding: 12, zIndex: 2, borderWidth: 1,},
     viewContainer: {flexDirection:'row', flexWrap:'wrap', alignItems: 'flex-start', flex: 1},
     scroll: {
-        height: 325,
+        ...Platform.select ({
+            ios: {
+                height: 350,
+            },
+            android: {
+                height: 325,
+            }
+        }),
     },
 
 });
