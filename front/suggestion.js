@@ -29,7 +29,7 @@ export function Settings({ navigation, route }) {
 }
 
 function create_table2(info) {
-    console.log(info);
+   // console.log(info);
     if (info) {
         
         if (info.length === 0) {

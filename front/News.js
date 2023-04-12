@@ -40,7 +40,7 @@ function get_Announcements2(news) {
     hold = news["Items"];
     var announcements = [];
     announcements.push(<View key={0} style={theme.title}></View>);
-    console.log(hold);
+    
     for (var i = 0; i < hold.length; i++) {
         var summary = hold[i]["Summary"]["Text"];
 
@@ -115,9 +115,9 @@ export function Trial() {
         };
         newsArr().then(setNews);
     }, []);
-    console.log(news);
+   // console.log(news);
     if (news.length == 0) {
-        console.log("News is Undefined");
+       // console.log("News is Undefined");
         return <View style={theme.info}><Text style={theme.title} >All Buses Running Smoothly</Text></View>;
        
     } else {

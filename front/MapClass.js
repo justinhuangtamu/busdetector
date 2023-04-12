@@ -86,7 +86,7 @@ export function Map({ navigation, route }) {
   // gets the route number that is selected and processes it
   handlePress = async (id) => {
     setSelectedId(id);
-    console.log(id);
+    //console.log(id);
     try {
       queryString = "Select latitude, longitude from public.stops inner join public.route_stop_bridge on route_stop_bridge.stop_id=stops.stop_id where (route_id='" + id + "' and rank is not null) order by route_stop_bridge.rank asc;";
       
@@ -143,33 +143,6 @@ export function Map({ navigation, route }) {
 
   };
 
-  // requeries for bus routes and etas
-  // refreshPress = async (id) => {
-  //   const bus_id = id
-
-  //   queryString = "Select eta_time, stop_name, stops.stop_id, raw_time from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, raw_time) asc";
-  //   const dynamic = await CallDatabase(queryString); 
-
-  //   //get the bus locations from the database
-  //   queryString = "select latitude, longitude, occupancy from buses where route_id='" + id + "';";
-  //   const bus = await CallDatabase(queryString);
-  //   console.log(bus);
-
-  //   // set params to route, stops, and static time selected by the user
-  //   const waypoint = waypoints;
-  //   const stops = markers;
-  //   const static_time = static_times;
-    
-  //   // Navigate to the Map screen and pass the selected waypoints as a parameter
-  //   navigation.dispatch(
-  //     CommonActions.navigate({
-  //       name: 'Home',
-
-  //       params: {waypoint, bus_id, stops, static_time, bus, dynamic}, 
-
-  //     })
-  //   )
-  // };
 
   // refreshes the page
   useEffect(() => {
@@ -180,7 +153,7 @@ export function Map({ navigation, route }) {
       if (selectedId && refresh) {
         // Simulate button press by calling the onPress function with the selected item
         //console.log("selectedId is inside the if: " + selectedId);
-        console.log("refresh");
+        //console.log("refresh");
         handlePress(selectedId);
       }
     };
@@ -237,7 +210,7 @@ export function Map({ navigation, route }) {
             
             <TouchableWithoutFeedback >
                 <Text style={styles.buttonTable}   onPress={() => SetDynamic(!dynamic)}   >
-                {dynamic ? 'Show ETA Times' : 'Show Static Times'}
+                {dynamic ? 'Show ETA Times' : 'Show Scheduled Times'}
                 </Text> 
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={() =>{refresh = false; navigation.navigate('Information')}}>
@@ -258,7 +231,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
   
   var id = 0;
   var bus_key = 0;
-  console.log("in create map")
+  
   // console.log(markers)
   const [coords, setCoords] = useState([{ "latitude": 33.00, "longitude": -94.00 },
     { "latitude": 37.00, "longitude": -96.00 }]);
@@ -276,7 +249,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     coords[0]["longitude"] + ")) as min_distance from stops s where stop_name != 'Way Point'" +
     " group by stop_name order by min_distance asc limit " + limit + ";";
     const start = await CallDatabase(queryString);
-    console.log(queryString);
+    //console.log(queryString);
 
 
     queryString = "select stop_name, MIN(" + "distance(s.latitude, s.longitude, " + coords[1]["latitude"] + ',' +
@@ -314,9 +287,9 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     list1 += ")";
     list2 += ")";
     list3 += ")";
-    console.log(list1);
-    console.log(list2);
-    console.log(list3);
+    //console.log(list1);
+    //console.log(list2);
+    //console.log(list3);
     // Create the needed functions in suggestion.js and import them for here to make it easier to read
     
     
@@ -341,7 +314,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     
 
 
-    console.log(queryString);
+    //console.log(queryString);
     const res = await CallDatabase(queryString);
     
 
@@ -364,6 +337,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           showsMyLocationButton={true}
+          showsCompass={true}
           customMapStyle={[
             {
               featureType: "administrative",
@@ -404,9 +378,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           onPress= {(e) => {
             var cords = pin ? [coords[0], e.nativeEvent.coordinate] : [e.nativeEvent.coordinate, coords[1]]
             //coords[counter ? 0 : 1] = e.nativeEvent.coordinate;
-            console.log("\n trial");
-            console.log(e.nativeEvent.coordinate);
-            console.log('\n');
+          
 
             setCoords(cords);
             // coords = cords;
@@ -536,7 +508,7 @@ export const styles = StyleSheet.create({
     mapButton: {
       position: 'absolute',
       top:5,
-      left:5,
+      right:5,
       backgroundColor: '#72b2fc', //#72b2fc
       borderColor: 'black',
       borderBottomColor: 'black',
@@ -622,7 +594,7 @@ export const styles = StyleSheet.create({
             backgroundColor: '#E7E6E1',
             color: '#500000',
             fontWeight: 'bold',
-            width: 155,
+            width: 200,
             height: 45,
             padding: 12,
             top: 40,
@@ -635,7 +607,7 @@ export const styles = StyleSheet.create({
             backgroundColor: '#E7E6E1',
             color: '#500000',
             fontWeight: 'bold',
-            width: 145,
+            width: 190,
             height: 45,
             padding: 12,
             top: 40,
@@ -653,7 +625,7 @@ export const styles = StyleSheet.create({
             zIndex: 1,
             backgroundColor: '#E7E6E1',
             top: -5,
-            left: 155,
+            left: 200,
             width: 45,
             height: 45,
             borderWidth: 1,
@@ -665,7 +637,7 @@ export const styles = StyleSheet.create({
             backgroundColor: '#E7E6E1',
             padding: 12,
             top: -5,
-            left: 145,
+            left: 190,
             width: 45,
             height: 45,
             borderWidth: 1,

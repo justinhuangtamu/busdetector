@@ -23,7 +23,7 @@ const ToggleButton = (unfiltered, stops) => {
         widthU.unshift(105);
     }
 
-    var headers = ['Location ', "Timed Stops", ''];
+    var headers = ['Location ', "Upcoming Stop Times", ''];
     
     return (
         // TERMINAL WILL DISPLAY
