@@ -314,7 +314,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     
 
 
-    //console.log(queryString);
+    
     const res = await CallDatabase(queryString);
     
 
@@ -489,8 +489,8 @@ async function CallDatabase(query) {
            // console.log(json);                       // UNCOMMENT TO LOG JSON RESPONSES
             // waypoints = json;
         } else {
-            console.log(response.status);
-            console.log(response);
+            //console.log(response.status);
+            //console.log(response);
         }
 
         return json;

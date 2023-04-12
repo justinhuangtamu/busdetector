@@ -45,7 +45,8 @@ function create_table2(info) {
             );
         } else {
             var rows = [];
-            var row_width = [60, 100, 240];
+            var wid = Platform.select({ios: {width: 232}, android: {width: 223}})
+            var row_width = [60, 100, wid["width"]];
             var headers = ["Route #", "Name", "Stops on Route"];
             for (var i = 0; i < info.length; i++) {
                 var check = info[i]["stops"].split(',');
@@ -59,7 +60,7 @@ function create_table2(info) {
                     <Text style={styles.label}>Suggested Routes</Text>
                     <ScrollView horizontal={false} nestedScrollView={true} style={table_style.scroll}>
                         <View style={table_style.viewContainer}>
-                            <Table borderStyle={{ borderWidth: 1, borderColor: '#500000' }}   >
+                            <Table borderStyle={{ borderWidth: 1, width: 300, borderColor: '#500000' }}   >
                                 <Row
                                     data={headers}
                                     widthArr={row_width}
@@ -131,6 +132,7 @@ const table_style = StyleSheet.create({
         ...Platform.select({
             android: {
                 height: 650,
+                
             }
         }),
         height: 650,
