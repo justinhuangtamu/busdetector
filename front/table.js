@@ -23,7 +23,7 @@ const ToggleButton = (unfiltered, stops, dynamic) => {
         widthU.unshift(105);
     }
 
-    var headers = ['Location ', dynamic ? "Upcoming ETAs" : "Pre-Scheduled Times", ''];
+    var headers = ['Location ', dynamic ? "Pre-Scheduled Times" : "Upcoming ETAs", ''];
     
     return (
         // TERMINAL WILL DISPLAY

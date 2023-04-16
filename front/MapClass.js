@@ -210,7 +210,7 @@ export function Map({ navigation, route }) {
             
             <TouchableWithoutFeedback >
                 <Text style={styles.buttonTable}   onPress={() => SetDynamic(!dynamic)}   >
-                {dynamic ? 'Showing ETA Times' : 'Showing Scheduled Times'}
+                {dynamic ? 'Show ETA Times' : 'Show Scheduled Times'}
                 </Text> 
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={() =>{refresh = false; navigation.navigate('Information')}}>
