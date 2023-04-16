@@ -210,7 +210,7 @@ export function Map({ navigation, route }) {
             
             <TouchableWithoutFeedback >
                 <Text style={styles.buttonTable}   onPress={() => SetDynamic(!dynamic)}   >
-                {dynamic ? 'Show ETA Times' : 'Show Scheduled Times'}
+                {dynamic ? 'Showing ETA Times' : 'Showing Scheduled Times'}
                 </Text> 
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={() =>{refresh = false; navigation.navigate('Information')}}>
@@ -455,7 +455,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
       }
       <StatusBar style="auto" />
       <Image
-      style={{ width: 80, height: 50, marginBottom: 40 }}
+      style={{ width: 80, height: 80, marginBottom: 40, bottom:20 }}
       source={require('./assets/bar.png')}
     />
     <TouchableOpacity style={styles.mapButton} onPress={suggestRoutes} >

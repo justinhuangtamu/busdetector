@@ -9,7 +9,7 @@ import { Table, TableWrapper,  Row, Rows } from 'react-native-table-component';
 LogBox.ignoreLogs(["Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.", "There was a problem sending log messages to your development environment [PrettyFormatPluginError: undefined is not a function"]);
 
 
-const ToggleButton = (unfiltered, stops) => {
+const ToggleButton = (unfiltered, stops, dynamic) => {
 
 
     var rowsU = unfiltered;
@@ -23,7 +23,7 @@ const ToggleButton = (unfiltered, stops) => {
         widthU.unshift(105);
     }
 
-    var headers = ['Location ', "Upcoming Stop Times", ''];
+    var headers = ['Location ', dynamic ? "Upcoming ETAs" : "Pre-Scheduled Times", ''];
     
     return (
         // TERMINAL WILL DISPLAY
@@ -35,7 +35,7 @@ const ToggleButton = (unfiltered, stops) => {
             <ScrollView horizontal={true}  >
                 <ScrollView horizontal={false} style={table_style.scroll} nestedScrollEnabled={true}>
                     <View style={table_style.viewContainer} >
-                        <Table borderStyle={{borderWidth: 1, borderColor: '#500000'} }  >
+                        <Table borderStyle={{borderWidth: 1, borderColor: '#500000' } }  >
                             <Row 
                                 data={headers}
                                widthArr={ [105, 300, sumU] }
@@ -85,7 +85,7 @@ export function sort_times(time_array_static, time_array_eta, dynamic) {
            // filtered = filterTimesBeforeNow(values);
         }
         
-        return create_table(values, stops);
+        return create_table(values, stops, dynamic);
     } catch {
         return;
     }
@@ -93,11 +93,11 @@ export function sort_times(time_array_static, time_array_eta, dynamic) {
 }
 
 
-export function create_table(unfiltered, stops) {
+export function create_table(unfiltered, stops, dynamic) {
     
     return (
         
-        ToggleButton(unfiltered, stops)
+        ToggleButton(unfiltered, stops, dynamic)
     )
 }
 
