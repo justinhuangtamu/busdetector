@@ -1,54 +1,66 @@
 [
     {
-        "stop_name": "Asbury Water Tower",
+        "name": "Asbury Water Tower",
         "timed_stop": true
     },
     {
-        "stop_name": "Commons",
+        "name": "Commons",
         "timed_stop": true
     },
     {
-        "stop_name": "Fish Pond",
+        "name": "Fish Pond",
         "timed_stop": false
     },
     {
-        "stop_name": "HEEP",
+        "name": "HEEP",
         "timed_stop": false
     },
     {
-        "stop_name": "Kleberg",
+        "name": "Kleberg",
         "timed_stop": false
     },
     {
-        "stop_name": "Lewis St",
+        "name": "Kleberg",
         "timed_stop": false
     },
     {
-        "stop_name": "Lot 100G",
+        "name": "Lewis St",
         "timed_stop": false
     },
     {
-        "stop_name": "MSC",
+        "name": "Lot 100G",
+        "timed_stop": false
+    },
+    {
+        "name": "MSC",
         "timed_stop": true
     },
     {
-        "stop_name": "Rec Center",
+        "name": "Rec Center",
         "timed_stop": false
     },
     {
-        "stop_name": "Reed Arena",
+        "name": "Reed Arena",
         "timed_stop": true
     },
     {
-        "stop_name": "Ross and Bizzell",
+        "name": "Ross and Bizzell",
         "timed_stop": false
     },
     {
-        "stop_name": "Ross and Ireland",
+        "name": "Ross and Bizzell",
         "timed_stop": false
     },
     {
-        "stop_name": "SouthSide Rec",
+        "name": "Ross and Ireland",
+        "timed_stop": false
+    },
+    {
+        "name": "Ross and Ireland",
+        "timed_stop": false
+    },
+    {
+        "name": "SouthSide Rec",
         "timed_stop": false
     }
 ]
