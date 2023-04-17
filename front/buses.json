@@ -6,90 +6,90 @@
         },
         "01-04": {
             "color": "rgb(153, 50, 204)",
-            "name": "Nights & Weekends",
+            "name": "Nights & Weekends"
         },
         "03": {
             "color": "rgb(1,1,1)",
-            "name": "yell practice",
+            "name": "yell practice"
         },
         "03-05": {
             "color": "rgb(124,55,19)",
-            "name": "Nights & Weekends",
+            "name": "Nights & Weekends"
         },
         "04": {
             "color": "rgb(236,39,39)",
-            "name": "Gig Em",
+            "name": "Gig Em"
         },
         "05": {
             "color": "rgb(94,155,211)",
-            "name": "Bush School",
+            "name": "Bush School"
         },
         "06": {
             "color": "rgb(20,178,75)",
-            "name": "12th Man",
+            "name": "12th Man"
         },
         "07": {
             "color": "rgb(82,189,160)",
-            "name": "Airport",
+            "name": "Airport"
         },
         "08": {
             "color": "rgb(233,22,139)",
-            "name": "Howdy",
+            "name": "Howdy"
         },
         "12": {
             "color": "#b22222",
-            "name": "Reveille",
+            "name": "Reveille"
         },
         "15": {
             "color": "rgb(40,144,58)",
-            "name": "Old Army",
+            "name": "Old Army"
         },
         "22": {
             "color": "rgb(189,26,141)",
-            "name": "Excel",
+            "name": "Excel"
         },
         "26": {
             "color": "rgb(0,111,59)",
-            "name": "Rudder",
+            "name": "Rudder"
         },
         "27": {
             "color": "rgb(0,174,239)",
-            "name": "Ring Dance",
+            "name": "Ring Dance"
         },
         "31": {
             "color": "#A020F0",
-            "name": "E-Walk",
+            "name": "E-Walk"
         },
         "34": {
             "color": "rgb(234,116,36)",
-            "name": "Fish Camp",
+            "name": "Fish Camp"
         },
         "35": {
             "color": "rgb(96,56,19)",
-            "name": "Hullabaloo",
+            "name": "Hullabaloo"
         },
         "36": {
             "color": "rgb(150,115,72)",
-            "name": "Matthew Gaines",
+            "name": "Matthew Gaines"
         },
         "40": {
             "color": "rgb(170,0,0)",
-            "name": "Century Tree",
+            "name": "Century Tree"
         },
         "47": {
             "color": "#4169e1",
-            "name": "RELLIS",
+            "name": "RELLIS"
         },
         "47-48": {
             "color": "rgb(220,20,60)",
-            "name": "Nights & Weekends",
+            "name": "Nights & Weekends"
         },
         "48": {
             "color": "rgb(0,0,120)",
-            "name": "RELLIS Circulator",
+            "name": "RELLIS Circulator"
         },
         "N15": {
             "color": "rgb(40,144,58)",
-            "name": "Thursday & Friday",
-        },
+            "name": "Thursday & Friday"
+        }
     }

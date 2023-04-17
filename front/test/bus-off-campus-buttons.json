@@ -1,72 +1,72 @@
 [
     {
-        id: "12",
-        color: "#b22222",
-        name: "Reveille",
+        "id": "12",
+        "color": "#b22222",
+        "name": "Reveille"
     },
     {
-        id: "15",
-        color: "rgb(40,144,58)",
-        name: "Old Army",
+        "id": "15",
+        "color": "rgb(40,144,58)",
+        "name": "Old Army"
     },
     {
-        id: "22",
-        color: "rgb(189,26,141)",
-        name: "Excel",
+        "id": "22",
+        "color": "rgb(189,26,141)",
+        "name": "Excel"
     },
     {
-        id: "26",
-        color: "rgb(0,111,59)",
-        name: "Rudder",
+        "id": "26",
+        "color": "rgb(0,111,59)",
+        "name": "Rudder"
     },
     {
-        id: "27",
-        color: "rgb(0,174,239)",
-        name: "Ring Dance",
+        "id": "27",
+        "color": "rgb(0,174,239)",
+        "name": "Ring Dance"
     },
     {
-        id: "31",
-        color: "#A020F0",
-        name: "E-Walk",
+        "id": "31",
+        "color": "#A020F0",
+        "name": "E-Walk"
     },
     {
-        id: "34",
-        color: "rgb(234,116,36)",
-        name: "Fish Camp",
+        "id": "34",
+        "color": "rgb(234,116,36)",
+        "name": "Fish Camp"
     },
     {
-        id: "35",
-        color: "rgb(96,56,19)",
-        name: "Hullabaloo",
+        "id": "35",
+        "color": "rgb(96,56,19)",
+        "name": "Hullabaloo"
     },
     {
-        id: "36",
-        color: "rgb(150,115,72)",
-        name: "Matthew Gaines",
+        "id": "36",
+        "color": "rgb(150,115,72)",
+        "name": "Matthew Gaines"
     },
     {
-        id: "40",
-        color: "rgb(170,0,0)",
-        name: "Century Tree",
+        "id": "40",
+        "color": "rgb(170,0,0)",
+        "name": "Century Tree"
     },
     {
-        id: "47",
-        color: "#4169e1",
-        name: "RELLIS",
+        "id": "47",
+        "color": "#4169e1",
+        "name": "RELLIS"
     },
     {
-        id: "47-48",
-        color: "rgb(220,20,60)",
-        name: "Nights & Weekends",
+        "id": "47-48",
+        "color": "rgb(220,20,60)",
+        "name": "Nights & Weekends"
     },
     {
-        id: "48",
-        color: "rgb(0,0,120)",
-        name: "RELLIS Circulator",
+        "id": "48",
+        "color": "rgb(0,0,120)",
+        "name": "RELLIS Circulator"
     },
     {
-        id: "N15",
-        color: "rgb(40,144,58)",
-        name: "Thursday & Friday",
-    },
+        "id": "N15",
+        "color": "rgb(40,144,58)",
+        "name": "Thursday & Friday"
+    }
 ]

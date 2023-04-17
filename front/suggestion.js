@@ -22,8 +22,6 @@ export function Settings({ navigation, route }) {
     }
     
     
-
-    //DropDownPicker.setMode("BADGE");
     return ( create_table2(table_info) );
             
 }
@@ -139,37 +137,6 @@ const table_style = StyleSheet.create({
     },
 });
 
-
-// API connection function
-async function CallDatabase(query) {
-    try {
-        const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
-        const response = await fetch(fetchString,
-            {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            });
-
-        let json = undefined;
-
-        if (response.status === 200) {
-            json = await response.json();
-            // console.log(json);                       // UNCOMMENT TO LOG JSON RESPONSES
-            // waypoints = json;
-        } else {
-            console.log(response.status);
-            console.log(response);
-        }
-
-        return json;
-    } catch (err) {
-        console.log(err)
-    }
-
-}
 
 
 

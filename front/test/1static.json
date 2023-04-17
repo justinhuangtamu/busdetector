@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Commons - Depart",
+        "timed": true
+    },
+    {
+        "name": "Reed Arena",
+        "timed": true
+    }, 
+    {
+        "name": "MSC",
+        "timed": true
+    },
+    {
+        "name": "Asbury Water Tower",
+        "timed": true
+    },
+    {
+        "name": "Commons - Arrive",
+        "timed": true
+    }
+]
