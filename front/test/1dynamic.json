@@ -1,0 +1,54 @@
+[
+    {
+        "stop_name": "Asbury Water Tower",
+        "timed_stop": true
+    },
+    {
+        "stop_name": "Commons",
+        "timed_stop": true
+    },
+    {
+        "stop_name": "Fish Pond",
+        "timed_stop": false
+    },
+    {
+        "stop_name": "HEEP",
+        "timed_stop": false
+    },
+    {
+        "stop_name": "Kleberg",
+        "timed_stop": false
+    },
+    {
+        "stop_name": "Lewis St",
+        "timed_stop": false
+    },
+    {
+        "stop_name": "Lot 100G",
+        "timed_stop": false
+    },
+    {
+        "stop_name": "MSC",
+        "timed_stop": true
+    },
+    {
+        "stop_name": "Rec Center",
+        "timed_stop": false
+    },
+    {
+        "stop_name": "Reed Arena",
+        "timed_stop": true
+    },
+    {
+        "stop_name": "Ross and Bizzell",
+        "timed_stop": false
+    },
+    {
+        "stop_name": "Ross and Ireland",
+        "timed_stop": false
+    },
+    {
+        "stop_name": "SouthSide Rec",
+        "timed_stop": false
+    }
+]

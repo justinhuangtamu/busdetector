@@ -1,13 +1,13 @@
 
 import React, {useState, useEffect} from 'react';
 import MapView from 'react-native-maps';
-import { PROVIDER_GOOGLE, Marker, Polyline, Callout } from 'react-native-maps';
+import { Marker, Polyline, Callout } from 'react-native-maps';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Platform, FlatList, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, Modal } from 'react-native';
+import { StyleSheet, Text, View, Platform, FlatList, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Image} from 'react-native';
 
-import {sort_times, create_table} from './table.js';
-import { useNavigation, CommonActions } from '@react-navigation/native';
+import {sort_times} from './table.js';
+import {CommonActions } from '@react-navigation/native';
 
 import Swiper from 'react-native-swiper';
 
@@ -101,11 +101,11 @@ export function Map({ navigation, route }) {
 
       queryString = "Select eta_time, stop_name, stops.stop_id, raw_time from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, raw_time) asc";
       const dynamic = await CallDatabase(queryString);
-
+      
       // get the stops from the database
       queryString = "select distinct stop_name, timed_stop, longitude, latitude from route_stop_bridge inner join stops on route_stop_bridge.stop_id = stops.stop_id where (stop_name != 'Way Point' and route_id='" + id + "');";
       const stops = await CallDatabase(queryString);
-      // console.log(stops)
+      
 
       //get the bus locations from the database
       queryString = "select latitude, longitude, occupancy, next_stop from buses where route_id='" + id + "' order by bus_id;";
@@ -293,10 +293,6 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     // Create the needed functions in suggestion.js and import them for here to make it easier to read
     
     
-    // console.log("Start\n End");
-    // console.log(start)
-    // console.log(end);
-    
     queryString = "select route_id, route_name, stops " +
     "from( " +
       "select r.route_id, route_name, STRING_AGG(distinct s.stop_name, ', ') as stops, " +
@@ -334,7 +330,6 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
         <MapView
           style={styles.map}
           initialRegion={MSC}
-          provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           showsMyLocationButton={true}
           showsCompass={true}
