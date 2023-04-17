@@ -371,14 +371,14 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
           ]}
 
           onPress= {(e) => {
-            var cords = pin ? [coords[0], e.nativeEvent.coordinate] : [e.nativeEvent.coordinate, coords[1]]
-            //coords[counter ? 0 : 1] = e.nativeEvent.coordinate;
-          
-
-            setCoords(cords);
-            // coords = cords;
-            setPin(!pin);
-            // pin = !pin;
+            
+            if (e.nativeEvent.action == null) {
+              var cords = pin ? [coords[0], e.nativeEvent.coordinate] : [e.nativeEvent.coordinate, coords[1]]
+              
+              setCoords(cords);
+              setPin(!pin);
+            }
+            
         }}
         >
           {coords.map(marker => (
