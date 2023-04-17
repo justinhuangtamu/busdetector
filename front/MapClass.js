@@ -352,7 +352,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
               featureType: "poi",
               stylers: [
                 {
-                  visibility: "off"
+                  visibility: "on"
                 }
               ]
             },
