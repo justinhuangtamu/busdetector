@@ -33,6 +33,7 @@ def get_route_pattern(route_ids):
                 continue
             if stop != None:
                 stop_name = stop.get("Name")
+                stop_name = stop_name.replace('/', '|')
                 stop_id = stop.get("StopCode")
                 if visited_stops.get(stop_id) == None:
                     visited_stops[stop_id] = True
