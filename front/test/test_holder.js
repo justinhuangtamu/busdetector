@@ -1,14 +1,20 @@
 import dynamic from "./1dynamic.json";
 import static_time from "./1static.json";
-import bus_on from "./bus-on-campus-button.json";
-import bus_off from "./bus-off-campus-buttons.json";
+import suggestion from "./route7suggest.json";
+
+/* UNIT TEST
+
+import suggestion from "./route7suggest.json";
+import dynamic_stops from "./1dynamic.json";
+import static_stops from "./1static.json";
+import announcements from "./announcements.json"
+import static_times from "./route1.json"
+*/
 
 
 
 
-
-
-const testing = true;
+export const testing = true;
 
 function print_green(title, word) {
     console.log("\x1B[32m" + String(title) + "\x1B[0m" + String(word));
@@ -19,7 +25,7 @@ function print_red(title, word) {
 }
 
 
-export function TimeTableTest(stops, eta) {
+export function StopsTableTest(stops, eta) {
     if (testing) {
         var tests = eta ? static_time : dynamic;
         var test_stops = [];
@@ -35,9 +41,148 @@ export function TimeTableTest(stops, eta) {
        
         
         if (test) {
-            print_green("TimeTableTest:", " The corrent stops are being displayed in the table");
+            print_green("TimeTableTest:", " The current stops are being displayed in the table");
         } else {
             print_red("TimeTableTest:"," The stops currently in the table do not match with Route1 test stops");
         }
     }
 }
+
+
+export function TimeTableTest(times) {
+    if (testing) {
+        var test = true;
+        for (var i = 0; i < times.length; i++) {
+            test = test && (times[i][1] != "-- -- --")
+        }
+        if (test) {
+            print_green("TimeTableTest:", " Times are being displayed in the table");
+        } else {
+            print_red("TimeTableTest:", " Times displayed in tabel are currently null");
+        }
+    }
+}
+export function TestRouteSuggest() {
+    
+    suggestRoutes = async () => {
+        // Write 
+        var des2 = { "latitude": 30.589648929108684, "longitude": -96.35869438626334 }; 
+        var des1 = { "latitude": 30.61041537072084, "longitude": -96.3416973860094};
+
+        var limit = 5;
+        
+
+        var queryString = "select stop_name, MIN(" + "distance(s.latitude, s.longitude, " + des1["latitude"] + ',' +
+            des1["longitude"] + ")) as min_distance from stops s where stop_name != 'Way Point'" +
+            " group by stop_name order by min_distance asc limit " + limit + ";";
+        const start = await CallDatabase(queryString);
+        //console.log(queryString);
+
+
+        queryString = "select stop_name, MIN(" + "distance(s.latitude, s.longitude, " + des2["latitude"] + ',' +
+            des2["longitude"] + ")) as min_distance from stops s where stop_name != 'Way Point'" +
+            " group by stop_name order by min_distance asc limit " + limit + ";";
+        //console.log(queryString);
+        const end = await CallDatabase(queryString);
+
+
+        var list1 = "(";
+        var list2 = "(";
+        var list3 = "(";
+        for (var i = 0; i < limit; i++) {
+            var s = "'" + start[i]["stop_name"] + "'";
+            var e = "'" + end[i]["stop_name"] + "'";
+
+
+            list1 += s;
+            list2 += e;
+            list3 += s + ", " + e;
+            if (i != (limit - 1)) {
+                list1 += ",";
+                list2 += ",";
+                list3 += ",";
+            }
+        }
+        list1 += ")";
+        list2 += ")";
+        list3 += ")";
+        
+
+        queryString = "select route_id, route_name, stops " +
+            "from( " +
+            "select r.route_id, route_name, STRING_AGG(distinct s.stop_name, ', ') as stops, " +
+            "SUM(CASE WHEN stop_name IN " + list3 + " THEN 1 ELSE 0 END) AS count3, " +
+            "SUM(CASE WHEN stop_name IN " + list1 + " THEN 1 ELSE 0 END) AS count1, " +
+            "SUM(CASE WHEN stop_name IN " + list2 + " THEN 1 ELSE 0 END) AS count2  " +
+            "from route_stop_bridge b " +
+            "join routes r on r.route_id = b.route_id " +
+            "join stops s on b.stop_id = s.stop_id " +
+            "where s.stop_name in " + list3 + " " +
+            "group by r.route_id " +
+            ") temp " +
+            "where(count1 > 0 and count2 > 0 and count3 > 1);";
+
+
+
+
+
+        const res = await CallDatabase(queryString);
+
+        var test = true;
+        
+        for (var i = 0; i < res.length; i++) {
+            test = test && (res[i]["route_id"] == suggestion[i]["route_id"]);
+            test = test && (res[i]["route_name"] == suggestion[i]["route_name"]);
+            test = test && (res[i]["stops"] == suggestion[i]["stops"]);
+        }
+        if (test) {
+            print_green("Route Suggest:", " routes suggestion feature is functioning as expected");
+        } else {
+            print_red("Route Suggest:", " Error in route suggestion. Check '/' bug and coordinate locations");
+        }
+        return "Finished";
+    }
+
+    if (testing) {
+        suggestRoutes();
+    }
+}
+
+export function AnnouncementsTest(news) {
+    var test = news.length > 0;
+    var test2 = news.length == 0;
+    if (test) {
+        print_green("Announcements:", " all announcements are being recieved");
+    } else if (test2) {
+        print_green("Announcementes:", " There are no announcements,  test announcements being displayed");
+    } else {
+        print_green("Announcementes:", " Announcements are not being retrieved");
+    }
+    return (testing && test2);
+}
+
+async function CallDatabase(query) {
+    try {
+        const fetchString = "http://us-lvm1.southcentralus.cloudapp.azure.com:3001/" + query;
+        const response = await fetch(fetchString,
+            {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+
+        let json = undefined;
+
+        if (response.status === 200) {
+            json = await response.json();
+        } 
+
+        return json;
+    } catch (err) {
+        console.log(err)
+    }
+
+}
+

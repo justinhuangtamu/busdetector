@@ -5,7 +5,7 @@ import { TouchableOpacity, StyleSheet, Text, View, ScrollView, LogBox, Platform 
 
 import { Table, TableWrapper,  Row, Rows } from 'react-native-table-component';
 
-import { TimeTableTest } from './test/test_holder.js';
+import { TimeTableTest, StopsTableTest } from './test/test_holder.js';
 // import { CallDatabase } from './MapClass.js';
 LogBox.ignoreLogs(["Warning: Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`.", "There was a problem sending log messages to your development environment [PrettyFormatPluginError: undefined is not a function"]);
 
@@ -95,7 +95,8 @@ export function sort_times(time_array_static, time_array_eta, dynamic) {
 
 
 export function create_table(unfiltered, stops, dynamic) {
-    TimeTableTest(stops, dynamic);
+    StopsTableTest(stops, dynamic);
+    TimeTableTest(unfiltered);
     return (
         
         ToggleButton(unfiltered, stops, dynamic)

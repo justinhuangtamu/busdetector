@@ -1,0 +1,22 @@
+[
+    {
+        "route_id": "03-05",
+        "route_name": "Nights & Weekends",
+        "stops": "Bush School, Kleberg, Lot 41|43, MSC"
+    },
+    {
+        "route_id": "05",
+        "route_name": "Bush School",
+        "stops": "Bush School, Kleberg, Lot 41|43, MSC"
+    },
+    {
+        "route_id": "07",
+        "route_name": "Airport",
+        "stops": "Easterwood Airport, Hotel|Joe Routt, Turbo Lab, Wind Tunnel"
+    }, 
+    {
+        "route_id": "34", 
+        "route_name": "Fish Camp", 
+        "stops": "Easterwood Airport, Trigon"
+    }
+]
