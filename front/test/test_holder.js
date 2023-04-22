@@ -13,6 +13,7 @@ import announcements from "./announcements.json"
 import static_times from "./route1.json"
 import route1 from "./route1_waypoints_unit.json";
 import stops1 from "./route1_stops_unit.json";
+import bus40 from "./route40_bus_location_unit.json"
 */
 
 
