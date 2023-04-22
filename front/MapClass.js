@@ -11,6 +11,8 @@ import {CommonActions } from '@react-navigation/native';
 
 import Swiper from 'react-native-swiper';
 
+
+
 import buses from "./buses.json";
 import on_bus_buttons from "./bus-on-campus-button.json";
 import off_bus_buttons from "./bus-off-campus-buttons.json";
@@ -243,6 +245,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
     // Write 
     // console.log(coords[0]);
     // console.log(coords[1]);
+    
 
     var limit = 5;
     refresh = false;
