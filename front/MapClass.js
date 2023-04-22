@@ -14,6 +14,7 @@ import Swiper from 'react-native-swiper';
 import buses from "./buses.json";
 import on_bus_buttons from "./bus-on-campus-button.json";
 import off_bus_buttons from "./bus-off-campus-buttons.json";
+import { routeTest, stopsTest } from './test/test_holder.js';
 
 const MSC = {
     latitude: 30.6123,
@@ -110,7 +111,7 @@ export function Map({ navigation, route }) {
       //get the bus locations from the database
       queryString = "select latitude, longitude, occupancy, next_stop from buses where route_id='" + id + "' order by bus_id;";
       const bus = await CallDatabase(queryString);
-      //console.log(bus);
+      console.log(bus);
 
       // Navigate to the Map screen and pass the selected waypoints as a parameter
       navigation.dispatch(
@@ -228,7 +229,8 @@ export function Map({ navigation, route }) {
 }
 
 function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
-  
+  routeTest(waypoints);
+  stopsTest(markers);
   var id = 0;
   var bus_key = 0;
   
@@ -436,7 +438,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
             ))
           }
           
-
+          
           <Polyline
             coordinates={waypoints}
 
