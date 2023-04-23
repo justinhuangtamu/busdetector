@@ -1,5 +1,7 @@
 import dynamic from "./1dynamic.json";
 import static_time from "./1static.json";
+import route1 from "./route1_waypoints_unit.json";
+import stops1 from "./route1_stops_unit.json";
 import suggestion from "./route7suggest.json";
 
 /* UNIT TEST
@@ -9,6 +11,9 @@ import dynamic_stops from "./1dynamic.json";
 import static_stops from "./1static.json";
 import announcements from "./announcements.json"
 import static_times from "./route1.json"
+import route1 from "./route1_waypoints_unit.json";
+import stops1 from "./route1_stops_unit.json";
+import bus40 from "./route40_bus_location_unit.json"
 */
 
 
@@ -24,6 +29,64 @@ function print_red(title, word) {
     console.log("\x1B[31m" + String(title) + "\x1B[0m" + String(word));
 }
 
+export function stopsTest(givenStops) {
+    if(testing) {
+        let test = givenStops.length === stops1.length; 
+
+        if(givenStops != undefined) {
+            for(let i = 0; i < givenStops.length; i++) {
+                givenLat = givenStops[i].latitude;
+                givenLong = givenStops[i].longitude;
+    
+                lat1 = stops1[i].latitude;
+                long1 = stops1[i].longitude;
+    
+                if((givenLat != lat1) && (givenLong != long1)) {
+                    test = false;
+                    break;
+                }
+            }
+        }
+        
+        
+        if(test) {
+            print_green("stopsTest: " , "the given stops matches route 1");
+        }
+        else {
+            print_red("stopsTest: " , "the given stops do not matches route 1");
+        }
+    }
+}
+
+export function routeTest(given_route) {
+    if(testing) {
+
+        let test = given_route.length === route1.length;
+
+        if(given_route != undefined) {
+            for(let i = 0; i < given_route.length; i++) {
+                givenLat = given_route[i].latitude;
+                givenLat = given_route[i].longitude;
+    
+                lat1 = route1[i].latitude;
+                long1 = route1[i].longitude;
+    
+                if((givenLat != lat1) && (givenLat != long1)) {
+                    test = false;
+                    break;
+                }
+            }
+        }
+
+        
+        if(test) {
+            print_green("routeTest: " , "the given route matches route 1");
+        }
+        else {
+            print_red("routeTest: ", "the given route does not match route 1");
+        }
+    }
+}
 
 export function StopsTableTest(stops, eta) {
     if (testing) {
