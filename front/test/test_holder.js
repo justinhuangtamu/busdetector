@@ -35,13 +35,13 @@ export function stopsTest(givenStops) {
 
         if(givenStops != undefined) {
             for(let i = 0; i < givenStops.length; i++) {
-                givenLat = givenStops[i].latitude;
-                givenLong = givenStops[i].longitude;
+                let givenLat = givenStops[i].latitude;
+                let givenLong = givenStops[i].longitude;
     
-                lat1 = stops1[i].latitude;
-                long1 = stops1[i].longitude;
+                let lat1 = stops1[i].latitude;
+                let long1 = stops1[i].longitude;
     
-                if((givenLat != lat1) && (givenLong != long1)) {
+                if((givenLat != lat1) || (givenLong != long1)) {
                     test = false;
                     break;
                 }
@@ -65,13 +65,13 @@ export function routeTest(given_route) {
 
         if(given_route != undefined) {
             for(let i = 0; i < given_route.length; i++) {
-                givenLat = given_route[i].latitude;
-                givenLat = given_route[i].longitude;
+                let givenLat = given_route[i].latitude;
+                let givenLong = given_route[i].longitude;
     
-                lat1 = route1[i].latitude;
-                long1 = route1[i].longitude;
+                let lat1 = route1[i].latitude;
+                let long1 = route1[i].longitude;
     
-                if((givenLat != lat1) && (givenLat != long1)) {
+                if((givenLat != lat1) || (givenLong != long1)) {
                     test = false;
                     break;
                 }
