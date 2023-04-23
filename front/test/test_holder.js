@@ -14,7 +14,7 @@ import static_times from "./route1.json"
 
 
 
-export const testing = true;
+export const testing = false;
 
 function print_green(title, word) {
     console.log("\x1B[32m" + String(title) + "\x1B[0m" + String(word));
