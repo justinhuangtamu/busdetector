@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 
 import { StyleSheet, Text, View, Image } from 'react-native';
-//import news_ex from './temp/announcements.json';
+import news_ex from './test/announcements.json';
+import { AnnouncementsTest, testing } from './test/test_holder.js';
 
 
 export const theme = StyleSheet.create({
@@ -37,7 +38,8 @@ export const theme = StyleSheet.create({
 
 function get_Announcements2(news) {
     
-    hold = news["Items"];
+    hold = AnnouncementsTest(news["Items"]) ? news_ex["Items"] : news["Items"];
+    
     var announcements = [];
     announcements.push(<View key={0} style={theme.title}></View>);
     
@@ -116,6 +118,8 @@ export function Trial() {
         newsArr().then(setNews);
     }, []);
    // console.log(news);
+   
+
     if (news.length == 0) {
        // console.log("News is Undefined");
         return <View style={theme.info}><Text style={theme.title} >All Buses Running Smoothly</Text></View>;

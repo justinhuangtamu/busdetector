@@ -4,7 +4,7 @@ import React, { Component, useState } from 'react';
 import { Text, View, StyleSheet, ScrollView, Platform} from 'react-native';
 
 import { Table, TableWrapper, Row, Rows } from 'react-native-table-component';
-
+import { TestRouteSuggest } from './test/test_holder.js';
 
 
 
@@ -13,7 +13,7 @@ export function Settings({ navigation, route }) {
     
     
     var table_info;
-
+    TestRouteSuggest();
 
     if (route.params === undefined) {
         table_info = [];
