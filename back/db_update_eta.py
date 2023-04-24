@@ -53,7 +53,7 @@ def get_eta(bus_list, point_list, route_id):
         d = ''
         stop_keys = []
 
-        for i in point_list[:25]:
+        for i in point_list[:10]:
             lat, long, stop_key, stop_id = i
             d += str(lat) + ', '+str(long)+'|'
             stop_keys.append((stop_key,stop_id))
@@ -67,7 +67,8 @@ def get_eta(bus_list, point_list, route_id):
         #print(d)
         r = requests.get(url,params)
         #print(r.text)
-        update_db(r.json(), stop_keys,bid, route_id)
+        if(len(point_list) > 0):
+            update_db(r.json(), stop_keys,bid, route_id)
     print(route_id+" done")
 
 def get_points(route_id):
@@ -108,3 +109,4 @@ def update_etas():
         points = get_points(id)
         bus_points = get_bus_location(id)
         get_eta(bus_points, points,id)
+update_etas()
