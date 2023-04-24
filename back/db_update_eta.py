@@ -53,7 +53,7 @@ def get_eta(bus_list, point_list, route_id):
         d = ''
         stop_keys = []
 
-        for i in point_list[:10]:
+        for i in point_list[:25]:
             lat, long, stop_key, stop_id = i
             d += str(lat) + ', '+str(long)+'|'
             stop_keys.append((stop_key,stop_id))
