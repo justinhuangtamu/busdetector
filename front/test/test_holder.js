@@ -8,7 +8,7 @@ import bus_off from "./bus-off-campus-buttons.json";
 
 
 
-const testing = true;
+const testing = false;
 
 function print_green(title, word) {
     console.log("\x1B[32m" + String(title) + "\x1B[0m" + String(word));

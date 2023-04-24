@@ -372,7 +372,12 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
 
           onPress= {(e) => {
             
-            if (e.nativeEvent.action == null) {
+            if (Platform.OS === 'ios' && e.nativeEvent.action == null) {
+              var cords = pin ? [coords[0], e.nativeEvent.coordinate] : [e.nativeEvent.coordinate, coords[1]]
+              
+              setCoords(cords);
+              setPin(!pin);
+            } else if (Platform.OS === 'android') {
               var cords = pin ? [coords[0], e.nativeEvent.coordinate] : [e.nativeEvent.coordinate, coords[1]]
               
               setCoords(cords);
