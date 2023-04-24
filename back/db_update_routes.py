@@ -31,6 +31,7 @@ def get_route_pattern(route_ids):
             # Handles two erroneous points in the Bus API
             if bridge_key == "29e91b30-4fe2-436c-bec0-dd8f02c56a07" or bridge_key == "2ffc52fe-c589-463e-b3a5-e6e9a55c8b22":
                 continue
+            
             if stop != None:
                 stop_name = stop.get("Name")
                 stop_name = stop_name.replace('/', '|')
@@ -39,7 +40,7 @@ def get_route_pattern(route_ids):
                     visited_stops[stop_id] = True
                     timed_stop = stop.get("IsTimePoint")
                     route_data.append((stop_id,stop_name, lat, long, timed_stop))
-                route_bridge.append((bridge_key,route_id, stop_id,rank))
+                    route_bridge.append((bridge_key,route_id, stop_id,rank))
             else:
                 timed_stop = False
                 stop_name = 'Way Point'
@@ -116,4 +117,4 @@ def update_routes():
     conn.close()
     
 # Run Program
-# update_routes()  # DEBUG purposes, leave commented out when not testing
+update_routes()  # DEBUG purposes, leave commented out when not testing
