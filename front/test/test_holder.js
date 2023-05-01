@@ -19,7 +19,7 @@ import bus40 from "./route40_bus_location_unit.json"
 
 
 
-export const testing = true;
+export const testing = false;
 
 function print_green(title, word) {
     console.log("\x1B[32m" + String(title) + "\x1B[0m" + String(word));
