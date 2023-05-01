@@ -109,4 +109,4 @@ def update_etas():
         points = get_points(id)
         bus_points = get_bus_location(id)
         get_eta(bus_points, points,id)
-update_etas()
+# update_etas()
