@@ -18,6 +18,12 @@ import on_bus_buttons from "./bus-on-campus-button.json";
 import off_bus_buttons from "./bus-off-campus-buttons.json";
 import { routeTest, stopsTest } from './test/test_holder.js';
 
+
+//import suggestion from "./test/route7suggest.json";
+
+
+
+
 const MSC = {
     latitude: 30.6123,
     longitude: -96.3415,
@@ -77,7 +83,9 @@ export function Map({ navigation, route }) {
     eta_times = [];
     buses_loc = [];
   } else {
-    waypoints  = route.params["waypoint"] || [];
+    waypoints  = route.params["waypoint1"] || [];
+    //console.log(waypoints);
+    
     bus_ids = route.params["bus_id"] || "";
     markers = route.params["stops"] || [];
     static_times = route.params["static_time"] || [];
@@ -85,7 +93,6 @@ export function Map({ navigation, route }) {
     buses_loc = route.params["bus"] || [];
 
   }
-  
   // gets the route number that is selected and processes it
   handlePress = async (id) => {
     setSelectedId(id);
@@ -95,6 +102,15 @@ export function Map({ navigation, route }) {
       
       // CallDatabase(queryString);
       const waypoint = await CallDatabase(queryString);
+      var waypoint1 = waypoint;
+      
+
+      // {"latitude": 30.607236063911685, "longitude": -96.34486638574998, "stop_name": "Rec Center", "timed_stop": false}
+      if (id == '27') {
+        waypoint1.splice(95, 1);
+      } else if (id == '34') {
+        waypoint1.splice(107, 1);
+      }
       const bus_id = id;
 
       //Querry for static tables & dynamic tables
@@ -104,23 +120,28 @@ export function Map({ navigation, route }) {
 
       queryString = "Select eta_time, stop_name, stops.stop_id, raw_time from stops inner join route_stop_bridge on route_stop_bridge.stop_id = stops.stop_id where (not stop_name='Way Point' and route_id='" + id + "') order by (stops.stop_id, raw_time) asc";
       const dynamic = await CallDatabase(queryString);
-      
+
       // get the stops from the database
       queryString = "select distinct stop_name, timed_stop, longitude, latitude from route_stop_bridge inner join stops on route_stop_bridge.stop_id = stops.stop_id where (stop_name != 'Way Point' and route_id='" + id + "');";
-      const stops = await CallDatabase(queryString);
-      
+      var stops = await CallDatabase(queryString);
+    
 
+      if (id == '27') {
+        stops.splice(7, 1);
+      } else if (id == '34') {
+        stops.splice(1,1);
+      }
       //get the bus locations from the database
       queryString = "select latitude, longitude, occupancy, next_stop from buses where route_id='" + id + "' order by bus_id;";
       const bus = await CallDatabase(queryString);
-      console.log(bus);
+      //console.log(bus);
 
       // Navigate to the Map screen and pass the selected waypoints as a parameter
       navigation.dispatch(
         CommonActions.navigate({
           name: 'Home',
 
-          params: { waypoint, bus_id, stops, static_time, bus, dynamic },
+          params: { waypoint1, bus_id, stops, static_time, bus, dynamic },
 
         }));
     } catch (e) {
@@ -420,6 +441,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
               {marker.timed_stop ? <Image source={require("./assets/fast-time.png")} style={{ height: 35, width: 35 }} /> : <Image source={require("./assets/bus-stop.png")} style={{ height: 35, width: 35 }} />}
               <Callout style={{justifyContent: 'center'}}>
                 <Text style={{width: 100, textAlign: 'center'}}>{marker.stop_name}</Text>
+               
               </Callout>
             </Marker>
           ))}

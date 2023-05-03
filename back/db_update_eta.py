@@ -126,4 +126,8 @@ def update_etas():
         points = get_points(id)
         bus_points = get_bus_location(id)
         get_eta(bus_points, points,id)
+<<<<<<< HEAD
 #update_etas()
+=======
+# update_etas()
+>>>>>>> fb69f68facd7d57853f3bd6228d6fe77cdf4b421

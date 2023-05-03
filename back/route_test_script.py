@@ -29,11 +29,11 @@ def compare_timetable():
     
     our_data = query_our_timetable()
     for index in range(len(live_data)):
+        print(live_data[index])
+        print("---------------------------------------------------------------------------------")
+        print(our_data[index], "\n")
         if live_data[index] != our_data[index]:
             print("Time Table Data Doesn't Match")
-            print(live_data[index])
-            print("_____________________")
-            print(our_data[index])
             return False
     return True
 
@@ -45,19 +45,17 @@ def compare_stops_pattern():
     our_stops, our_bridge = query_our_route_pattern()
     for index in range(len(live_stops)):
         print(live_stops[index])
-        print("_____________________")
-        print(our_stops[index])
+        print("---------------------------------------------------------------------------------")
+        print(our_stops[index], "\n")
         if live_stops[index] != our_stops[index]:
             print("Stop Data Doesn't Match")
-            
             return False
     for index in range(len(live_bridge)):
         print(live_bridge[index])
-        print("_____________________")
-        print(our_bridge[index])
+        print("---------------------------------------------------------------------------------")
+        print(our_bridge[index], "\n")
         if live_bridge[index] != our_bridge[index]:
             print("Stop Data Doesn't Match")
-            
             return False
     return True
 

@@ -79,7 +79,7 @@ while not exit:
             print("DONE")
             etaupdate_counter = 0
 
-        etaupdate_counter += 15  # comment to turn on/off
+        # etaupdate_counter += 15  # comment to turn on/off
         time.sleep(15)
     elif ((time.localtime().tm_hour - timezone_offset) < 6 and (time.localtime().tm_hour - timezone_offset) > 2 and routeupdate_flag is not True):
         routeupdate_flag = True
