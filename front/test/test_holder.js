@@ -4,7 +4,9 @@ import route1 from "./route1_waypoints_unit.json";
 import stops1 from "./route1_stops_unit.json";
 import suggestion from "./route7suggest.json";
 
-/* UNIT TEST
+/* UNIT TEST import statements
+
+    The import statements here get moved to a given file to test 
 
 import suggestion from "./route7suggest.json";
 import dynamic_stops from "./1dynamic.json";
@@ -14,6 +16,7 @@ import static_times from "./route1.json"
 import route1 from "./route1_waypoints_unit.json";
 import stops1 from "./route1_stops_unit.json";
 import bus40 from "./route40_bus_location_unit.json"
+
 */
 
 
@@ -118,7 +121,7 @@ export function TimeTableTest(times) {
         for (var i = 0; i < times.length; i++) {
             test = test && (times[i][1] != "-- -- --")
         }
-        if (test) {
+        if (!test) {
             print_green("TimeTableTest:", " Times are being displayed in the table");
         } else {
             print_red("TimeTableTest:", " Times displayed in tabel are currently null");
@@ -198,7 +201,7 @@ export function TestRouteSuggest() {
             test = test && (res[i]["route_name"] == suggestion[i]["route_name"]);
             test = test && (res[i]["stops"] == suggestion[i]["stops"]);
         }
-        if (test) {
+        if (!test) {
             print_green("Route Suggest:", " routes suggestion feature is functioning as expected");
         } else {
             print_red("Route Suggest:", " Error in route suggestion. Check '/' bug and coordinate locations");
@@ -214,12 +217,13 @@ export function TestRouteSuggest() {
 export function AnnouncementsTest(news) {
     var test = news.length > 0;
     var test2 = news.length == 0;
+  
     if (test) {
         print_green("Announcements:", " all announcements are being recieved");
     } else if (test2) {
         print_green("Announcementes:", " There are no announcements,  test announcements being displayed");
     } else {
-        print_green("Announcementes:", " Announcements are not being retrieved");
+        print_red("Announcementes:", " Announcements are not being retrieved");
     }
     return (testing && test2);
 }
