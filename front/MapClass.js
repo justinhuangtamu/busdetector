@@ -103,7 +103,14 @@ export function Map({ navigation, route }) {
       // CallDatabase(queryString);
       const waypoint = await CallDatabase(queryString);
       var waypoint1 = waypoint;
-      waypoint1.push(waypoint[0]);
+      
+
+      // {"latitude": 30.607236063911685, "longitude": -96.34486638574998, "stop_name": "Rec Center", "timed_stop": false}
+      if (id == '27') {
+        waypoint1.splice(95, 1);
+      } else if (id == '34') {
+        waypoint1.splice(107, 1);
+      }
       const bus_id = id;
 
       //Querry for static tables & dynamic tables
@@ -116,9 +123,14 @@ export function Map({ navigation, route }) {
 
       // get the stops from the database
       queryString = "select distinct stop_name, timed_stop, longitude, latitude from route_stop_bridge inner join stops on route_stop_bridge.stop_id = stops.stop_id where (stop_name != 'Way Point' and route_id='" + id + "');";
-      const stops = await CallDatabase(queryString);
-      
+      var stops = await CallDatabase(queryString);
+    
 
+      if (id == '27') {
+        stops.splice(7, 1);
+      } else if (id == '34') {
+        stops.splice(1,1);
+      }
       //get the bus locations from the database
       queryString = "select latitude, longitude, occupancy, next_stop from buses where route_id='" + id + "' order by bus_id;";
       const bus = await CallDatabase(queryString);
@@ -429,6 +441,7 @@ function create_Map(navigation, waypoints, bus_id, markers, buses_loc) {
               {marker.timed_stop ? <Image source={require("./assets/fast-time.png")} style={{ height: 35, width: 35 }} /> : <Image source={require("./assets/bus-stop.png")} style={{ height: 35, width: 35 }} />}
               <Callout style={{justifyContent: 'center'}}>
                 <Text style={{width: 100, textAlign: 'center'}}>{marker.stop_name}</Text>
+               
               </Callout>
             </Marker>
           ))}
