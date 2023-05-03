@@ -48,15 +48,32 @@ key = 'AIzaSyAu6nlbhY5f261wk7EGJRDpQosx844VG5Q'
 def get_eta(bus_list, point_list, route_id):
     print(route_id+"|"+str(len(point_list)))
     for j in bus_list:
-        s1,s2,bid = j
+        s1,s2,bid,nextstop = j
         o = str(s1) + ', '+str(s2)
         d = ''
         stop_keys = []
-
-        for i in point_list[:25]:
-            lat, long, stop_key, stop_id = i
+        start = 0
+        count = 0
+        for i in point_list:
+            start += 1
+            lat, long, stop_key, stop_id, stop_name = i
+            if(stop_name == nextstop):
+                break
+        for i in point_list[start:]:
+            if (count > 24):
+                break
+            lat, long, stop_key, stop_id, stop_name = i
             d += str(lat) + ', '+str(long)+'|'
             stop_keys.append((stop_key,stop_id))
+            count += 1
+
+        for i in point_list[:start]:
+            if (count > 24):
+                break
+            lat, long, stop_key, stop_id, stop_name = i
+            d += str(lat) + ', '+str(long)+'|'
+            stop_keys.append((stop_key,stop_id))
+            count += 1
 
         d = d[:-1]
         params = {
@@ -75,7 +92,7 @@ def get_points(route_id):
     # establish db connection
     conn = ps.connect("dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
     cur = conn.cursor()
-    query = 'select latitude, longitude, key, B.stop_id from route_stop_bridge B inner join stops S on B.stop_id = S. stop_id where (B.route_id = \''+str(route_id)+'\') and (S.stop_name != \'Way Point\') and (COALESCE(B.bus_id,\'b\')=\'b\') order by B.rank;'
+    query = 'select latitude, longitude, key, B.stop_id, stop_name from route_stop_bridge B inner join stops S on B.stop_id = S. stop_id where (B.route_id = \''+str(route_id)+'\') and (S.stop_name != \'Way Point\') and (COALESCE(B.bus_id,\'b\')=\'b\') order by B.rank;'
     cur.execute(query)
     output = cur.fetchall()
     #print(output)
@@ -85,7 +102,7 @@ def get_bus_location(route_id):
     # establish db connection
     conn = ps.connect("dbname='busdetector' user='postgres' host='us-lvm1.southcentralus.cloudapp.azure.com' password='Bu$det3ctoR2023'")
     cur = conn.cursor()
-    query = 'select latitude,longitude,bus_id from buses where (route_id = \'' + str(route_id) + '\');'
+    query = 'select latitude,longitude,bus_id,next_stop from buses where (route_id = \'' + str(route_id) + '\');'
     cur.execute(query)
     output = cur.fetchall()
     #print(output)
@@ -109,4 +126,4 @@ def update_etas():
         points = get_points(id)
         bus_points = get_bus_location(id)
         get_eta(bus_points, points,id)
-update_etas()
+#update_etas()
