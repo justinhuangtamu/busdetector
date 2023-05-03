@@ -1,380 +1,282 @@
 [
   {
-    "Commons": null,
-    "Asbury Water Tower": null,
-    "Reed Arena": "07:06 AM",
-    "MSC": "07:09 AM",
-    "Commons2": "07:17 AM"
+    "key": "6cd40ed8-6af6-4ea5-952b-d2bda2db8d5e",
+    "static_time": "09:32 AM",
+    "stop_name": "Autumn Circle"
   },
   {
-    "Commons": null,
-    "Asbury Water Tower": null,
-    "Reed Arena": "07:15 AM",
-    "MSC": "07:18 AM",
-    "Commons2": "07:27 AM"
+    "key": "6cd40ed8-6af6-4ea5-952b-d2bda2db8d5e",
+    "static_time": "10:32 AM",
+    "stop_name": "Autumn Circle"
   },
   {
-    "Commons": null,
-    "Asbury Water Tower": "07:10 AM",
-    "Reed Arena": "07:23 AM",
-    "MSC": "07:28 AM",
-    "Commons2": "07:37 AM"
+    "key": "6cd40ed8-6af6-4ea5-952b-d2bda2db8d5e",
+    "static_time": "11:32 AM",
+    "stop_name": "Autumn Circle"
   },
   {
-    "Commons": "07:10 AM",
-    "Asbury Water Tower": "07:18 AM",
-    "Reed Arena": "07:30 AM",
-    "MSC": "07:34 AM",
-    "Commons2": "07:47 AM"
+    "key": "6cd40ed8-6af6-4ea5-952b-d2bda2db8d5e",
+    "static_time": "12:32 PM",
+    "stop_name": "Autumn Circle"
   },
   {
-    "Commons": "07:22 AM",
-    "Asbury Water Tower": "07:28 AM",
-    "Reed Arena": "07:40 AM",
-    "MSC": "07:44 AM",
-    "Commons2": "07:57 AM"
+    "key": "6cd40ed8-6af6-4ea5-952b-d2bda2db8d5e",
+    "static_time": "01:32 PM",
+    "stop_name": "Autumn Circle"
   },
   {
-    "Commons": "07:32 AM",
-    "Asbury Water Tower": "07:38 AM",
-    "Reed Arena": "07:50 AM",
-    "MSC": "07:54 AM",
-    "Commons2": "08:07 AM"
+    "key": "6cd40ed8-6af6-4ea5-952b-d2bda2db8d5e",
+    "static_time": "02:32 PM",
+    "stop_name": "Autumn Circle"
   },
   {
-    "Commons": "07:42 AM",
-    "Asbury Water Tower": "07:48 AM",
-    "Reed Arena": "08:00 AM",
-    "MSC": "08:04 AM",
-    "Commons2": "08:17 AM"
+    "key": "6cd40ed8-6af6-4ea5-952b-d2bda2db8d5e",
+    "static_time": "03:32 PM",
+    "stop_name": "Autumn Circle"
   },
   {
-    "Commons": "07:52 AM",
-    "Asbury Water Tower": "07:58 AM",
-    "Reed Arena": "08:10 AM",
-    "MSC": "08:14 AM",
-    "Commons2": "08:27 AM"
+    "key": "6cd40ed8-6af6-4ea5-952b-d2bda2db8d5e",
+    "static_time": null,
+    "stop_name": "Autumn Circle"
   },
   {
-    "Commons": "08:02 AM",
-    "Asbury Water Tower": "08:08 AM",
-    "Reed Arena": "08:20 AM",
-    "MSC": "08:24 AM",
-    "Commons2": "08:37 AM"
+    "key": "9675e663-206a-435f-80a9-fd015fd5315f",
+    "static_time": "09:07 AM",
+    "stop_name": "Munson"
   },
   {
-    "Commons": "08:12 AM",
-    "Asbury Water Tower": "08:18 AM",
-    "Reed Arena": "08:30 AM",
-    "MSC": "08:34 AM",
-    "Commons2": "08:47 AM"
+    "key": "9675e663-206a-435f-80a9-fd015fd5315f",
+    "static_time": "10:07 AM",
+    "stop_name": "Munson"
   },
   {
-    "Commons": "08:22 AM",
-    "Asbury Water Tower": "08:28 AM",
-    "Reed Arena": "08:40 AM",
-    "MSC": "08:44 AM",
-    "Commons2": "08:57 AM"
+    "key": "9675e663-206a-435f-80a9-fd015fd5315f",
+    "static_time": "11:07 AM",
+    "stop_name": "Munson"
   },
   {
-    "Commons": "08:32 AM",
-    "Asbury Water Tower": "08:38 AM",
-    "Reed Arena": "08:50 AM",
-    "MSC": "08:54 AM",
-    "Commons2": "09:07 AM"
+    "key": "9675e663-206a-435f-80a9-fd015fd5315f",
+    "static_time": "12:07 PM",
+    "stop_name": "Munson"
   },
   {
-    "Commons": "08:42 AM",
-    "Asbury Water Tower": "08:48 AM",
-    "Reed Arena": "09:00 AM",
-    "MSC": "09:04 AM",
-    "Commons2": "09:17 AM"
+    "key": "9675e663-206a-435f-80a9-fd015fd5315f",
+    "static_time": "01:07 PM",
+    "stop_name": "Munson"
   },
   {
-    "Commons": "08:52 AM",
-    "Asbury Water Tower": "08:58 AM",
-    "Reed Arena": "09:10 AM",
-    "MSC": "09:14 AM",
-    "Commons2": "09:27 AM"
+    "key": "9675e663-206a-435f-80a9-fd015fd5315f",
+    "static_time": "02:07 PM",
+    "stop_name": "Munson"
   },
   {
-    "Commons": "09:02 AM",
-    "Asbury Water Tower": "09:08 AM",
-    "Reed Arena": "09:20 AM",
-    "MSC": "09:24 AM",
-    "Commons2": "09:37 AM"
+    "key": "9675e663-206a-435f-80a9-fd015fd5315f",
+    "static_time": "03:07 PM",
+    "stop_name": "Munson"
   },
   {
-    "Commons": "09:12 AM",
-    "Asbury Water Tower": "09:18 AM",
-    "Reed Arena": "09:30 AM",
-    "MSC": "09:34 AM",
-    "Commons2": "09:47 AM"
+    "key": "9675e663-206a-435f-80a9-fd015fd5315f",
+    "static_time": "04:07 PM",
+    "stop_name": "Munson"
   },
   {
-    "Commons": "09:22 AM",
-    "Asbury Water Tower": "09:28 AM",
-    "Reed Arena": "09:40 AM",
-    "MSC": "09:44 AM",
-    "Commons2": "09:57 AM"
+    "key": "a2bfbe2c-de72-4787-8754-7f9616fad3dd",
+    "static_time": "09:36 AM",
+    "stop_name": "Ashburn"
   },
   {
-    "Commons": "09:32 AM",
-    "Asbury Water Tower": "09:38 AM",
-    "Reed Arena": "09:50 AM",
-    "MSC": "09:54 AM",
-    "Commons2": "10:07 AM"
+    "key": "a2bfbe2c-de72-4787-8754-7f9616fad3dd",
+    "static_time": "10:36 AM",
+    "stop_name": "Ashburn"
   },
   {
-    "Commons": "09:42 AM",
-    "Asbury Water Tower": "09:48 AM",
-    "Reed Arena": "10:00 AM",
-    "MSC": "10:04 AM",
-    "Commons2": "10:17 AM"
+    "key": "a2bfbe2c-de72-4787-8754-7f9616fad3dd",
+    "static_time": "11:36 AM",
+    "stop_name": "Ashburn"
   },
   {
-    "Commons": "09:52 AM",
-    "Asbury Water Tower": "09:58 AM",
-    "Reed Arena": "10:10 AM",
-    "MSC": "10:14 AM",
-    "Commons2": "10:27 AM"
+    "key": "a2bfbe2c-de72-4787-8754-7f9616fad3dd",
+    "static_time": "12:36 PM",
+    "stop_name": "Ashburn"
   },
   {
-    "Commons": "10:02 AM",
-    "Asbury Water Tower": "10:08 AM",
-    "Reed Arena": "10:20 AM",
-    "MSC": "10:24 AM",
-    "Commons2": "10:37 AM"
+    "key": "a2bfbe2c-de72-4787-8754-7f9616fad3dd",
+    "static_time": "01:36 PM",
+    "stop_name": "Ashburn"
   },
   {
-    "Commons": "10:12 AM",
-    "Asbury Water Tower": "10:18 AM",
-    "Reed Arena": "10:30 AM",
-    "MSC": "10:34 AM",
-    "Commons2": "10:47 AM"
+    "key": "a2bfbe2c-de72-4787-8754-7f9616fad3dd",
+    "static_time": "02:36 PM",
+    "stop_name": "Ashburn"
   },
   {
-    "Commons": "10:22 AM",
-    "Asbury Water Tower": "10:28 AM",
-    "Reed Arena": "10:40 AM",
-    "MSC": "10:44 AM",
-    "Commons2": "10:57 AM"
+    "key": "a2bfbe2c-de72-4787-8754-7f9616fad3dd",
+    "static_time": "03:36 PM",
+    "stop_name": "Ashburn"
   },
   {
-    "Commons": "10:39 AM",
-    "Asbury Water Tower": "10:45 AM",
-    "Reed Arena": "10:57 AM",
-    "MSC": "11:01 AM",
-    "Commons2": "11:14 AM"
+    "key": "a2bfbe2c-de72-4787-8754-7f9616fad3dd",
+    "static_time": null,
+    "stop_name": "Ashburn"
   },
   {
-    "Commons": "10:52 AM",
-    "Asbury Water Tower": "10:58 AM",
-    "Reed Arena": "11:10 AM",
-    "MSC": "11:14 AM",
-    "Commons2": "11:27 AM"
+    "key": "c9b0ee20-30a1-40b4-afca-70c36bf39082",
+    "static_time": "09:25 AM",
+    "stop_name": "Blinn College - Bldg E"
   },
   {
-    "Commons": "11:06 AM",
-    "Asbury Water Tower": "11:12 AM",
-    "Reed Arena": "11:24 AM",
-    "MSC": "11:28 AM",
-    "Commons2": "11:41 AM"
+    "key": "c9b0ee20-30a1-40b4-afca-70c36bf39082",
+    "static_time": "10:25 AM",
+    "stop_name": "Blinn College - Bldg E"
   },
   {
-    "Commons": "11:19 AM",
-    "Asbury Water Tower": "11:25 AM",
-    "Reed Arena": "11:37 AM",
-    "MSC": "11:41 AM",
-    "Commons2": "11:54 AM"
+    "key": "c9b0ee20-30a1-40b4-afca-70c36bf39082",
+    "static_time": "11:25 AM",
+    "stop_name": "Blinn College - Bldg E"
   },
   {
-    "Commons": "11:32 AM",
-    "Asbury Water Tower": "11:38 AM",
-    "Reed Arena": "11:50 AM",
-    "MSC": "11:54 AM",
-    "Commons2": "12:07 PM"
+    "key": "c9b0ee20-30a1-40b4-afca-70c36bf39082",
+    "static_time": "12:25 PM",
+    "stop_name": "Blinn College - Bldg E"
   },
   {
-    "Commons": "11:46 AM",
-    "Asbury Water Tower": "11:52 AM",
-    "Reed Arena": "12:04 PM",
-    "MSC": "12:08 PM",
-    "Commons2": "12:21 PM"
+    "key": "c9b0ee20-30a1-40b4-afca-70c36bf39082",
+    "static_time": "01:25 PM",
+    "stop_name": "Blinn College - Bldg E"
   },
   {
-    "Commons": "11:59 AM",
-    "Asbury Water Tower": "12:05 PM",
-    "Reed Arena": "12:17 PM",
-    "MSC": "12:21 PM",
-    "Commons2": "12:34 PM"
+    "key": "c9b0ee20-30a1-40b4-afca-70c36bf39082",
+    "static_time": "02:25 PM",
+    "stop_name": "Blinn College - Bldg E"
   },
   {
-    "Commons": "12:12 PM",
-    "Asbury Water Tower": "12:18 PM",
-    "Reed Arena": "12:30 PM",
-    "MSC": "12:34 PM",
-    "Commons2": "12:47 PM"
+    "key": "c9b0ee20-30a1-40b4-afca-70c36bf39082",
+    "static_time": "03:25 PM",
+    "stop_name": "Blinn College - Bldg E"
   },
   {
-    "Commons": "12:26 PM",
-    "Asbury Water Tower": "12:32 PM",
-    "Reed Arena": "12:44 PM",
-    "MSC": "12:48 PM",
-    "Commons2": "01:01 PM"
+    "key": "c9b0ee20-30a1-40b4-afca-70c36bf39082",
+    "static_time": "04:25 PM",
+    "stop_name": "Blinn College - Bldg E"
   },
   {
-    "Commons": "12:39 PM",
-    "Asbury Water Tower": "12:45 PM",
-    "Reed Arena": "12:57 PM",
-    "MSC": "01:01 PM",
-    "Commons2": "01:14 PM"
+    "key": "cec60dc9-8a21-4777-be3c-1cceb2ee6df0",
+    "static_time": "09:11 AM",
+    "stop_name": "Laurel Ridge"
   },
   {
-    "Commons": "12:52 PM",
-    "Asbury Water Tower": "12:58 PM",
-    "Reed Arena": "01:10 PM",
-    "MSC": "01:14 PM",
-    "Commons2": "01:27 PM"
+    "key": "cec60dc9-8a21-4777-be3c-1cceb2ee6df0",
+    "static_time": "10:11 AM",
+    "stop_name": "Laurel Ridge"
   },
   {
-    "Commons": "01:06 PM",
-    "Asbury Water Tower": "01:12 PM",
-    "Reed Arena": "01:24 PM",
-    "MSC": "01:28 PM",
-    "Commons2": "01:41 PM"
+    "key": "cec60dc9-8a21-4777-be3c-1cceb2ee6df0",
+    "static_time": "11:11 AM",
+    "stop_name": "Laurel Ridge"
   },
   {
-    "Commons": "01:19 PM",
-    "Asbury Water Tower": "01:25 PM",
-    "Reed Arena": "01:37 PM",
-    "MSC": "01:41 PM",
-    "Commons2": "01:54 PM"
+    "key": "cec60dc9-8a21-4777-be3c-1cceb2ee6df0",
+    "static_time": "12:11 PM",
+    "stop_name": "Laurel Ridge"
   },
   {
-    "Commons": "01:32 PM",
-    "Asbury Water Tower": "01:38 PM",
-    "Reed Arena": "01:50 PM",
-    "MSC": "01:54 PM",
-    "Commons2": "02:07 PM"
+    "key": "cec60dc9-8a21-4777-be3c-1cceb2ee6df0",
+    "static_time": "01:11 PM",
+    "stop_name": "Laurel Ridge"
   },
   {
-    "Commons": "01:46 PM",
-    "Asbury Water Tower": "01:52 PM",
-    "Reed Arena": "02:04 PM",
-    "MSC": "02:08 PM",
-    "Commons2": "02:21 PM"
+    "key": "cec60dc9-8a21-4777-be3c-1cceb2ee6df0",
+    "static_time": "02:11 PM",
+    "stop_name": "Laurel Ridge"
   },
   {
-    "Commons": "01:59 PM",
-    "Asbury Water Tower": "02:05 PM",
-    "Reed Arena": "02:17 PM",
-    "MSC": "02:21 PM",
-    "Commons2": "02:34 PM"
+    "key": "cec60dc9-8a21-4777-be3c-1cceb2ee6df0",
+    "static_time": "03:11 PM",
+    "stop_name": "Laurel Ridge"
   },
   {
-    "Commons": "02:12 PM",
-    "Asbury Water Tower": "02:18 PM",
-    "Reed Arena": "02:30 PM",
-    "MSC": "02:34 PM",
-    "Commons2": "02:47 PM"
+    "key": "cec60dc9-8a21-4777-be3c-1cceb2ee6df0",
+    "static_time": "04:11 PM",
+    "stop_name": "Laurel Ridge"
   },
   {
-    "Commons": "02:26 PM",
-    "Asbury Water Tower": "02:32 PM",
-    "Reed Arena": "02:44 PM",
-    "MSC": "02:48 PM",
-    "Commons2": "03:01 PM"
+    "key": "e39e9543-941a-41be-9581-bab8238769cd",
+    "static_time": "09:00 AM",
+    "stop_name": "Trigon - Depart"
   },
   {
-    "Commons": "02:39 PM",
-    "Asbury Water Tower": "02:45 PM",
-    "Reed Arena": "02:57 PM",
-    "MSC": "03:01 PM",
-    "Commons2": "03:14 PM"
+    "key": "e39e9543-941a-41be-9581-bab8238769cd",
+    "static_time": "10:00 AM",
+    "stop_name": "Trigon - Depart"
   },
   {
-    "Commons": "02:52 PM",
-    "Asbury Water Tower": "02:58 PM",
-    "Reed Arena": "03:10 PM",
-    "MSC": "03:14 PM",
-    "Commons2": "03:27 PM"
+    "key": "e39e9543-941a-41be-9581-bab8238769cd",
+    "static_time": "11:00 AM",
+    "stop_name": "Trigon - Depart"
   },
   {
-    "Commons": "03:06 PM",
-    "Asbury Water Tower": "03:12 PM",
-    "Reed Arena": "03:24 PM",
-    "MSC": "03:28 PM",
-    "Commons2": "03:41 PM"
+    "key": "e39e9543-941a-41be-9581-bab8238769cd",
+    "static_time": "12:00 PM",
+    "stop_name": "Trigon - Depart"
   },
   {
-    "Commons": "03:19 PM",
-    "Asbury Water Tower": "03:25 PM",
-    "Reed Arena": "03:37 PM",
-    "MSC": "03:41 PM",
-    "Commons2": "03:53 PM"
+    "key": "e39e9543-941a-41be-9581-bab8238769cd",
+    "static_time": "01:00 PM",
+    "stop_name": "Trigon - Depart"
   },
   {
-    "Commons": "03:32 PM",
-    "Asbury Water Tower": "03:38 PM",
-    "Reed Arena": "03:50 PM",
-    "MSC": "03:54 PM",
-    "Commons2": "04:06 PM"
+    "key": "e39e9543-941a-41be-9581-bab8238769cd",
+    "static_time": "02:00 PM",
+    "stop_name": "Trigon - Depart"
   },
   {
-    "Commons": "03:53 PM",
-    "Asbury Water Tower": "03:59 PM",
-    "Reed Arena": "04:11 PM",
-    "MSC": "04:15 PM",
-    "Commons2": "04:27 PM"
+    "key": "e39e9543-941a-41be-9581-bab8238769cd",
+    "static_time": "03:00 PM",
+    "stop_name": "Trigon - Depart"
   },
   {
-    "Commons": "04:11 PM",
-    "Asbury Water Tower": "04:17 PM",
-    "Reed Arena": "04:29 PM",
-    "MSC": "04:33 PM",
-    "Commons2": "04:45 PM"
+    "key": "e39e9543-941a-41be-9581-bab8238769cd",
+    "static_time": "04:00 PM",
+    "stop_name": "Trigon - Depart"
   },
   {
-    "Commons": "04:29 PM",
-    "Asbury Water Tower": "04:35 PM",
-    "Reed Arena": "04:47 PM",
-    "MSC": "04:51 PM",
-    "Commons2": "05:03 PM"
+    "key": "f0035414-51a3-4e0e-b890-72062a21ee23",
+    "static_time": "09:55 AM",
+    "stop_name": "Trigon - Arrive"
   },
   {
-    "Commons": "04:50 PM",
-    "Asbury Water Tower": "04:56 PM",
-    "Reed Arena": "05:08 PM",
-    "MSC": "05:12 PM",
-    "Commons2": "05:24 PM"
+    "key": "f0035414-51a3-4e0e-b890-72062a21ee23",
+    "static_time": "10:55 AM",
+    "stop_name": "Trigon - Arrive"
   },
   {
-    "Commons": "05:08 PM",
-    "Asbury Water Tower": "05:14 PM",
-    "Reed Arena": "05:26 PM",
-    "MSC": "05:30 PM",
-    "Commons2": "05:42 PM"
+    "key": "f0035414-51a3-4e0e-b890-72062a21ee23",
+    "static_time": "11:55 AM",
+    "stop_name": "Trigon - Arrive"
   },
   {
-    "Commons": "05:29 PM",
-    "Asbury Water Tower": "05:35 PM",
-    "Reed Arena": "05:47 PM",
-    "MSC": "05:51 PM",
-    "Commons2": "06:03 PM"
+    "key": "f0035414-51a3-4e0e-b890-72062a21ee23",
+    "static_time": "12:55 PM",
+    "stop_name": "Trigon - Arrive"
   },
   {
-    "Commons": "05:45 PM",
-    "Asbury Water Tower": "05:51 PM",
-    "Reed Arena": "06:03 PM",
-    "MSC": "06:07 PM",
-    "Commons2": "06:20 PM"
+    "key": "f0035414-51a3-4e0e-b890-72062a21ee23",
+    "static_time": "01:55 PM",
+    "stop_name": "Trigon - Arrive"
   },
   {
-    "Commons": "06:25 PM",
-    "Asbury Water Tower": "06:32 PM",
-    "Reed Arena": "06:45 PM",
-    "MSC": null,
-    "Commons2": null
+    "key": "f0035414-51a3-4e0e-b890-72062a21ee23",
+    "static_time": "02:55 PM",
+    "stop_name": "Trigon - Arrive"
+  },
+  {
+    "key": "f0035414-51a3-4e0e-b890-72062a21ee23",
+    "static_time": "03:55 PM",
+    "stop_name": "Trigon - Arrive"
+  },
+  {
+    "key": "f0035414-51a3-4e0e-b890-72062a21ee23",
+    "static_time": null,
+    "stop_name": "Trigon - Arrive"
   }
 ]
